@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Default from "../views/dashboards/Default.vue";
+// import Default from "../views/dashboards/Default.vue";
 import Automotive from "../views/dashboards/Automotive.vue";
 import SmartHome from "../views/dashboards/SmartHome.vue";
 import VRDefault from "../views/dashboards/vr/VRDefault.vue";
@@ -63,7 +63,7 @@ const routes = [
   {
     path: "/dashboards/dashboard-default",
     name: "Default",
-    component: Default,
+    component: CRM,
   },
   {
     path: "/dashboards/automotive",

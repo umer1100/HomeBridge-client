@@ -9,7 +9,7 @@
         class="navbar-brand font-weight-bolder ms-lg-0 ms-3"
         :class="darkMode ? 'text-black' : 'text-white'"
         to="/"
-        >Soft UI Dashboard PRO</router-link>
+        >Ownerific</router-link>
       <button
         class="shadow-none navbar-toggler ms-2"
         type="button"
@@ -31,7 +31,7 @@
       >
         <ul class="mx-auto navbar-nav navbar-nav-hover">
           <li class="mx-2 nav-item dropdown dropdown-hover">
-            <a
+            <!-- <a
               id="dropdownMenuPages"
               role="button"
               class="cursor-pointer nav-link ps-2 d-flex justify-content-between align-items-center"
@@ -52,7 +52,7 @@
                 class="arrow ms-1 d-block"
                 :class="darkMode ? 'd-lg-block' : 'd-lg-none'"
               />
-            </a>
+            </a> -->
             <div
               class="p-3 mt-0 dropdown-menu dropdown-menu-animation dropdown-xl border-radius-xl mt-lg-3"
               aria-labelledby="dropdownMenuPages"
@@ -437,7 +437,7 @@
             </div>
           </li>
           <li class="mx-2 nav-item dropdown dropdown-hover">
-            <a
+            <!-- <a
               id="dropdownMenuAccount"
               role="button"
               class="cursor-pointer nav-link ps-2 d-flex justify-content-between align-items-center"
@@ -458,7 +458,7 @@
                 class="arrow ms-1 d-block"
                 :class="darkMode ? 'd-lg-block' : 'd-lg-none'"
               />
-            </a>
+            </a> -->
             <div
               class="p-3 mt-0 dropdown-menu dropdown-menu-animation dropdown-lg border-radius-xl mt-lg-3"
               aria-labelledby="dropdownMenuAccount"
@@ -843,7 +843,7 @@
             </div>
           </li>
           <li class="mx-2 nav-item dropdown dropdown-hover">
-            <a
+            <!-- <a
               id="dropdownMenuBlocks"
               role="button"
               class="cursor-pointer nav-link ps-2 d-flex justify-content-between align-items-center"
@@ -864,7 +864,7 @@
                 class="arrow ms-1 d-block"
                 :class="darkMode ? 'd-lg-block' : 'd-lg-none'"
               />
-            </a>
+            </a> -->
             <div
               class="p-3 mt-0 dropdown-menu dropdown-menu-animation dropdown-md dropdown-md-responsive border-radius-lg mt-lg-3"
               aria-labelledby="dropdownMenuBlocks"
@@ -1049,7 +1049,7 @@
             </div>
           </li>
           <li class="mx-2 nav-item dropdown dropdown-hover">
-            <a
+            <!-- <a
               id="dropdownMenuEcommerce"
               role="button"
               class="cursor-pointer nav-link ps-2 d-flex justify-content-between align-items-center"
@@ -1070,7 +1070,7 @@
                 class="arrow ms-1 d-block"
                 :class="darkMode ? 'd-lg-block' : ' d-lg-none'"
               />
-            </a>
+            </a> -->
             <div
               class="p-3 mt-0 dropdown-menu dropdown-menu-animation dropdown-lg border-radius-xl mt-lg-3"
               aria-labelledby="dropdownMenuEcommerce"
@@ -1289,7 +1289,7 @@
             </div>
           </li>
           <li class="mx-2 nav-item dropdown dropdown-hover">
-            <a
+            <!-- <a
               id="dropdownMenuDocs"
               role="button"
               class="cursor-pointer nav-link ps-2 d-flex justify-content-between align-items-center"
@@ -1310,7 +1310,7 @@
                 class="arrow ms-1 d-block"
                 :class="darkMode ? 'd-lg-block' : 'd-lg-none'"
               />
-            </a>
+            </a> -->
             <div
               class="p-3 mt-0 dropdown-menu dropdown-menu-animation dropdown-lg mt-lg-3 border-radius-lg"
               aria-labelledby="dropdownMenuDocs"
@@ -1521,7 +1521,7 @@
           </li>
         </ul>
         <ul class="navbar-nav d-lg-block d-none">
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a
               href="https://www.creative-tim.com/product/vue-soft-ui-dashboard-pro"
               target="_blank"
@@ -1530,7 +1530,7 @@
               onclick="smoothToPricing('pricing-soft-ui')"
               >Buy Now</a
             >
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>

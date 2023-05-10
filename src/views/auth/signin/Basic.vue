@@ -11,10 +11,9 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="mx-auto text-center col-lg-5">
-          <h1 class="mt-5 mb-2 text-white">Welcome!</h1>
+          <h1 class="mt-5 mb-2 text-white">Welcome</h1>
           <p class="text-white text-lead">
-            Use these awesome forms to login or create new account in your
-            project for free.
+            Sign into your Ownerific account below to start achieving your homeownership goals.
           </p>
         </div>
       </div>
@@ -27,7 +26,7 @@
           <div class="pt-4 text-center card-header">
             <h5>Sign in</h5>
           </div>
-          <div class="px-3 row px-xl-5 px-sm-4">
+          <!-- <div class="px-3 row px-xl-5 px-sm-4">
             <div class="px-1 col-3 ms-auto">
               <a class="btn btn-outline-light w-100" href="javascript:;">
                 <svg
@@ -127,7 +126,7 @@
                 </svg>
               </a>
             </div>
-          </div>
+          </div> -->
           <div class="card-body">
             <form role="form" class="text-start">
               <div class="mb-3">
