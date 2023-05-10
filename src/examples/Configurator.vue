@@ -6,11 +6,45 @@
     >
       <i class="py-2 fa fa-cog"> </i>
     </a>
+
     <div class="shadow-lg card blur">
       <div class="pt-3 pb-0 bg-transparent card-header">
         <div class="float-start">
-          <h5 class="mt-3 mb-0">Soft UI Configurator</h5>
-          <p>See our dashboard options.</p>
+          <h5 class="mt-3 mb-0">Marcus Goodwin</h5>
+          <p>Employer | FiscalNote</p>
+        </div>
+        <div class="mt-4 float-end" @click="toggle">
+          <button class="p-0 btn btn-link text-dark fixed-plugin-close-button">
+            <i class="fa fa-close"></i>
+          </button>
+        </div>
+        <!-- End Toggle Button -->
+      </div>
+      <hr class="my-1 horizontal dark" />
+      <div class="d-flex">
+          <button
+            id="btn-transparent"
+            class="px-3 mb-2 btn bg-gradient-success w-100"
+            :class="isTransparent === 'bg-transparent' ? 'active' : ''"
+            @click="sidebarType('bg-transparent')"
+          >
+            My Profile
+          </button>
+          <button
+            id="btn-white"
+            class="px-3 mb-2 btn bg-gradient-success w-100 ms-2"
+            :class="isTransparent === 'bg-white' ? 'active' : ''"
+            @click="sidebarType('bg-white')"
+          >
+            Sign Out
+          </button>
+        </div>
+      <hr class="my-1 horizontal dark" />
+
+      <div class="pt-3 pb-0 bg-transparent card-header">
+        <div class="float-start">
+          <h5 class="mt-3 mb-0">App Settings</h5>
+          <p>Make your account your own.</p>
         </div>
         <div class="mt-4 float-end" @click="toggle">
           <button class="p-0 btn btn-link text-dark fixed-plugin-close-button">
@@ -22,7 +56,7 @@
       <hr class="my-1 horizontal dark" />
       <div class="pt-0 card-body pt-sm-3">
         <!-- Sidebar Backgrounds -->
-        <div>
+        <!-- <div>
           <h6 class="mb-0">Sidebar Colors</h6>
         </div>
         <a href="#" class="switch-trigger background-color">
@@ -61,11 +95,11 @@
               @click="sidebarColor('danger')"
             ></span>
           </div>
-        </a>
+        </a> -->
         <!-- Sidenav Type -->
         <div class="mt-3">
-          <h6 class="mb-0">Sidenav Type</h6>
-          <p class="text-sm">Choose between 2 different sidenav types.</p>
+          <h6 class="mb-0">Left-Side Navigation Menu</h6>
+          <p class="text-sm">Select a side navigation type.</p>
         </div>
         <div class="d-flex">
           <button
@@ -82,29 +116,15 @@
             :class="isTransparent === 'bg-white' ? 'active' : ''"
             @click="sidebarType('bg-white')"
           >
-            White
+            Solid
           </button>
         </div>
         <p class="mt-2 text-sm d-xl-none d-block">
           You can change the sidenav type just on desktop view.
         </p>
         <!-- Navbar Fixed -->
-        <div class="mt-3">
-          <h6 class="mb-0">Navbar Fixed</h6>
-        </div>
-        <div class="form-check form-switch ps-0">
-          <input
-            id="navbarFixed"
-            class="mt-1 form-check-input"
-            :class="isRTL ? 'float-end  me-auto' : ' ms-auto'"
-            type="checkbox"
-            :checked="isNavFixed"
-            @click="setNavbarFixed"
-          />
-        </div>
-        <hr class="mb-1 horizontal dark" />
         <div class="mt-2">
-          <h6 class="mb-0">Sidenav Mini</h6>
+          <h6 class="mb-0">Side Navigation Menu | Compact</h6>
         </div>
         <div class="form-check form-switch ps-0">
           <input
@@ -116,24 +136,38 @@
             @click="navbarMinimize"
           />
         </div>
+        <hr class="mb-1 horizontal dark" />
+        <div class="mt-3">
+          <h6 class="mb-0">Top Navigation Bar | Fixed</h6>
+        </div>
+        <div class="form-check form-switch ps-0">
+          <input
+            id="navbarFixed"
+            class="mt-1 form-check-input"
+            :class="isRTL ? 'float-end  me-auto' : ' ms-auto'"
+            type="checkbox"
+            :checked="isNavFixed"
+            @click="setNavbarFixed"
+          />
+        </div>
         <hr class="horizontal dark my-sm-4" />
         <a
           class="btn bg-gradient-info w-100"
           href="https://www.creative-tim.com/product/vue-soft-ui-dashboard-pro"
-          >Buy now</a
+          >Help Center</a
         >
         <a
           class="btn bg-gradient-dark w-100"
           href="https://demos.creative-tim.com/vue-soft-ui-dashboard/"
-          >Free demo</a
+          >Report an Issue</a
         >
         <a
           class="btn btn-outline-dark w-100"
           href="https://www.creative-tim.com/learning-lab/vue/overview/soft-ui-dashboard/"
-          >View documentation</a
+          >Request a Feature</a
         >
         <div class="text-center w-100">
-          <a
+          <!-- <a
             class="github-button"
             href="https://github.com/creativetimofficial/ct-vue-soft-ui-dashboard-pro"
             data-icon="octicon-star"
@@ -141,21 +175,21 @@
             data-show-count="true"
             aria-label="Star creativetimofficial/soft-ui-dashboard on GitHub"
             >Star</a
-          >
-          <h6 class="mt-3">Thank you for sharing!</h6>
+          > -->
+          <h6 class="mt-3">Leave us a review!</h6>
           <a
-            href="https://twitter.com/intent/tweet?text=Check%20Soft%20UI%20Dashboard%20PRO%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fsoft-ui-dashboard-pro"
+            href="https://trustpilot.com/"
             class="mb-0 btn btn-dark me-2"
             target="_blank"
           >
-            <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
+            <i class="fas fa-star me-1" aria-hidden="true"></i> Trustpilot
           </a>
           <a
-            href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/soft-ui-dashboard-pro"
+            href="https://www.google.com/search?q=ownerific&oq=ownerific+&aqs=chrome..69i57j0i546l2j69i60l5.1374j0j7&sourceid=chrome&ie=UTF-8#ip=1&lrd=0x89b7b77f526d1161:0x1974b517ed83ee8f,3,,,,"
             class="mb-0 btn btn-dark me-2"
             target="_blank"
           >
-            <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
+            <i class="fab fa-google me-1" aria-hidden="true"></i> Google
           </a>
         </div>
       </div>

@@ -803,7 +803,7 @@
       text-secondary="Please check our Help Center"
       route="https://www.ownerific.com/help/"
       label="Help Center"
-      icon="ni ni-diamond"
+      icon="ni ni-support-16"
     />
   </div>
 </template>

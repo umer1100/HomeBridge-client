@@ -201,7 +201,7 @@
                     ],
                     datasets: [
                       {
-                        label: 'Enrolled Employees',
+                        label: 'Visitors',
                         data: [50, 45, 60, 60, 80, 65, 90, 80, 100],
                       },
                     ],
