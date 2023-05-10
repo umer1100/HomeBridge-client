@@ -800,9 +800,9 @@
     <sidenav-card
       :class="cardBg"
       text-primary="Need Help?"
-      text-secondary="Please check our docs"
-      route="https://www.creative-tim.com/learning-lab/vue/overview/soft-ui-dashboard/"
-      label="Documentation"
+      text-secondary="Please check our Help Center"
+      route="https://www.ownerific.com/help/"
+      label="Help Center"
       icon="ni ni-diamond"
     />
   </div>

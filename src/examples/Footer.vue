@@ -11,12 +11,12 @@
             {{ new Date().getFullYear() }}, made with
             <i class="fa fa-heart"></i> by
             <a
-              href="https://www.creative-tim.com"
+              href="https://www.ownerific.com"
               class="font-weight-bold"
               target="_blank"
-              >Creative Tim</a
+              >The Ownerific Team</a
             >
-            for a better web.
+            help provide a home for all.
           </div>
         </div>
         <div class="col-lg-6">
@@ -25,15 +25,15 @@
           >
             <li class="nav-item">
               <a
-                href="https://www.creative-tim.com"
+                href="https://www.ownerific.com"
                 class="nav-link text-muted"
                 target="_blank"
-                >Creative Tim</a
+                >Ownerific</a
               >
             </li>
             <li class="nav-item">
               <a
-                href="https://www.creative-tim.com/presentation"
+                href="https://www.ownerific.com/about"
                 class="nav-link text-muted"
                 target="_blank"
                 >About Us</a
@@ -41,7 +41,7 @@
             </li>
             <li class="nav-item">
               <a
-                href="https://www.creative-tim.com/blog"
+                href="https://www.ownerific.com/blog"
                 class="nav-link text-muted"
                 target="_blank"
                 >Blog</a
@@ -49,10 +49,18 @@
             </li>
             <li class="nav-item">
               <a
-                href="https://www.creative-tim.com/license"
+                href="https://www.ownerific.com/about/privacy/"
                 class="nav-link pe-0 text-muted"
                 target="_blank"
-                >License</a
+                >Privacy Policy</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                href="https://www.ownerific.com/about/terms/"
+                class="nav-link pe-0 text-muted"
+                target="_blank"
+                >Terms of Service</a
               >
             </li>
           </ul>

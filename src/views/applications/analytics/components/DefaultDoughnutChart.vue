@@ -36,14 +36,14 @@
                   <td>
                     <div class="px-2 py-1 d-flex">
                       <div>
-                        <img
+                        <!-- <img
                           src="@/assets/img/small-logos/logo-xd.svg"
                           class="avatar avatar-sm me-2"
                           alt="logo_xd"
-                        />
+                        /> -->
                       </div>
                       <div class="d-flex flex-column justify-content-center">
-                        <h6 class="mb-0 text-sm">Adobe</h6>
+                        <h6 class="mb-0 text-sm">Pending</h6>
                       </div>
                     </div>
                   </td>
@@ -55,14 +55,14 @@
                   <td>
                     <div class="px-2 py-1 d-flex">
                       <div>
-                        <img
+                        <!-- <img
                           src="@/assets/img/small-logos/logo-atlassian.svg"
                           class="avatar avatar-sm me-2"
                           alt="logo_atlassian"
-                        />
+                        /> -->
                       </div>
                       <div class="d-flex flex-column justify-content-center">
-                        <h6 class="mb-0 text-sm">Atlassian</h6>
+                        <h6 class="mb-0 text-sm">New</h6>
                       </div>
                     </div>
                   </td>
@@ -74,14 +74,14 @@
                   <td>
                     <div class="px-2 py-1 d-flex">
                       <div>
-                        <img
+                        <!-- <img
                           src="@/assets/img/small-logos/logo-slack.svg"
                           class="avatar avatar-sm me-2"
                           alt="logo_slack"
-                        />
+                        /> -->
                       </div>
                       <div class="d-flex flex-column justify-content-center">
-                        <h6 class="mb-0 text-sm">Slack</h6>
+                        <h6 class="mb-0 text-sm">Active</h6>
                       </div>
                     </div>
                   </td>
@@ -93,14 +93,14 @@
                   <td>
                     <div class="px-2 py-1 d-flex">
                       <div>
-                        <img
+                        <!-- <img
                           src="@/assets/img/small-logos/logo-spotify.svg"
                           class="avatar avatar-sm me-2"
                           alt="logo_spotify"
-                        />
+                        /> -->
                       </div>
                       <div class="d-flex flex-column justify-content-center">
-                        <h6 class="mb-0 text-sm">Spotify</h6>
+                        <h6 class="mb-0 text-sm">Onboarding</h6>
                       </div>
                     </div>
                   </td>
@@ -112,14 +112,14 @@
                   <td>
                     <div class="px-2 py-1 d-flex">
                       <div>
-                        <img
+                        <!-- <img
                           src="@/assets/img/small-logos/logo-jira.svg"
                           class="avatar avatar-sm me-2"
                           alt="logo_jira"
-                        />
+                        /> -->
                       </div>
                       <div class="d-flex flex-column justify-content-center">
-                        <h6 class="mb-0 text-sm">Jira</h6>
+                        <h6 class="mb-0 text-sm">Paused</h6>
                       </div>
                     </div>
                   </td>
