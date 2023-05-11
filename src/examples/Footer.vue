@@ -16,7 +16,7 @@
               target="_blank"
               >The Ownerific Team</a
             >
-            help provide a home for all.
+            to help provide housing opportunities for all.
           </div>
         </div>
         <div class="col-lg-6">
@@ -36,7 +36,7 @@
                 href="https://www.ownerific.com/about"
                 class="nav-link text-muted"
                 target="_blank"
-                >About Us</a
+                >About</a
               >
             </li>
             <li class="nav-item">

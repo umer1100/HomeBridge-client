@@ -20,24 +20,23 @@
         </div>
         <!-- End Toggle Button -->
       </div>
-      <hr class="my-1 horizontal dark" />
-      <div class="d-flex">
-          <button
-            id="btn-transparent"
-            class="px-3 mb-2 btn bg-gradient-success w-100"
-            :class="isTransparent === 'bg-transparent' ? 'active' : ''"
-            @click="sidebarType('bg-transparent')"
+      <div class="d-flex pt-0 card-body pb-sm-0">
+          <a
+          id="btn-transparent"  
+          :to="{ name: 'Profile Overview' }"
+            class="px-3 mb-2 btn w-100"
+            target="_blank"
           >
-            My Profile
-          </button>
-          <button
-            id="btn-white"
-            class="px-3 mb-2 btn bg-gradient-success w-100 ms-2"
-            :class="isTransparent === 'bg-white' ? 'active' : ''"
-            @click="sidebarType('bg-white')"
+            <i aria-hidden="true"></i> My Profile
+          </a>
+          <a
+          id="btn-transparent"  
+          href="https://trustpilot.com/"
+            class="px-3 mb-2 btn w-100 ms-2"
+            target="_blank"
           >
-            Sign Out
-          </button>
+            <i aria-hidden="true"></i> Sign Out
+          </a>
         </div>
       <hr class="my-1 horizontal dark" />
 
@@ -46,11 +45,7 @@
           <h5 class="mt-3 mb-0">App Settings</h5>
           <p>Make your account your own.</p>
         </div>
-        <div class="mt-4 float-end" @click="toggle">
-          <button class="p-0 btn btn-link text-dark fixed-plugin-close-button">
-            <i class="fa fa-close"></i>
-          </button>
-        </div>
+
         <!-- End Toggle Button -->
       </div>
       <hr class="my-1 horizontal dark" />

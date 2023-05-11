@@ -57,11 +57,44 @@
                 }"
               />
             </div>
-            <div class="mt-4 col-sm-4 mt-sm-0">
+            <!-- <div class="mt-4 col-sm-4 mt-sm-0">
               <place-holder-card :title="{ variant: 'h6', text: 'New tab' }" />
+            </div> -->
+
+            <div class="mt-4 col-sm-4 mt-sm-0">
+              <mini-gradient-line-chart
+                title="Employer Contributions"
+                description='$130,832 <span class="text-sm text-success font-weight-bolder">+90%</span>'
+                :chart="{
+                  labels: [
+                    'Apr',
+                    'May',
+                    'Jun',
+                    'Jul',
+                    'Aug',
+                    'Sep',
+                    'Oct',
+                    'Nov',
+                    'Dec',
+                  ],
+                  datasets: [
+                    {
+                      data: [60, 80, 75, 90, 67, 100, 90, 110, 120],
+                      label: 'Income',
+                    },
+                  ],
+                }"
+              />
             </div>
+
+
+
+
           </div>
-          <div class="mt-4 row">
+          <div class="pt-4 mt-4 col-lg-12 col-sm-6 mt-sm-0">
+            <revenue-chart-card />
+          </div>
+          <div class="mt-4">
             <default-doughnut-chart
           title="Employee Status"
           :chart="{
@@ -77,18 +110,37 @@
           </div>
         </div>
         <div class="mt-4 col-xl-4 col-lg-5 mt-lg-0">
+          <div class="mb-4 col-lg-12 col-sm-6"> 
+                <announcement-card
+                  title="Hey Marcus! Did you know..."
+                  description="Our research has shown that, by increasing your Employer Contribution amount, you will retain and attract more employees."
+                  :by="{
+                    image: image,
+                    name: 'OwlAI | Your Personal Advisor',
+                    date: '2h ago',
+                  }"
+                  :badge="{ color: 'success', label: 'Recommendation' }"
+                  :value="{ currency: '$', amount: '500', method: 'month' }"
+                  :action="{ route: 'javascript:;', label: 'Modify' }"
+                />
+              </div>
+          
+          
           <div class="row">
             <div class="col-lg-12">
               <background-blog-card
                 :image="backgroundImage"
-                title="Hey Marcus!"
-                description="Driving positive business outcomes through creating data-driven employee financial programs is your key to a happier and healthier team."
+                title="Tips & Tricks"
+                description="Driving positive business outcomes through creating data-driven employee homeownership programs is your key to a happier and healthier team."
                 :action="{
                   route: '/',
                   label: 'Learn more',
                 }"
               />
             </div>
+              
+
+            
             <div class="col-lg-12 col-sm-6">
               <categories-list
                 :items="[
@@ -189,7 +241,7 @@
 
 <script>
 import MiniGradientLineChart from "@/views/dashboards/components/MiniGradientLineChart.vue";
-import PlaceHolderCard from "@/examples/Cards/PlaceHolderCard.vue";
+// import PlaceHolderCard from "@/examples/Cards/PlaceHolderCard.vue";
 import BackgroundBlogCard from "./components/BackgroundBlogCard.vue";
 import CategoriesList from "./components/CategoriesList.vue";
 import MessageCard from "./components/MessageCard.vue";
@@ -197,6 +249,8 @@ import RankingListCard from "../../examples/Cards/RankingListCard.vue";
 // import Calendar from "../../examples/Calendar.vue";
 import AppFooter from "../../examples/Footer.vue";
 import DefaultDoughnutChart from "@/views/applications/analytics/components/DefaultDoughnutChart.vue";
+import RevenueChartCard from "@/views/ecommerce/overview/components/RevenueChartCard.vue";
+import AnnouncementCard from "@/views/pages/projects/components/AnnouncementCard.vue";
 
 
 import image from "@/assets/img/kal-visuals-square.jpg";
@@ -210,14 +264,16 @@ export default {
   name: "Crm",
   components: {
     MiniGradientLineChart,
-    PlaceHolderCard,
+    // PlaceHolderCard,
     BackgroundBlogCard,
     CategoriesList,
     MessageCard,
+    AnnouncementCard,
     // Calendar,
     RankingListCard,
     AppFooter,
     DefaultDoughnutChart,
+    RevenueChartCard
   },
   data() {
     return {

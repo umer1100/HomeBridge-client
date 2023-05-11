@@ -56,12 +56,11 @@
         <ul class="navbar-nav justify-content-end">
           <li class="nav-item d-flex align-items-center">
             <router-link
-              :to="{ name: 'Signin Basic' }"
+              :to="{ name: 'Profile Overview' }"
               class="px-0 nav-link font-weight-bold"
               :class="textWhite ? textWhite : 'text-body'"
-              target="_blank"
             >
-              <i class="fa fa-user" :class="isRTL ? 'ms-sm-2' : 'me-sm-1'"></i>
+              <i :class="isRTL ? 'ms-sm-2' : 'me-sm-1'"></i>
               <span v-if="isRTL" class="d-sm-inline d-none">يسجل دخول</span>
               <span v-else class="d-sm-inline d-none"> Marcus Goodwin | Employer | FiscalNote</span>
             </router-link>
