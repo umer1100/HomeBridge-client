@@ -60,7 +60,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: "Earnings Categories",
+      default: "Program Outcomes",
     },
     items: {
       type: Array,

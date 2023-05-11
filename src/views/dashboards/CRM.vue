@@ -120,7 +120,7 @@
                     date: '2h ago',
                   }"
                   :badge="{ color: 'success', label: 'Recommendation' }"
-                  :value="{ currency: '$', amount: '500', method: 'month' }"
+                  :value="{ currency: '$', amount: '1,000', method: 'month' }"
                   :action="{ route: 'javascript:;', label: 'Modify' }"
                 />
               </div>
@@ -130,8 +130,8 @@
             <div class="col-lg-12">
               <background-blog-card
                 :image="backgroundImage"
-                title="Tips & Tricks"
-                description="Driving positive business outcomes through creating data-driven employee homeownership programs is your key to a happier and healthier team."
+                title="Your Unique Ownerific Benefit"
+                description="Your employees qualify for a 2% discount on any home purchased through the Ownerific Brokerage Program. That amount is broken into monthly credit installments deposited into their Ownerific Wallets, based on the length of their Home Savings Timeline."
                 :action="{
                   route: '/',
                   label: 'Learn more',
@@ -146,20 +146,20 @@
                 :items="[
                   {
                     icon: { component: faRocket, background: 'dark' },
-                    title: 'Employer Contributions',
-                    description: '$250,000 contributed from <strong>FiscalNote</strong>',
+                    title: 'Homes Purchased | Year-to-Date',
+                    description: '<strong>13 Homes</strong> | $550,000 worth of <strong>free money</strong>!',
                   },
                   {
                     icon: {
                       component: faScrewdriverWrench,
                       background: 'dark',
                     },
-                    title: 'Platform Contributions',
-                    description: '$130,000 contributed from <strong>Ownerific</strong>',
+                    title: 'Homes Purchased | Projected | Next 12 Months',
+                    description: '<strong>31 Homes</strong> | $1,550,000 worth of <strong>free money</strong>!',
                   },
                   {
                     icon: { component: faCube, background: 'dark' },
-                    title: 'Incentive Bonuses',
+                    title: 'Goals Achieved',
                     description: '$93,000 contributed from <strong>Ownerific</strong>',
                   },
                 ]"

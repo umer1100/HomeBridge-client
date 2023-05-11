@@ -7,65 +7,29 @@
       <li class="nav-item">
         <sidenav-collapse
           collapse-ref="dashboardsExamples"
-          nav-text="Dashboards"
+          nav-text="Dashboard"
           :class="getRoute() === 'dashboards' ? 'active' : ''"
         >
           <template #icon>
             <Shop />
           </template>
           <template #list>
-            <ul class="nav ms-4 ps-3">
-              <!-- nav links -->
-              <sidenav-item
-                :to="{ name: 'Default' }"
-                mini-icon="D"
-                text="Default"
-              />
-              <sidenav-item
-                :to="{ name: 'Automotive' }"
-                mini-icon="A"
-                text="Automotive"
-              />
-              <sidenav-item
-                :to="{ name: 'Smart Home' }"
-                mini-icon="S"
-                text="Smart Home"
-              />
-              <sidenav-collapse-item
-                refer="vrExamples"
-                mini-icon="V"
-                text="Virtual Reality"
-              >
-                <template #nav-child-item>
-                  <sidenav-item
-                    :to="{ name: 'VR Default' }"
-                    mini-icon="V"
-                    text="VR Default"
-                  />
-                  <sidenav-item
-                    :to="{ name: 'VR Info' }"
-                    mini-icon="V"
-                    text="VR Info"
-                  />
-                </template>
-              </sidenav-collapse-item>
-              <sidenav-item :to="{ name: 'CRM' }" mini-icon="C" text="CRM" />
-            </ul>
           </template>
         </sidenav-collapse>
       </li>
       <li class="mt-3 nav-item">
-        <h6
-          class="text-xs ps-4 text-uppercase font-weight-bolder opacity-6"
-          :class="isRTL ? 'me-4' : 'ms-2'"
-        >
-          PAGES
-        </h6>
       </li>
       <li class="nav-item">
+        <hr class="mt-0 horizontal dark" />
+        <h6
+          class="text-xs ps-4 ms-2 text-uppercase font-weight-bolder opacity-6"
+          :class="isRTL ? 'me-4' : 'ms-2'"
+        >
+          Manage
+        </h6>
         <sidenav-collapse
           collapse-ref="pagesExamples"
-          nav-text="Pages"
+          nav-text="People"
           :class="getRoute() === 'pages' ? 'active' : ''"
         >
           <template #icon>
@@ -203,8 +167,122 @@
 
       <li class="nav-item">
         <sidenav-collapse
+          collapse-ref="basicExamples"
+          nav-text="Account"
+          :class="getRoute() === 'basic' ? 'active' : ''"
+        >
+          <template #icon>
+            <Spaceship height="20px" />
+          </template>
+          <template #list>
+            <ul class="nav ms-4 ps-3">
+              <!-- nav links -->
+              <sidenav-collapse-item
+                refer="gettingStartedExample"
+                mini-icon="G"
+                text="Getting Started"
+              >
+                <template #nav-child-item>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      href="https://www.creative-tim.com/learning-lab/bootstrap/quick-start/soft-ui-dashboard/"
+                      target="_blank"
+                    >
+                      <span class="text-xs sidenav-mini-icon">Q</span>
+                      <span class="sidenav-normal">Quick Start</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      href="https://www.creative-tim.com/learning-lab/bootstrap/license/soft-ui-dashboard/"
+                      target="_blank"
+                    >
+                      <span class="text-xs sidenav-mini-icon">L</span>
+                      <span class="sidenav-normal">License</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      href="https://www.creative-tim.com/learning-lab/bootstrap/overview/soft-ui-dashboard/"
+                      target="_blank"
+                    >
+                      <span class="text-xs sidenav-mini-icon">C</span>
+                      <span class="sidenav-normal">Contents</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      href="https://www.creative-tim.com/learning-lab/bootstrap/build-tools/soft-ui-dashboard/"
+                      target="_blank"
+                    >
+                      <span class="text-xs sidenav-mini-icon">B</span>
+                      <span class="sidenav-normal">Build Tools</span>
+                    </a>
+                  </li>
+                </template>
+              </sidenav-collapse-item>
+
+              <sidenav-collapse-item
+                refer="foundationExample"
+                mini-icon="F"
+                text="Foundation"
+              >
+                <template #nav-child-item>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      href="https://www.creative-tim.com/learning-lab/bootstrap/colors/soft-ui-dashboard/"
+                      target="_blank"
+                    >
+                      <span class="text-xs sidenav-mini-icon">C</span>
+                      <span class="sidenav-normal">Colors</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      href="https://www.creative-tim.com/learning-lab/bootstrap/grid/soft-ui-dashboard/"
+                      target="_blank"
+                    >
+                      <span class="text-xs sidenav-mini-icon">G</span>
+                      <span class="sidenav-normal">Grid</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      href="https://www.creative-tim.com/learning-lab/bootstrap/typography/soft-ui-dashboard/"
+                      target="_blank"
+                    >
+                      <span class="text-xs sidenav-mini-icon">T</span>
+                      <span class="sidenav-normal">Typography</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      href="https://www.creative-tim.com/learning-lab/bootstrap/icons/soft-ui-dashboard/"
+                      target="_blank"
+                    >
+                      <span class="text-xs sidenav-mini-icon">I</span>
+                      <span class="sidenav-normal">Icons</span>
+                    </a>
+                  </li>
+                </template>
+              </sidenav-collapse-item>
+            </ul>
+          </template>
+        </sidenav-collapse>
+      </li>
+
+      <li class="nav-item">
+        <sidenav-collapse
           collapse-ref="applicationsExamples"
-          nav-text="Applications"
+          nav-text="Program"
           :class="getRoute() === 'applications' ? 'active' : ''"
         >
           <template #icon>
@@ -247,7 +325,7 @@
       <li class="nav-item">
         <sidenav-collapse
           collapse-ref="ecommerceExamples"
-          nav-text="Ecommerce"
+          nav-text="Brokerage"
           :class="getRoute() === 'ecommerce' ? 'active' : ''"
         >
           <template #icon>
@@ -322,7 +400,7 @@
       <li class="nav-item">
         <sidenav-collapse
           collapse-ref="authExamples"
-          nav-text="Authentication"
+          nav-text="Integrations"
           :class="getRoute() === 'authentication' ? 'active' : ''"
         >
           <template #icon>
@@ -479,126 +557,13 @@
           class="text-xs ps-4 ms-2 text-uppercase font-weight-bolder opacity-6"
           :class="isRTL ? 'me-4' : 'ms-2'"
         >
-          DOCS
+          Measure
         </h6>
       </li>
       <li class="nav-item">
         <sidenav-collapse
-          collapse-ref="basicExamples"
-          nav-text="Basic"
-          :class="getRoute() === 'basic' ? 'active' : ''"
-        >
-          <template #icon>
-            <Spaceship height="20px" />
-          </template>
-          <template #list>
-            <ul class="nav ms-4 ps-3">
-              <!-- nav links -->
-              <sidenav-collapse-item
-                refer="gettingStartedExample"
-                mini-icon="G"
-                text="Getting Started"
-              >
-                <template #nav-child-item>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      href="https://www.creative-tim.com/learning-lab/bootstrap/quick-start/soft-ui-dashboard/"
-                      target="_blank"
-                    >
-                      <span class="text-xs sidenav-mini-icon">Q</span>
-                      <span class="sidenav-normal">Quick Start</span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      href="https://www.creative-tim.com/learning-lab/bootstrap/license/soft-ui-dashboard/"
-                      target="_blank"
-                    >
-                      <span class="text-xs sidenav-mini-icon">L</span>
-                      <span class="sidenav-normal">License</span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      href="https://www.creative-tim.com/learning-lab/bootstrap/overview/soft-ui-dashboard/"
-                      target="_blank"
-                    >
-                      <span class="text-xs sidenav-mini-icon">C</span>
-                      <span class="sidenav-normal">Contents</span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      href="https://www.creative-tim.com/learning-lab/bootstrap/build-tools/soft-ui-dashboard/"
-                      target="_blank"
-                    >
-                      <span class="text-xs sidenav-mini-icon">B</span>
-                      <span class="sidenav-normal">Build Tools</span>
-                    </a>
-                  </li>
-                </template>
-              </sidenav-collapse-item>
-
-              <sidenav-collapse-item
-                refer="foundationExample"
-                mini-icon="F"
-                text="Foundation"
-              >
-                <template #nav-child-item>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      href="https://www.creative-tim.com/learning-lab/bootstrap/colors/soft-ui-dashboard/"
-                      target="_blank"
-                    >
-                      <span class="text-xs sidenav-mini-icon">C</span>
-                      <span class="sidenav-normal">Colors</span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      href="https://www.creative-tim.com/learning-lab/bootstrap/grid/soft-ui-dashboard/"
-                      target="_blank"
-                    >
-                      <span class="text-xs sidenav-mini-icon">G</span>
-                      <span class="sidenav-normal">Grid</span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      href="https://www.creative-tim.com/learning-lab/bootstrap/typography/soft-ui-dashboard/"
-                      target="_blank"
-                    >
-                      <span class="text-xs sidenav-mini-icon">T</span>
-                      <span class="sidenav-normal">Typography</span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      href="https://www.creative-tim.com/learning-lab/bootstrap/icons/soft-ui-dashboard/"
-                      target="_blank"
-                    >
-                      <span class="text-xs sidenav-mini-icon">I</span>
-                      <span class="sidenav-normal">Icons</span>
-                    </a>
-                  </li>
-                </template>
-              </sidenav-collapse-item>
-            </ul>
-          </template>
-        </sidenav-collapse>
-      </li>
-      <li class="nav-item">
-        <sidenav-collapse
           collapse-ref="componentsExamples"
-          nav-text="Components"
+          nav-text="Analytics"
           :class="getRoute() === 'components' ? 'active' : ''"
         >
           <template #icon>
@@ -783,7 +748,7 @@
       </li>
       <li class="nav-item">
         <sidenav-collapse
-          nav-text="Changelog"
+          nav-text="OwlAI (Beta)"
           :collapse="false"
           url="#"
           :aria-controls="''"
