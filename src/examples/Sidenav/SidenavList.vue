@@ -35,133 +35,6 @@
           <template #icon>
             <Office />
           </template>
-          <template #list>
-            <ul class="nav ms-4 ps-3">
-              <!-- nav links -->
-              <sidenav-collapse-item
-                refer="profileExample"
-                mini-icon="P"
-                text="Profile"
-              >
-                <template #nav-child-item>
-                  <sidenav-item
-                    :to="{ name: 'Profile Overview' }"
-                    mini-icon="P"
-                    text="Profile Overview"
-                  />
-                  <sidenav-item
-                    :to="{ name: 'Teams' }"
-                    mini-icon="T"
-                    text="Teams"
-                  />
-                  <sidenav-item
-                    :to="{ name: 'All Projects' }"
-                    mini-icon="A"
-                    text="All Projects"
-                  />
-                </template>
-              </sidenav-collapse-item>
-
-              <sidenav-collapse-item
-                refer="usersExample"
-                mini-icon="U"
-                text="Users"
-              >
-                <template #nav-child-item>
-                  <sidenav-item
-                    :to="{ name: 'Reports' }"
-                    mini-icon="R"
-                    text="Reports"
-                  />
-                  <sidenav-item
-                    :to="{ name: 'New User' }"
-                    mini-icon="N"
-                    text="New User"
-                  />
-                </template>
-              </sidenav-collapse-item>
-
-              <sidenav-collapse-item
-                refer="accountExample"
-                mini-icon="A"
-                text="Account"
-              >
-                <template #nav-child-item>
-                  <sidenav-item
-                    :to="{ name: 'Settings' }"
-                    mini-icon="S"
-                    text="Settings"
-                  />
-                  <sidenav-item
-                    :to="{ name: 'Billing' }"
-                    mini-icon="B"
-                    text="Billing"
-                  />
-                  <sidenav-item
-                    :to="{ name: 'Invoice' }"
-                    mini-icon="I"
-                    text="Invoice"
-                  />
-                  <sidenav-item
-                    :to="{ name: 'Security' }"
-                    mini-icon="S"
-                    text="Security"
-                  />
-                </template>
-              </sidenav-collapse-item>
-
-              <sidenav-collapse-item
-                refer="projectsExample"
-                mini-icon="P"
-                text="Projects"
-              >
-                <template #nav-child-item>
-                  <sidenav-item
-                    :to="{ name: 'General' }"
-                    mini-icon="G"
-                    text="General"
-                  />
-                  <sidenav-item
-                    :to="{ name: 'Timeline' }"
-                    mini-icon="T"
-                    text="Timeline"
-                  />
-                  <sidenav-item
-                    :to="{ name: 'New Project' }"
-                    mini-icon="N"
-                    text="New Project"
-                  />
-                </template>
-              </sidenav-collapse-item>
-
-              <sidenav-item
-                :to="{ name: 'Pricing Page' }"
-                mini-icon="P"
-                text="Pricing Page"
-              />
-              <sidenav-item :to="{ name: 'RTL' }" mini-icon="R" text="RTL" />
-              <sidenav-item
-                :to="{ name: 'Widgets' }"
-                mini-icon="W"
-                text="Widgets"
-              />
-              <sidenav-item
-                :to="{ name: 'Charts' }"
-                mini-icon="C"
-                text="Charts"
-              />
-              <sidenav-item
-                :to="{ name: 'Sweet Alerts' }"
-                mini-icon="S"
-                text="Sweet Alerts"
-              />
-              <sidenav-item
-                :to="{ name: 'Notifications' }"
-                mini-icon="N"
-                text="Notifications"
-              />
-            </ul>
-          </template>
         </sidenav-collapse>
       </li>
 
@@ -173,108 +46,6 @@
         >
           <template #icon>
             <Spaceship height="20px" />
-          </template>
-          <template #list>
-            <ul class="nav ms-4 ps-3">
-              <!-- nav links -->
-              <sidenav-collapse-item
-                refer="gettingStartedExample"
-                mini-icon="G"
-                text="Getting Started"
-              >
-                <template #nav-child-item>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      href="https://www.creative-tim.com/learning-lab/bootstrap/quick-start/soft-ui-dashboard/"
-                      target="_blank"
-                    >
-                      <span class="text-xs sidenav-mini-icon">Q</span>
-                      <span class="sidenav-normal">Quick Start</span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      href="https://www.creative-tim.com/learning-lab/bootstrap/license/soft-ui-dashboard/"
-                      target="_blank"
-                    >
-                      <span class="text-xs sidenav-mini-icon">L</span>
-                      <span class="sidenav-normal">License</span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      href="https://www.creative-tim.com/learning-lab/bootstrap/overview/soft-ui-dashboard/"
-                      target="_blank"
-                    >
-                      <span class="text-xs sidenav-mini-icon">C</span>
-                      <span class="sidenav-normal">Contents</span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      href="https://www.creative-tim.com/learning-lab/bootstrap/build-tools/soft-ui-dashboard/"
-                      target="_blank"
-                    >
-                      <span class="text-xs sidenav-mini-icon">B</span>
-                      <span class="sidenav-normal">Build Tools</span>
-                    </a>
-                  </li>
-                </template>
-              </sidenav-collapse-item>
-
-              <sidenav-collapse-item
-                refer="foundationExample"
-                mini-icon="F"
-                text="Foundation"
-              >
-                <template #nav-child-item>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      href="https://www.creative-tim.com/learning-lab/bootstrap/colors/soft-ui-dashboard/"
-                      target="_blank"
-                    >
-                      <span class="text-xs sidenav-mini-icon">C</span>
-                      <span class="sidenav-normal">Colors</span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      href="https://www.creative-tim.com/learning-lab/bootstrap/grid/soft-ui-dashboard/"
-                      target="_blank"
-                    >
-                      <span class="text-xs sidenav-mini-icon">G</span>
-                      <span class="sidenav-normal">Grid</span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      href="https://www.creative-tim.com/learning-lab/bootstrap/typography/soft-ui-dashboard/"
-                      target="_blank"
-                    >
-                      <span class="text-xs sidenav-mini-icon">T</span>
-                      <span class="sidenav-normal">Typography</span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      href="https://www.creative-tim.com/learning-lab/bootstrap/icons/soft-ui-dashboard/"
-                      target="_blank"
-                    >
-                      <span class="text-xs sidenav-mini-icon">I</span>
-                      <span class="sidenav-normal">Icons</span>
-                    </a>
-                  </li>
-                </template>
-              </sidenav-collapse-item>
-            </ul>
           </template>
         </sidenav-collapse>
       </li>
@@ -288,37 +59,6 @@
           <template #icon>
             <Settings />
           </template>
-          <template #list>
-            <ul class="nav ms-4 ps-3">
-              <!-- nav links -->
-
-              <sidenav-item
-                :to="{ name: 'Kanban' }"
-                mini-icon="K"
-                text="Kanban"
-              />
-              <sidenav-item
-                :to="{ name: 'Wizard' }"
-                mini-icon="W"
-                text="Wizard"
-              />
-              <sidenav-item
-                :to="{ name: 'Data Tables' }"
-                mini-icon="D"
-                text="Data Tables"
-              />
-              <sidenav-item
-                :to="{ name: 'Calendar' }"
-                mini-icon="C"
-                text="Calendar"
-              />
-              <sidenav-item
-                :to="{ name: 'Analytics' }"
-                mini-icon="A"
-                text="Analytics"
-              />
-            </ul>
-          </template>
         </sidenav-collapse>
       </li>
 
@@ -330,69 +70,6 @@
         >
           <template #icon>
             <Basket />
-          </template>
-          <template #list>
-            <ul class="nav ms-4 ps-3">
-              <!-- nav links -->
-              <sidenav-item
-                :to="{ name: 'Overview' }"
-                mini-icon="O"
-                text="Overview"
-              />
-
-              <sidenav-collapse-item
-                refer="productsExample"
-                mini-icon="P"
-                text="Products"
-              >
-                <template #nav-child-item>
-                  <sidenav-item
-                    :to="{ name: 'New Product' }"
-                    mini-icon="N"
-                    text="New Product"
-                  />
-                  <sidenav-item
-                    :to="{ name: 'Edit Product' }"
-                    mini-icon="E"
-                    text="Edit Product"
-                  />
-                  <sidenav-item
-                    :to="{ name: 'Product Page' }"
-                    mini-icon="P"
-                    text="Product page"
-                  />
-                  <sidenav-item
-                    :to="{ name: 'Products List' }"
-                    mini-icon="P"
-                    text="Products List"
-                  />
-                </template>
-              </sidenav-collapse-item>
-
-              <sidenav-collapse-item
-                refer="ordersExample"
-                mini-icon="O"
-                text="Orders"
-              >
-                <template #nav-child-item>
-                  <sidenav-item
-                    :to="{ name: 'Order List' }"
-                    mini-icon="O"
-                    text="Order List"
-                  />
-                  <sidenav-item
-                    :to="{ name: 'Order Details' }"
-                    mini-icon="O"
-                    text="Order Details"
-                  />
-                </template>
-              </sidenav-collapse-item>
-              <sidenav-item
-                :to="{ name: 'Referral' }"
-                mini-icon="R"
-                text="Referral"
-              />
-            </ul>
           </template>
         </sidenav-collapse>
       </li>
@@ -764,8 +441,8 @@
   <div class="pt-3 mx-3 mt-3 sidenav-footer">
     <sidenav-card
       :class="cardBg"
-      text-primary="Need Help?"
-      text-secondary="Please check our Help Center"
+      text-primary="Have a Question?"
+      text-secondary="Check out our Help Center"
       route="https://www.ownerific.com/help/"
       label="Help Center"
       icon="ni ni-support-16"
