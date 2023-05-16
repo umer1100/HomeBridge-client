@@ -44,6 +44,7 @@ import ResetCover from "../views/auth/reset/Cover.vue";
 import ResetIllustration from "../views/auth/reset/Illustration.vue";
 import VerificationBasic from "../views/auth/verification/Basic.vue";
 import VerificationCover from "../views/auth/verification/Cover.vue";
+import NewPassword from "../views/auth/newPassword/Basic.vue"
 import VerificationIllustration from "../views/auth/verification/Illustration.vue";
 import SignupBasic from "../views/auth/signup/Basic.vue";
 import SignupCover from "../views/auth/signup/Cover.vue";
@@ -274,6 +275,11 @@ const routes = [
     path: "/authentication/reset/illustration",
     name: "Reset Illustration",
     component: ResetIllustration,
+  },
+  {
+    path: "/authentication/new-password",
+    name: "New Password",
+    component: NewPassword,
   },
   {
     path: "/authentication/lock/basic",

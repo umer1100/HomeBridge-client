@@ -13,7 +13,8 @@
       />
     </div>
     <hr class="horizontal dark m-0" :class="getHrColor(color)" />
-    <div class="toast-body" :class="getTextColor(color)">{{ description }}</div>
+    <div v-if="isRawHtml" class="toast-body" :class="getTextColor(color)" v-html="description"></div>
+    <div v-else class="toast-body" :class="getTextColor(color)">{{ description }}</div>
   </div>
 </template>
 
@@ -32,6 +33,10 @@ export default {
     description: {
       type: String,
       default: "",
+    },
+    isRawHtml: {
+      type: Boolean,
+      default: false
     },
     icon: {
       type: [String, Object],
