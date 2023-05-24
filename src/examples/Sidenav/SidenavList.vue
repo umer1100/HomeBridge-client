@@ -6,19 +6,20 @@
     <ul class="navbar-nav">
       <li class="nav-item">
         <sidenav-collapse
-          collapse-ref="dashboardsExamples"
+          collapse-ref="Dashboard"
           nav-text="Dashboard"
+          :collapse="false"
           :class="getRoute() === 'dashboards' ? 'active' : ''"
         >
           <template #icon>
             <Shop />
           </template>
-          <template #list>
-          </template>
         </sidenav-collapse>
       </li>
+
       <li class="mt-3 nav-item">
       </li>
+
       <li class="nav-item">
         <hr class="mt-0 horizontal dark" />
         <h6
@@ -28,8 +29,9 @@
           Manage
         </h6>
         <sidenav-collapse
-          collapse-ref="pagesExamples"
+          collapse-ref="People"
           nav-text="People"
+          :collapse="false"
           :class="getRoute() === 'pages' ? 'active' : ''"
         >
           <template #icon>
@@ -38,7 +40,7 @@
         </sidenav-collapse>
       </li>
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <sidenav-collapse
           collapse-ref="basicExamples"
           nav-text="Account"
@@ -48,12 +50,13 @@
             <Spaceship height="20px" />
           </template>
         </sidenav-collapse>
-      </li>
+      </li> -->
 
       <li class="nav-item">
         <sidenav-collapse
-          collapse-ref="applicationsExamples"
+          collapse-ref="Program"
           nav-text="Program"
+          :collapse="false"
           :class="getRoute() === 'applications' ? 'active' : ''"
         >
           <template #icon>
@@ -64,8 +67,9 @@
 
       <li class="nav-item">
         <sidenav-collapse
-          collapse-ref="ecommerceExamples"
+          collapse-ref="Brokerage"
           nav-text="Brokerage"
+          :collapse="false"
           :class="getRoute() === 'ecommerce' ? 'active' : ''"
         >
           <template #icon>
@@ -76,16 +80,17 @@
 
       <li class="nav-item">
         <sidenav-collapse
-          collapse-ref="authExamples"
+          collapse-ref="Integrations"
           nav-text="Integrations"
+          :collapse="false"
           :class="getRoute() === 'authentication' ? 'active' : ''"
         >
           <template #icon>
             <Document />
           </template>
-          <template #list>
+          <!-- <template #list>
             <ul class="nav ms-4 ps-3">
-              <!-- nav links -->
+              nav links
               <sidenav-collapse-item
                 refer="signinExample"
                 mini-icon="S"
@@ -97,7 +102,7 @@
                     mini-icon="B"
                     text="Basic"
                   />
-                  <sidenav-item
+                   <sidenav-item
                     :to="{ name: 'Signin Cover' }"
                     mini-icon="C"
                     text="Cover"
@@ -225,10 +230,11 @@
                 </template>
               </sidenav-collapse-item>
             </ul>
-          </template>
+          </template> -->
         </sidenav-collapse>
       </li>
-      <li class="mt-3 nav-item">
+
+      <!-- <li class="mt-3 nav-item">
         <hr class="mt-0 horizontal dark" />
         <h6
           class="text-xs ps-4 ms-2 text-uppercase font-weight-bolder opacity-6"
@@ -236,8 +242,9 @@
         >
           Measure
         </h6>
-      </li>
-      <li class="nav-item">
+      </li> -->
+
+      <!-- <li class="nav-item">
         <sidenav-collapse
           collapse-ref="componentsExamples"
           nav-text="Analytics"
@@ -248,7 +255,6 @@
           </template>
           <template #list>
             <ul class="nav ms-4 ps-3">
-              <!-- nav links -->
               <li class="nav-item">
                 <a
                   class="nav-link"
@@ -422,8 +428,9 @@
             </ul>
           </template>
         </sidenav-collapse>
-      </li>
-      <li class="nav-item">
+      </li> -->
+
+      <!-- <li class="nav-item">
         <sidenav-collapse
           nav-text="OwlAI (Beta)"
           :collapse="false"
@@ -435,7 +442,7 @@
             <CreditCard />
           </template>
         </sidenav-collapse>
-      </li>
+      </li> -->
     </ul>
   </div>
   <div class="pt-3 mx-3 mt-3 sidenav-footer">
@@ -450,35 +457,31 @@
   </div>
 </template>
 <script>
-import SidenavItem from "./SidenavItem.vue";
 import SidenavCollapse from "./SidenavCollapse.vue";
 import SidenavCard from "./SidenavCard.vue";
-import SidenavCollapseItem from "./SidenavCollapseItem.vue";
 import Settings from "../../components/Icon/Settings.vue";
 import Basket from "../../components/Icon/Basket.vue";
-import Box3d from "../../components/Icon/Box3d.vue";
+// import Box3d from "../../components/Icon/Box3d.vue";
 import Shop from "../../components/Icon/Shop.vue";
 import Office from "../../components/Icon/Office.vue";
 import Document from "../../components/Icon/Document.vue";
-import Spaceship from "../../components/Icon/Spaceship.vue";
-import CreditCard from "../../components/Icon/CreditCard.vue";
+// import Spaceship from "../../components/Icon/Spaceship.vue";
+// import CreditCard from "../../components/Icon/CreditCard.vue";
 
 import { mapState } from "vuex";
 export default {
   name: "SidenavList",
   components: {
-    SidenavItem,
     SidenavCollapse,
     SidenavCard,
-    SidenavCollapseItem,
     Settings,
     Basket,
-    Box3d,
+    // Box3d,
     Shop,
     Office,
     Document,
-    Spaceship,
-    CreditCard,
+    // Spaceship,
+    // CreditCard,
   },
   props: {
     cardBg: {

@@ -128,50 +128,42 @@
             </div>
           </div> -->
           <div class="card-body">
-            <form role="form" class="text-start">
+            <form role="form" class="text-start" @submit="handleFormSubmit">
               <div class="mb-3">
-                <soft-input
-                  id="email"
+                <input
+                  v-model="emailAddress"
                   type="email"
-                  placeholder="Email"
-                  name="email"
+                  class="form-control"
+                  :name="emailAddress"
+                  placeholder="Email Address"
+                  :isRequired="true"
                 />
               </div>
               <div class="mb-3">
-                <soft-input
-                  id="password"
-                  name="password"
+                <input
+                  v-model="password"
                   type="password"
+                  class="form-control"
+                  :name="password"
                   placeholder="Password"
+                  :isRequired="true"
                 />
               </div>
-              <soft-switch id="rememberMe" name="rememberMe">
-                Remember me
-              </soft-switch>
-              <div class="text-center">
-                <soft-button
-                  class="my-4 mb-2"
-                  variant="gradient"
-                  color="info"
-                  full-width
-                  >Sign in
-                </soft-button>
-              </div>
-              <div class="mb-2 text-center position-relative">
-                <p
-                  class="px-3 mb-2 text-sm bg-white font-weight-bold text-secondary text-border d-inline z-index-2"
+              <div class="py-3">
+                <router-link
+                  to="/authentication/reset"
+                  class="border-radius-md underline"
                 >
-                  or
-                </p>
+                  Forgot your password ?
+                </router-link>
               </div>
               <div class="text-center">
-                <soft-button
-                  class="mt-2 mb-4"
-                  variant="gradient"
-                  color="dark"
-                  full-width
-                  >Sign up
-                </soft-button>
+                <button
+                  type="submit"
+                  class="btn mb-0 bg-gradient-info btn-md w-100"
+                >
+                  Sign in
+                </button>
               </div>
             </form>
           </div>
@@ -179,37 +171,92 @@
       </div>
     </div>
   </div>
+  <div class="position-fixed top-1 end-1 z-index-2">
+    <soft-snackbar
+      v-if="snackbar"
+      :title="snackbarTitle"
+      :description="snackbarDescription"
+      color="white"
+      :close-handler="() => snackbar = null"
+    />
+  </div>
   <app-footer />
 </template>
 
 <script>
-import Navbar from "@/examples/PageLayout/Navbar.vue";
-import AppFooter from "@/examples/PageLayout/Footer.vue";
-import SoftInput from "@/components/SoftInput.vue";
-import SoftSwitch from "@/components/SoftSwitch.vue";
-import SoftButton from "@/components/SoftButton.vue";
+import { defineComponent, onBeforeMount, onBeforeUnmount, ref } from "vue"
+import { useStore } from "vuex"
+import Navbar from "@/examples/PageLayout/Navbar.vue"
+import AppFooter from "@/examples/PageLayout/Footer.vue"
+import SoftSnackbar from "@/components/SoftSnackbar.vue"
+import { login } from "../../../api/user/login"
+import { useUserStore } from "../../../store/user"
+import { useOrganizationStore } from "../../../store/organization"
+import { persistAuthenticationDetails } from "../../../utils/localStorage"
+import { useRouter } from "vue-router"
 
-import { mapMutations } from "vuex";
-export default {
+export default defineComponent({
   name: "SigninBasic",
   components: {
     Navbar,
     AppFooter,
-    SoftInput,
-    SoftSwitch,
-    SoftButton,
+    SoftSnackbar,
   },
+  setup() {
+    const globalStore = useStore()
+    const userStore = useUserStore()
+    const organizationStore = useOrganizationStore()
+    const router = useRouter()
 
-  created() {
-    this.toggleEveryDisplay();
-    this.toggleHideConfig();
-  },
-  beforeUnmount() {
-    this.toggleEveryDisplay();
-    this.toggleHideConfig();
-  },
-  methods: {
-    ...mapMutations(["toggleEveryDisplay", "toggleHideConfig"]),
-  },
-};
+    const emailAddress = ref("")
+    const password = ref("")
+    const snackbar = ref(false)
+    const snackbarTitle = ref("")
+    const snackbarDescription = ref("")
+
+    const handleFormSubmit = async (event) => {
+      event.preventDefault()
+      const response = await login(emailAddress.value, password.value)
+      const { success, token, user } = response
+      if (success) {
+        const { organization } = user
+
+        userStore.userJWT = token
+        userStore.data = user
+        organizationStore.data = organization
+
+        persistAuthenticationDetails(token)
+        router.push('/')
+      } else {
+        snackbar.value = true
+        snackbarTitle.value = 'Something Went Wrong'
+        snackbarDescription.value = response.message
+      }
+    }
+
+    onBeforeMount(()=> {
+      globalStore.commit("hideEveryDisplay")
+    })
+
+    onBeforeUnmount(()=> {
+      globalStore.state.showNavbar = true
+      globalStore.state.showSidenav = true
+    })
+
+    return{
+      emailAddress,
+      password,
+      snackbar,
+      snackbarTitle,
+      snackbarDescription,
+      handleFormSubmit
+    }
+  }
+})
 </script>
+
+<style>
+ .underline {
+  text-decoration: underline;
+ }
+</style>

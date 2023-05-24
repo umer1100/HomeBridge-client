@@ -8,8 +8,8 @@
   >
     <div class="px-3 py-1 container-fluid">
       <breadcrumbs
-        :current-directory="currentDirectory"
-        :current-page="currentRouteName"
+        :current-directory="currentDirectory()"
+        :current-page="currentRouteName()"
         :text-white="textWhite"
       />
       <div
@@ -62,7 +62,7 @@
             >
               <i :class="isRTL ? 'ms-sm-2' : 'me-sm-1'"></i>
               <span v-if="isRTL" class="d-sm-inline d-none">يسجل دخول</span>
-              <span v-else class="d-sm-inline d-none"> Marcus Goodwin | Employer | FiscalNote</span>
+              <span v-else class="d-sm-inline d-none"> {{ firstName }} {{ lastName }} | {{ roleType }} | {{ organizationName }}</span>
             </router-link>
           </li>
           <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -220,10 +220,14 @@
   </nav>
 </template>
 <script>
-import Breadcrumbs from "../Breadcrumbs.vue";
-import { mapMutations, mapActions, mapState } from "vuex";
+import { defineComponent, onMounted, ref, watch } from "vue"
+import { useStore } from "vuex"
+import { useRoute } from "vue-router"
+import Breadcrumbs from "../Breadcrumbs.vue"
+import { useUserStore } from "../../store/user"
+import { useOrganizationStore } from "../../store/organization"
 
-export default {
+export default defineComponent({
   name: "Navbar",
   components: {
     Breadcrumbs,
@@ -238,32 +242,60 @@ export default {
       default: "",
     },
   },
-  data() {
-    return {
-      showMenu: false,
-    };
-  },
-  computed: {
-    ...mapState(["isRTL"]),
-    currentRouteName() {
-      return this.$route.name;
-    },
-    currentDirectory() {
-      let dir = this.$route.path.split("/")[1];
-      return dir.charAt(0).toUpperCase() + dir.slice(1);
-    },
-  },
-  created() {
-    this.minNav;
-  },
-  methods: {
-    ...mapMutations(["navbarMinimize", "toggleConfigurator"]),
-    ...mapActions(["toggleSidebarColor"]),
+  setup (props) {
+    const globalStore = useStore()
+    let route = useRoute()
+    let userStore = useUserStore()
+    let organizationStore = useOrganizationStore()
+    
+    const minNav = ref(props.minNav)
+    let isRTL = ref(globalStore?.state?.isRTL)
+    let firstName = ref(userStore?.data?.firstName)
+    let lastName = ref(userStore.data?.lastName)
+    let roleType = ref(userStore.data?.roleType)
+    let organizationName = ref(organizationStore?.data?.name)
 
-    toggleSidebar() {
-      this.toggleSidebarColor("bg-white");
-      this.navbarMinimize();
-    },
+    onMounted(()=> {
+      minNav.value()
+    })
+
+    const currentRouteName = () => {
+      return route.name
+    }
+
+    const currentDirectory = () => {
+      let dir = route.path.split("/")[1]
+      return dir.charAt(0).toUpperCase() + dir.slice(1)
+    }
+
+    const toggleConfigurator = () => {
+      globalStore.state.showConfig = !globalStore.state.showConfig
+    }
+
+    const toggleSidebar = () => {
+      globalStore.dispatch("toggleSidebarColor", "bg-white")
+      globalStore.commit("navbarMinimize")
+    }
+
+    watch(() => userStore.data?.firstName, () => {
+      firstName.value = userStore.data?.firstName
+      lastName.value = userStore.data?.lastName
+      roleType.value = userStore.data?.roleType
+      organizationName.value = organizationStore?.data?.name
+    })
+
+    return {
+      isRTL,
+      showMenu: false,
+      firstName,
+      lastName,
+      roleType,
+      organizationName,
+      currentRouteName,
+      currentDirectory,
+      toggleConfigurator,
+      toggleSidebar
+    }
   },
-};
+})
 </script>

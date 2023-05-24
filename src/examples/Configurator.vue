@@ -10,8 +10,8 @@
     <div class="shadow-lg card blur">
       <div class="pt-3 pb-0 bg-transparent card-header">
         <div class="float-start">
-          <h5 class="mt-3 mb-0">Marcus Goodwin</h5>
-          <p>Employer | FiscalNote</p>
+          <h5 class="mt-3 mb-0">{{ firstName }} {{ lastName }}</h5>
+          <p>{{ roleType }} | {{ organizationName }}</p>
         </div>
         <div class="mt-4 float-end" @click="toggle">
           <button class="p-0 btn btn-link text-dark fixed-plugin-close-button">
@@ -20,23 +20,21 @@
         </div>
         <!-- End Toggle Button -->
       </div>
-      <div class="d-flex pt-0 card-body pb-sm-0">
-          <a
-          id="btn-transparent"  
-          :to="{ name: 'Profile Overview' }"
-            class="px-3 mb-2 btn w-100"
-            target="_blank"
-          >
-            <i aria-hidden="true"></i> My Profile
-          </a>
-          <a
-          id="btn-transparent"  
-          href="https://trustpilot.com/"
-            class="px-3 mb-2 btn w-100 ms-2"
-            target="_blank"
-          >
-            <i aria-hidden="true"></i> Sign Out
-          </a>
+      <div class="d-flex pt-0 card-body pb-sm-0 button-block">
+        <router-link
+        id="btn-transparent"
+        to="/pages/profile/overview"
+        class="px-3 mb-2 btn w-100 h-auto"
+      >
+        My Profile
+      </router-link>
+      <button
+        id="btn-transparent"
+        class="px-3 mb-2 btn w-100 h-auto"
+        @click="onClickLogout"
+      >
+        Sign Out
+      </button>
         </div>
       <hr class="my-1 horizontal dark" />
 
@@ -193,8 +191,13 @@
 </template>
 
 <script>
-import { mapMutations, mapActions, mapState } from "vuex";
-export default {
+import { defineComponent, onMounted, ref, watch } from "vue"
+import { useStore } from "vuex"
+import { logout } from "../utils/logout"
+import router from "../router/index"
+import { useUserStore } from "../store/user"
+import { useOrganizationStore } from "../store/organization"
+export default defineComponent({
   name: "Configurator",
   props: {
     toggle: {
@@ -202,59 +205,97 @@ export default {
       default: null,
     },
   },
-  computed: {
-    ...mapState([
-      "isTransparent",
-      "isNavFixed",
-      "isAbsolute",
-      "isPinned",
-      "isRTL",
-      "absolute",
-      "color",
-    ]),
-    sidenavResponsive() {
-      return this.sidenavTypeOnResize;
-    },
-  },
-  beforeMount() {
-    this.$store.state.isTransparent = "bg-transparent";
-    // Deactivate sidenav type buttons on resize and small screens
-    window.addEventListener("resize", this.sidenavTypeOnResize);
-    window.addEventListener("load", this.sidenavTypeOnResize);
-  },
-  methods: {
-    ...mapMutations(["navbarMinimize", "sidebarType", "navbarFixed"]),
-    ...mapActions(["toggleSidebarColor", "setCardBackground"]),
+  setup() {
+    let globalStore = useStore()
+    const userStore = useUserStore()
+    const organizationStore = useOrganizationStore()
 
-    sidebarColor(color = "success") {
-      document.querySelector("#sidenav-main").setAttribute("data-color", color);
-      let mcolor = `card-background-mask-${color}`;
-      this.setCardBackground(mcolor);
-    },
+    let isTransparent = ref(globalStore.state?.isTransparent)
+    let isNavFixed = ref(globalStore.state?.isNavFixed)
+    let isAbsolute = ref(globalStore.state?.isAbsolute)
+    let isPinned = ref(globalStore.state?.isPinned)
+    let isRTL = ref(globalStore.state?.isRTL)
+    let color = ref(globalStore.state?.color)
+    let firstName = ref(userStore.data?.firstName)
+    let lastName = ref(userStore.data?.lastName)
+    let roleType = ref(userStore.data?.roleType)
+    let organizationName = ref(organizationStore?.data?.name)
 
-    sidebarType(type) {
-      this.toggleSidebarColor(type);
-    },
-
-    setNavbarFixed() {
-      if (!this.isAbsolute) {
-        this.navbarFixed();
-      } else {
-        this.absolute;
-      }
-    },
-
-    sidenavTypeOnResize() {
-      let transparent = document.querySelector("#btn-transparent");
-      let white = document.querySelector("#btn-white");
+    const onClickLogout = () => {
+      logout()
+      router.push("/authentication/signin")
+    }
+    const navbarMinimize = () => {
+      globalStore.commit("navbarMinimize")
+    }
+    const navbarFixed = () => {
+      globalStore.commit("navbarFixed")
+    }
+    const toggleSidebarColor = (color) => {
+      globalStore.dispatch("toggleSidebarColor", color)
+    }
+    const setCardBackground = (background) => {
+      globalStore.dispatch("setCardBackground", background)
+    }
+    const setNavbarFixed = () => {
+      !isAbsolute.value ? navbarFixed() : null
+    }
+    const sidebarType = (type) => {
+      toggleSidebarColor(type)
+    }
+    const sidebarColor = (color = "success") => {
+      document.querySelector("#sidenav-main").setAttribute("data-color", color)
+      let mcolor = `card-background-mask-${color}`
+      setCardBackground(mcolor)
+    }
+    const sidenavTypeOnResize = () => {
+      let transparent = document.querySelector("#btn-transparent")
+      let white = document.querySelector("#btn-white")
       if (window.innerWidth < 1200) {
-        transparent.classList.add("disabled");
-        white.classList.add("disabled");
-      } else {
-        transparent.classList.remove("disabled");
-        white.classList.remove("disabled");
+        transparent.classList.add("disabled")
+        white.classList.add("disabled")
       }
-    },
+      else {
+        transparent.classList.remove("disabled")
+        white.classList.remove("disabled")
+      }
+    }
+
+    watch(() => userStore.data?.firstName, () => {
+      firstName.value = userStore.data?.firstName
+      lastName.value = userStore.data?.lastName
+      roleType.value = userStore.data?.roleType
+      organizationName.value = organizationStore?.data?.name
+    })
+    
+    onMounted(() => {
+      isTransparent.value = "bg-transparent"
+      window.addEventListener("resize", sidenavTypeOnResize)
+      window.addEventListener("load", sidenavTypeOnResize)
+    })
+    
+    return {
+      firstName,
+      lastName,
+      roleType,
+      organizationName,
+      isTransparent,
+      isNavFixed,
+      isPinned,
+      isRTL,
+      color,
+      navbarMinimize,
+      sidebarType,
+      setNavbarFixed,
+      sidebarColor,
+      onClickLogout
+    }
   },
-};
+})
 </script>
+
+<style>
+.button-block {
+  max-height: 50px
+}
+</style>

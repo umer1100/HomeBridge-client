@@ -79,13 +79,13 @@
                       >
                         <span class="ps-3">Default</span>
                       </router-link>
-                      <router-link
+                      <!-- <router-link
                         :to="{ name: 'Automotive' }"
                         class="dropdown-item border-radius-md"
                       >
                         <span class="ps-3">Automotive</span>
-                      </router-link>
-                      <router-link
+                      </router-link> -->
+                      <!-- <router-link
                         :to="{ name: 'Smart Home' }"
                         class="dropdown-item border-radius-md"
                       >
@@ -96,13 +96,13 @@
                         class="dropdown-item border-radius-md"
                       >
                         <span class="ps-3">Virtual Reality</span>
-                      </router-link>
-                      <router-link
+                      </router-link> -->
+                      <!-- <router-link
                         :to="{ name: 'CRM' }"
                         class="dropdown-item border-radius-md"
                       >
                         <span class="ps-3">CRM</span>
-                      </router-link>
+                      </router-link> -->
                       <div
                         class="px-0 mt-3 dropdown-header text-dark font-weight-bolder d-flex align-items-center"
                       >
@@ -115,7 +115,7 @@
                         </div>
                         Users
                       </div>
-                      <router-link
+                      <!-- <router-link
                         :to="{ name: 'Reports' }"
                         class="dropdown-item border-radius-md"
                       >
@@ -126,7 +126,7 @@
                         class="dropdown-item border-radius-md"
                       >
                         <span class="ps-3">New User</span>
-                      </router-link>
+                      </router-link> -->
                       <hr class="vertical dark" />
                     </div>
                     <div class="col-4 position-relative">
@@ -142,13 +142,13 @@
                         </div>
                         Profile
                       </div>
-                      <router-link
+                      <!-- <router-link
                         :to="{ name: 'Overview' }"
                         class="dropdown-item border-radius-md"
                       >
                         <span class="ps-3">Overview</span>
-                      </router-link>
-                      <router-link
+                      </router-link> -->
+                      <!-- <router-link
                         :to="{ name: 'Teams' }"
                         class="dropdown-item border-radius-md"
                       >
@@ -159,7 +159,7 @@
                         class="dropdown-item border-radius-md"
                       >
                         <span class="ps-3">Projects</span>
-                      </router-link>
+                      </router-link> -->
                       <div
                         class="px-0 mt-3 dropdown-header text-dark font-weight-bolder d-flex align-items-center"
                       >
@@ -172,7 +172,7 @@
                         </div>
                         Projects
                       </div>
-                      <router-link
+                      <!-- <router-link
                         :to="{ name: 'General' }"
                         class="dropdown-item border-radius-md"
                       >
@@ -189,7 +189,7 @@
                         class="dropdown-item border-radius-md"
                       >
                         <span class="ps-3">New Project</span>
-                      </router-link>
+                      </router-link> -->
                       <hr class="vertical dark" />
                     </div>
                     <div class="col-4">
@@ -205,7 +205,7 @@
                         </div>
                         Account
                       </div>
-                      <router-link
+                      <!-- <router-link
                         :to="{ name: 'Settings' }"
                         class="dropdown-item border-radius-md"
                       >
@@ -228,7 +228,7 @@
                         class="dropdown-item border-radius-md"
                       >
                         <span class="ps-3">Security</span>
-                      </router-link>
+                      </router-link> -->
                       <div
                         class="px-0 mt-3 dropdown-header text-dark font-weight-bolder d-flex align-items-center"
                       >
@@ -241,7 +241,7 @@
                         </div>
                         Extra
                       </div>
-                      <router-link
+                      <!-- <router-link
                         :to="{ name: 'Pricing Page' }"
                         class="dropdown-item border-radius-md"
                       >
@@ -258,7 +258,7 @@
                         class="dropdown-item border-radius-md"
                       >
                         <span class="ps-3">Widgets</span>
-                      </router-link>
+                      </router-link> -->
                     </div>
                   </div>
                 </div>
@@ -282,7 +282,7 @@
                   class="dropdown-item border-radius-md"
                   >Default</router-link
                 >
-                <router-link
+                <!-- <router-link
                   :to="{ name: 'Automotive' }"
                   class="dropdown-item border-radius-md"
                   >Automotive</router-link
@@ -291,8 +291,8 @@
                   :to="{ name: 'Smart Home' }"
                   class="dropdown-item border-radius-md"
                   >Smart Home</router-link
-                >
-                <router-link
+                > -->
+                <!-- <router-link
                   :to="{ name: 'VR Default' }"
                   class="dropdown-item border-radius-md"
                   >Virtual Reality</router-link
@@ -301,7 +301,7 @@
                   :to="{ name: 'CRM' }"
                   class="dropdown-item border-radius-md"
                   >CRM</router-link
-                >
+                > -->
                 <div
                   class="px-0 mt-3 dropdown-header text-dark font-weight-bolder d-flex align-items-center"
                 >
@@ -314,14 +314,14 @@
                   </div>
                   Users
                 </div>
-                <router-link
+                <!-- <router-link
                   :to="{ name: 'Reports' }"
                   class="dropdown-item border-radius-md"
                   >Reports</router-link
                 >
                 <router-link to="#" class="dropdown-item border-radius-md"
                   >New user</router-link
-                >
+                > -->
                 <div
                   class="px-0 mt-3 dropdown-header text-dark font-weight-bolder d-flex align-items-center"
                 >
@@ -334,19 +334,19 @@
                   </div>
                   Profile
                 </div>
-                <router-link
+                <!-- <router-link
                   :to="{ name: 'Overview' }"
                   class="dropdown-item border-radius-md"
                   >Overview</router-link
-                >
-                <router-link
+                > -->
+                <!-- <router-link
                   :to="{ name: 'Teams' }"
                   class="dropdown-item border-radius-md"
                   >Teams</router-link
                 >
                 <router-link to="#" class="dropdown-item border-radius-md"
                   >Projects</router-link
-                >
+                > -->
                 <div
                   class="px-0 mt-3 dropdown-header text-dark font-weight-bolder d-flex align-items-center"
                 >
@@ -359,7 +359,7 @@
                   </div>
                   Projects
                 </div>
-                <router-link
+                <!-- <router-link
                   :to="{ name: 'General' }"
                   class="dropdown-item border-radius-md"
                   >General</router-link
@@ -373,7 +373,7 @@
                   :to="{ name: 'New Project' }"
                   class="dropdown-item border-radius-md"
                   >New Project</router-link
-                >
+                > -->
                 <div
                   class="px-0 mt-3 dropdown-header text-dark font-weight-bolder d-flex align-items-center"
                 >
@@ -386,7 +386,7 @@
                   </div>
                   Account
                 </div>
-                <router-link
+                <!-- <router-link
                   :to="{ name: 'Settings' }"
                   class="dropdown-item border-radius-md"
                   >Settings</router-link
@@ -405,7 +405,7 @@
                   :to="{ name: 'Security' }"
                   class="dropdown-item border-radius-md"
                   >Security</router-link
-                >
+                > -->
                 <div
                   class="px-0 mt-3 dropdown-header text-dark font-weight-bolder d-flex align-items-center"
                 >
@@ -418,7 +418,7 @@
                   </div>
                   Extra
                 </div>
-                <router-link
+                <!-- <router-link
                   :to="{ name: 'Pricing Page' }"
                   class="dropdown-item border-radius-md"
                   >Pricing Page</router-link
@@ -432,7 +432,7 @@
                   :to="{ name: 'Widgets' }"
                   class="dropdown-item border-radius-md"
                   >Widgets</router-link
-                >
+                > -->
               </div>
             </div>
           </li>
@@ -519,18 +519,18 @@
                         >
                           <span>Basic</span>
                         </router-link>
-                        <router-link
+                        <!-- <router-link
                           class="mb-1 dropdown-item ps-3 border-radius-md"
                           :to="{ name: 'Signin Cover' }"
                         >
                           <span>Cover</span>
-                        </router-link>
-                        <router-link
+                        </router-link> -->
+                        <!-- <router-link
                           class="mb-1 dropdown-item ps-3 border-radius-md"
                           :to="{ name: 'Signin Illustration' }"
                         >
                           <span>Illustration</span>
-                        </router-link>
+                        </router-link> -->
                       </div>
                     </li>
                     <li
@@ -551,24 +551,24 @@
                         class="px-2 py-3 mt-0 dropdown-menu"
                         aria-labelledby="dropdownSignUp"
                       >
-                        <router-link
+                        <!-- <router-link
                           class="mb-1 dropdown-item ps-3 border-radius-md"
                           :to="{ name: 'Signup Basic' }"
                         >
                           <span>Basic</span>
-                        </router-link>
-                        <router-link
+                        </router-link> -->
+                        <!-- <router-link
                           class="mb-1 dropdown-item ps-3 border-radius-md"
                           :to="{ name: 'Signup Cover' }"
                         >
                           <span>Cover</span>
-                        </router-link>
-                        <router-link
+                        </router-link> -->
+                        <!-- <router-link
                           class="mb-1 dropdown-item ps-3 border-radius-md"
                           :to="{ name: 'Signup Illustration' }"
                         >
                           <span>Illustration</span>
-                        </router-link>
+                        </router-link> -->
                       </div>
                     </li>
                     <li
@@ -589,7 +589,7 @@
                         class="px-2 py-3 mt-0 dropdown-menu"
                         aria-labelledby="dropdownPasswordReset"
                       >
-                        <router-link
+                        <!-- <router-link
                           class="mb-1 dropdown-item ps-3 border-radius-md"
                           :to="{ name: 'Reset Basic' }"
                         >
@@ -606,7 +606,7 @@
                           :to="{ name: 'Reset Illustration' }"
                         >
                           <span>Illustration</span>
-                        </router-link>
+                        </router-link> -->
                       </div>
                     </li>
                     <li
@@ -627,7 +627,7 @@
                         class="px-2 py-3 mt-0 dropdown-menu"
                         aria-labelledby="dropdownLock"
                       >
-                        <router-link
+                        <!-- <router-link
                           class="mb-1 dropdown-item ps-3 border-radius-md"
                           :to="{ name: 'Lock Basic' }"
                         >
@@ -644,7 +644,7 @@
                           :to="{ name: 'Lock Illustration' }"
                         >
                           <span>Illustration</span>
-                        </router-link>
+                        </router-link> -->
                       </div>
                     </li>
                     <li
@@ -665,7 +665,7 @@
                         class="px-2 py-3 mt-0 dropdown-menu"
                         aria-labelledby="dropdown2fa"
                       >
-                        <router-link
+                        <!-- <router-link
                           class="mb-1 dropdown-item ps-3 border-radius-md"
                           :to="{ name: 'Verification Basic' }"
                         >
@@ -682,7 +682,7 @@
                           :to="{ name: 'Verification Illustration' }"
                         >
                           <span>Illustration</span>
-                        </router-link>
+                        </router-link> -->
                       </div>
                     </li>
                     <li
@@ -732,27 +732,27 @@
                     class="dropdown-item border-radius-md"
                     >Basic</router-link
                   >
-                  <router-link
+                  <!-- <router-link
                     :to="{ name: 'Signin Cover' }"
                     class="dropdown-item border-radius-md"
                     >Cover</router-link
-                  >
-                  <router-link
+                  > -->
+                  <!-- <router-link
                     :to="{ name: 'Signin Illustration' }"
                     class="dropdown-item border-radius-md"
                     >Illustration</router-link
-                  >
+                  > -->
                   <h6
                     class="px-0 mt-3 dropdown-header text-dark font-weight-bolder d-flex align-items-center"
                   >
                     Sign Up
                   </h6>
-                  <router-link
+                  <!-- <router-link
                     :to="{ name: 'Signup Basic' }"
                     class="dropdown-item border-radius-md"
                     >Basic</router-link
-                  >
-                  <router-link
+                  > -->
+                  <!-- <router-link
                     :to="{ name: 'Signup Cover' }"
                     class="dropdown-item border-radius-md"
                     >Cover</router-link
@@ -761,13 +761,13 @@
                     :to="{ name: 'Signup Illustration' }"
                     class="dropdown-item border-radius-md"
                     >Illustration</router-link
-                  >
+                  > -->
                   <h6
                     class="px-0 mt-3 dropdown-header text-dark font-weight-bolder d-flex align-items-center"
                   >
                     Reset Password
                   </h6>
-                  <router-link
+                  <!-- <router-link
                     :to="{ name: 'Reset Basic' }"
                     class="dropdown-item border-radius-md"
                     >Basic</router-link
@@ -781,13 +781,13 @@
                     :to="{ name: 'Reset Illustration' }"
                     class="dropdown-item border-radius-md"
                     >Illustation</router-link
-                  >
+                  > -->
                   <h6
                     class="px-0 mt-3 dropdown-header text-dark font-weight-bolder d-flex align-items-center"
                   >
                     Lock
                   </h6>
-                  <router-link
+                  <!-- <router-link
                     :to="{ name: 'Lock Basic' }"
                     class="dropdown-item border-radius-md"
                     >Basic</router-link
@@ -801,13 +801,13 @@
                     :to="{ name: 'Lock Illustration' }"
                     class="dropdown-item border-radius-md"
                     >Illustration</router-link
-                  >
+                  > -->
                   <h6
                     class="px-0 mt-3 dropdown-header text-dark font-weight-bolder d-flex align-items-center"
                   >
                     2-Step Verification
                   </h6>
-                  <router-link
+                  <!-- <router-link
                     :to="{ name: 'Verification Basic' }"
                     class="dropdown-item border-radius-md"
                     >Basic</router-link
@@ -821,7 +821,7 @@
                     :to="{ name: 'Verification Illustration' }"
                     class="dropdown-item border-radius-md"
                     >Illustration</router-link
-                  >
+                  > -->
                   <h6
                     class="px-0 mt-3 dropdown-header text-dark font-weight-bolder d-flex align-items-center"
                   >
@@ -869,7 +869,7 @@
               class="p-3 mt-0 dropdown-menu dropdown-menu-animation dropdown-md dropdown-md-responsive border-radius-lg mt-lg-3"
               aria-labelledby="dropdownMenuBlocks"
             >
-              <div class="d-none d-lg-block">
+              <!-- <div class="d-none d-lg-block">
                 <ul class="list-group">
                   <li
                     class="p-0 border-0 nav-item dropdown dropdown-hover dropdown-subitem list-group-item"
@@ -966,11 +966,11 @@
                     </router-link>
                   </li>
                 </ul>
-              </div>
+              </div> -->
               <!-- responsive -->
               <div class="row d-lg-none">
                 <div class="col-md-12">
-                  <router-link
+                  <!-- <router-link
                     class="py-2 ps-3 border-radius-md"
                     :to="{ name: 'Kanban' }"
                   >
@@ -988,8 +988,8 @@
                         </div>
                       </div>
                     </div>
-                  </router-link>
-                  <router-link
+                  </router-link> -->
+                  <!-- <router-link
                     class="py-2 ps-3 border-radius-md"
                     :to="{ name: 'Wizard' }"
                   >
@@ -1043,7 +1043,7 @@
                         </div>
                       </div>
                     </div>
-                  </router-link>
+                  </router-link> -->
                 </div>
               </div>
             </div>
@@ -1128,7 +1128,7 @@
                         </div>
                         Orders
                       </div>
-                      <router-link
+                      <!-- <router-link
                         :to="{ name: 'Order List' }"
                         class="dropdown-item border-radius-md"
                       >
@@ -1139,7 +1139,7 @@
                         class="dropdown-item border-radius-md"
                       >
                         <span class="ps-3">Order Details</span>
-                      </router-link>
+                      </router-link> -->
                       <div
                         class="px-0 mt-3 dropdown-header text-dark font-weight-bolder d-flex align-items-center"
                       >
@@ -1152,7 +1152,7 @@
                         </div>
                         General
                       </div>
-                      <router-link
+                      <!-- <router-link
                         :to="{ name: 'Overview' }"
                         class="dropdown-item border-radius-md"
                       >
@@ -1163,7 +1163,7 @@
                         class="dropdown-item border-radius-md"
                       >
                         <span class="ps-3">Referral</span>
-                      </router-link>
+                      </router-link> -->
                       <hr class="vertical dark" />
                     </div>
                     <div class="col-6 position-relative">
@@ -1179,7 +1179,7 @@
                         </div>
                         Products
                       </div>
-                      <router-link
+                      <!-- <router-link
                         :to="{ name: 'New Product' }"
                         class="dropdown-item border-radius-md"
                       >
@@ -1202,7 +1202,7 @@
                         class="dropdown-item border-radius-md"
                       >
                         <span class="ps-3">Products List</span>
-                      </router-link>
+                      </router-link> -->
                     </div>
                   </div>
                 </div>
@@ -1221,7 +1221,7 @@
                   </div>
                   Orders
                 </div>
-                <router-link
+                <!-- <router-link
                   :to="{ name: 'Order List' }"
                   class="dropdown-item border-radius-md"
                   >Order List</router-link
@@ -1230,7 +1230,7 @@
                   :to="{ name: 'Order Details' }"
                   class="dropdown-item border-radius-md"
                   >Order Details</router-link
-                >
+                > -->
                 <div
                   class="px-0 mt-3 dropdown-header text-dark font-weight-bolder d-flex align-items-center"
                 >
@@ -1243,7 +1243,7 @@
                   </div>
                   General
                 </div>
-                <router-link
+                <!-- <router-link
                   :to="{ name: 'Overview' }"
                   class="dropdown-item border-radius-md"
                   >Overview</router-link
@@ -1252,7 +1252,7 @@
                   :to="{ name: 'Referral' }"
                   class="dropdown-item border-radius-md"
                   >Referral</router-link
-                >
+                > -->
                 <div
                   class="px-0 mt-3 dropdown-header text-dark font-weight-bolder d-flex align-items-center"
                 >
@@ -1265,7 +1265,7 @@
                   </div>
                   Products
                 </div>
-                <router-link
+                <!-- <router-link
                   :to="{ name: 'New Product' }"
                   class="dropdown-item border-radius-md"
                   >New Product</router-link
@@ -1284,7 +1284,7 @@
                   :to="{ name: 'Products List' }"
                   class="dropdown-item border-radius-md"
                   >Products List</router-link
-                >
+                > -->
               </div>
             </div>
           </li>

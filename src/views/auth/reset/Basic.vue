@@ -20,23 +20,25 @@
               <div class="pt-4 pb-1 text-center card-header">
                 <h4 class="mb-1 font-weight-bolder">Reset password</h4>
                 <p class="mb-0">
-                  You will receive an e-mail in maximum 60 seconds
+                  You will receive an e-mail with reset password instructions.
                 </p>
               </div>
               <div class="card-body">
-                <form role="form">
+                <form role="form" @submit='handleSubmit'>
                   <div class="mb-3">
-                    <soft-input type="email" placeholder="Email" name="email" />
+                    <input
+                      v-model="emailAddress"
+                      type="email"
+                      class="form-control"
+                      :name="emailAddress"
+                      placeholder="Email Address"
+                      required
+                    />
                   </div>
                   <div class="text-center">
-                    <soft-button
-                      class="my-4 mb-2"
-                      variant="gradient"
-                      color="dark"
-                      full-width
-                      size="lg"
-                      >Send
-                    </soft-button>
+                    <button type="submit" class="btn mb-0 bg-gradient-info btn-md w-100">
+                      Send
+                    </button>
                   </div>
                 </form>
               </div>
@@ -46,37 +48,89 @@
       </div>
     </section>
   </main>
+  <div class="position-fixed top-9 end-1 z-index-2">
+    <soft-snackbar
+      v-if="snackbar"
+      :title="snackbarTitle"
+      :description="snackbarDescription"
+      color="white"
+      :close-handler="() => snackbar = null"
+    />
+  </div>
+  <soft-spinner v-if="showSpinner"/>
   <app-footer />
 </template>
 
 <script>
-import Navbar from "@/examples/PageLayout/Navbar.vue";
-import AppFooter from "@/examples/PageLayout/Footer.vue";
-import SoftInput from "@/components/SoftInput.vue";
-import SoftButton from "@/components/SoftButton.vue";
-const body = document.getElementsByTagName("body")[0];
+import { defineComponent, onBeforeMount, onBeforeUnmount, ref } from "vue"
+import { useStore } from "vuex"
+import Navbar from "@/examples/PageLayout/Navbar.vue"
+import AppFooter from "@/examples/PageLayout/Footer.vue"
+import { EMAIL_REGEX, EMAIL_REGEX_MISMATCH_NOTICE } from "../../../constant/index"
+import { sendResetPasswordToken } from "../../../api/user/sendResetPasswordToken"
+import SoftSnackbar from "@/components/SoftSnackbar.vue"
+import SoftSpinner from "@/components/SoftSpinner.vue"
+const body = document.getElementsByTagName("body")[0]
 
-import { mapMutations } from "vuex";
-export default {
+export default defineComponent({
   name: "ResetBasic",
   components: {
     Navbar,
     AppFooter,
-    SoftInput,
-    SoftButton,
+    SoftSnackbar,
+    SoftSpinner,
   },
-  created() {
-    this.toggleEveryDisplay();
-    this.toggleHideConfig();
-    body.classList.add("bg-gray-200");
-  },
-  beforeUnmount() {
-    this.toggleEveryDisplay();
-    this.toggleHideConfig();
-    body.classList.remove("bg-gray-200");
-  },
-  methods: {
-    ...mapMutations(["toggleEveryDisplay", "toggleHideConfig"]),
-  },
-};
+  setup() {
+    const globalStore = useStore()
+
+    const emailAddress = ref("")
+    const snackbar = ref(false)
+    const snackbarTitle = ref("")
+    const snackbarDescription = ref("")
+    const showSpinner = ref(false)
+
+    onBeforeMount(()=> {
+      globalStore.commit("hideEveryDisplay")
+      body.classList.add("bg-gray-200")
+    })
+
+    const handleSubmit = async (event) => {
+      event.preventDefault()
+      showSpinner.value = true
+      if (!EMAIL_REGEX.test(emailAddress.value)) {
+        snackbar.value = true
+        snackbarTitle.value = 'Something went Wrong'
+        snackbarDescription.value = EMAIL_REGEX_MISMATCH_NOTICE
+      } else {
+        const res = await sendResetPasswordToken(emailAddress.value)
+        if (res && res?.success) {
+          // eslint-disable-next-line require-atomic-updates
+          emailAddress.value = ''
+          snackbarTitle.value = 'Success'
+        } else {
+          snackbarTitle.value = 'Something went Wrong'
+        }
+
+        snackbar.value = true
+        snackbarDescription.value = res.message
+      }
+
+      showSpinner.value = false
+    }
+
+    onBeforeUnmount(()=> {
+      globalStore.commit("showEveryDisplay")
+      body.classList.remove("bg-gray-200")
+    })
+
+    return {
+      showSpinner,
+      snackbar,
+      snackbarDescription,
+      snackbarTitle,
+      emailAddress,
+      handleSubmit
+    }
+  }
+})
 </script>

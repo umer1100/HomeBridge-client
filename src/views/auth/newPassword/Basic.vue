@@ -36,16 +36,11 @@
                     </p>
                   </div>
                   <div class="text-center">
-                    <SoftButton
-                      :class="newPassword === confirmPassword ? '' : 'disabled'"
-                      class="my-4 mb-2"
-                      variant="gradient"
-                      color="dark"
-                      full-width
-                      size="lg"
+                    <button :disabled='newPassword != confirmPassword || newPassword == ""'
+                            class="btn mb-0 bg-gradient-info btn-md w-100"
                     >
                       Submit
-                    </SoftButton>
+                    </button>
                   </div>
                 </form>
               </div>
@@ -57,61 +52,93 @@
     <div class="position-fixed top-1 end-1 z-index-2">
       <soft-snackbar
         v-if="snackbar"
-        title="Invalid Password Format"
-        :description="PASSWORD_REGEX_MISMATCH_NOTICE"
-        :isRawHtml=true
+        :isRawHtml="snackbarisRawHtml"
+        :title="snackbarTitle"
+        :description="snackbarDescription"
         color="white"
         :close-handler="() => snackbar = null"
       />
     </div>
+    <soft-spinner v-if="showSpinner"/>
   </main>
   <app-footer />
 </template>
 
 <script>
-import { ref, onBeforeMount } from "vue";
-import { useStore } from "vuex";
-import AppFooter from "@/examples/PageLayout/Footer.vue";
-import SoftButton from "@/components/SoftButton.vue";
-import SoftSnackbar from "@/components/SoftSnackbar.vue";
+import { ref, onBeforeMount } from "vue"
+import { useRouter } from "vue-router"
+import { useStore } from "vuex"
+import AppFooter from "@/examples/PageLayout/Footer.vue"
+import SoftSnackbar from "@/components/SoftSnackbar.vue"
 import {
   PASSWORD_REGEX,
   PASSWORD_REGEX_MISMATCH_NOTICE
-} from "../../../constant";
+} from "../../../constant"
+import SoftSpinner from "@/components/SoftSpinner.vue"
+import { resetPassword } from "../../../api/user/resetPassword"
 
 export default {
   name: "NewPassword",
   components: {
     AppFooter,
-    SoftButton,
-    SoftSnackbar
+    SoftSnackbar,
+    SoftSpinner,
   },
   setup() {
-    const store = useStore();
-
-    const newPassword = ref("");
-    const confirmPassword = ref("");
-    const snackbar = ref(false);
+    const globalStore = useStore()
+    const router = useRouter()
+    
+    const newPassword = ref("")
+    const confirmPassword = ref("")
+    const snackbar = ref(false)
+    const snackbarTitle = ref("")
+    const snackbarDescription = ref("")
+    const snackbarisRawHtml = ref(false)
+    let showSpinner = ref(false)
 
     const updatePasswordHandler = async (event) => {
       event.preventDefault()
+
       if (!PASSWORD_REGEX.test(newPassword.value)) {
         snackbar.value = true
+        snackbarisRawHtml.value = true
+        snackbarTitle.value = "Invalid Password Format"
+        snackbarDescription.value = PASSWORD_REGEX_MISMATCH_NOTICE
+        snackbarisRawHtml.value = true
+      } else {
+        showSpinner.value = true
+        const passwordResetToken = router?.currentRoute?.value?.query?.passwordResetToken
+        const res = await resetPassword({
+          password1: newPassword.value,
+          password2: confirmPassword.value,
+          passwordResetToken
+        })
+
+        if (res && res?.success) {
+          router.push('/authentication/signin')
+        } else {
+          snackbar.value = true
+          snackbarTitle.value = "Something went Wrong"
+          snackbarDescription.value = res.message || "Password is not reset"
+        }
+        showSpinner.value = false
       }
-    };
+    }
 
     onBeforeMount(() => {
-      store.state.showNavbar = false
-      store.state.showSidenav = false
-    });
-
+      globalStore.commit("hideEveryDisplay")
+    })
+    
     return {
       newPassword,
       confirmPassword,
       snackbar,
-      PASSWORD_REGEX_MISMATCH_NOTICE,
+      snackbarTitle,
+      snackbarDescription,
+      snackbarisRawHtml,
+      showSpinner,
       updatePasswordHandler,
-    };
+    }
   },
-};
+}
 </script>

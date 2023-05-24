@@ -17,18 +17,22 @@
     <router-view />
     <app-footer v-show="showFooter" />
     <configurator
+      v-if="isAuthenticated"
       :toggle="toggleConfigurator"
       :class="[showConfig ? 'show' : '', hideConfigButton ? 'd-none' : '']"
     />
   </main>
 </template>
 <script>
-import Sidenav from "./examples/Sidenav";
-import Configurator from "@/examples/Configurator.vue";
-import Navbar from "@/examples/Navbars/Navbar.vue";
-import AppFooter from "@/examples/Footer.vue";
-import { mapMutations, mapState } from "vuex";
-export default {
+import { defineComponent, onMounted, ref, toRefs, watch } from "vue"
+import Sidenav from "./examples/Sidenav"
+import Configurator from "@/examples/Configurator.vue"
+import Navbar from "@/examples/Navbars/Navbar.vue"
+import AppFooter from "@/examples/Footer.vue"
+import { useStore } from "vuex"
+import { useUserStore } from "./store/user"
+import { retrieveAuthenticationDetailsFromLocalStorage } from "./utils/localStorage"
+export default defineComponent({
   name: "App",
   components: {
     Sidenav,
@@ -36,27 +40,61 @@ export default {
     Navbar,
     AppFooter,
   },
-  computed: {
-    ...mapState([
-      "isTransparent",
-      "isRTL",
-      "isNavFixed",
-      "isAbsolute",
-      "navbarFixed",
-      "absolute",
-      "color",
-      "showSidenav",
-      "showNavbar",
-      "showFooter",
-      "showConfig",
-      "hideConfigButton",
-    ]),
-  },
-  beforeMount() {
-    this.$store.state.isTransparent = "bg-transparent";
-  },
-  methods: {
-    ...mapMutations(["toggleConfigurator", "navbarMinimize"]),
-  },
-};
+
+  setup() {
+    const globalStore = useStore()
+    const userStore = useUserStore()
+
+    const isAuthenticated = ref(false)
+    let {
+      isTransparent,
+      isRTL,
+      isNavFixed,
+      isAbsolute,
+      navbarFixed,
+      absolute,
+      color,
+      showSidenav,
+      showNavbar,
+      showFooter,
+      showConfig,
+      hideConfigButton,
+    } = toRefs(globalStore.state)
+
+    const toggleConfigurator = () => {
+      globalStore.commit("toggleConfigurator")
+    }
+
+    const navbarMinimize = () => {
+      globalStore.commit("navbarMinimize")
+    }
+
+    watch(() => userStore.userJWT, (newValue) => isAuthenticated.value = newValue )
+
+    onMounted(() => {
+      const { userJWT } = retrieveAuthenticationDetailsFromLocalStorage()
+
+      userStore.userJWT = userJWT
+      userJWT ? isAuthenticated.value = true : null
+    })
+
+    return{
+      isTransparent,
+      isRTL,
+      isNavFixed,
+      isAbsolute,
+      navbarFixed,
+      absolute,
+      color,
+      showSidenav,
+      showNavbar,
+      showFooter,
+      showConfig,
+      hideConfigButton,
+      isAuthenticated,
+      toggleConfigurator,
+      navbarMinimize
+    }
+  }
+})
 </script>
