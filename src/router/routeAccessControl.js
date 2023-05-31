@@ -1,9 +1,10 @@
 export const ROUTES = {
-  DASHBOARD: '/Dashboard',
+  DASHBOARD: '/dashboard',
   SIGNIN: '/authentication/signin',
-  PROFILE: '/pages/profile/overview',
+  PROFILE: '/profile',
   NEW_PASSWORD: '/ResetPassword',
-  RESET_PASSWORD: '/authentication/reset'
+  RESET_PASSWORD: '/authentication/reset',
+  INTEGRATIONS: '/integrations'
 }
 
 export const PUBLIC_ROUTES = [

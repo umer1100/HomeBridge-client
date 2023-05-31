@@ -6,8 +6,8 @@
     <ul class="navbar-nav">
       <li class="nav-item">
         <sidenav-collapse
-          collapse-ref="Dashboard"
-          nav-text="Dashboard"
+          collapse-ref="dashboard"
+          nav-text="dashboard"
           :collapse="false"
           :class="getRoute() === 'dashboards' ? 'active' : ''"
         >
@@ -80,7 +80,7 @@
 
       <li class="nav-item">
         <sidenav-collapse
-          collapse-ref="Integrations"
+          collapse-ref="integrations"
           nav-text="Integrations"
           :collapse="false"
           :class="getRoute() === 'authentication' ? 'active' : ''"

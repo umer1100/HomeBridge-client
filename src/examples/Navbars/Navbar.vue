@@ -7,11 +7,11 @@
     data-scroll="true"
   >
     <div class="px-3 py-1 container-fluid">
-      <breadcrumbs
+      <!-- <breadcrumbs
         :current-directory="currentDirectory()"
         :current-page="currentRouteName()"
         :text-white="textWhite"
-      />
+      /> -->
       <div
         class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none"
         :class="isRTL ? 'me-3' : ''"
@@ -55,15 +55,9 @@
         </div>
         <ul class="navbar-nav justify-content-end">
           <li class="nav-item d-flex align-items-center">
-            <router-link
-              :to="{ name: 'Profile Overview' }"
-              class="px-0 nav-link font-weight-bold"
-              :class="textWhite ? textWhite : 'text-body'"
-            >
-              <i :class="isRTL ? 'ms-sm-2' : 'me-sm-1'"></i>
-              <span v-if="isRTL" class="d-sm-inline d-none">يسجل دخول</span>
-              <span v-else class="d-sm-inline d-none"> {{ firstName }} {{ lastName }} | {{ roleType }} | {{ organizationName }}</span>
-            </router-link>
+            <i :class="isRTL ? 'ms-sm-2' : 'me-sm-1'"></i>
+            <span v-if="isRTL" class="d-sm-inline d-none">يسجل دخول</span>
+            <span v-else class="d-sm-inline d-none"> {{ firstName }} {{ lastName }} | {{ roleType }} | {{ organizationName }}</span>
           </li>
           <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
             <a
@@ -220,17 +214,17 @@
   </nav>
 </template>
 <script>
-import { defineComponent, onMounted, ref, watch } from "vue"
+import { defineComponent, ref, watch } from "vue"
 import { useStore } from "vuex"
 import { useRoute } from "vue-router"
-import Breadcrumbs from "../Breadcrumbs.vue"
+//import Breadcrumbs from "../Breadcrumbs.vue"
 import { useUserStore } from "../../store/user"
 import { useOrganizationStore } from "../../store/organization"
 
 export default defineComponent({
   name: "Navbar",
   components: {
-    Breadcrumbs,
+    //Breadcrumbs,
   },
   props: {
     minNav: {
@@ -242,22 +236,17 @@ export default defineComponent({
       default: "",
     },
   },
-  setup (props) {
+  setup () {
     const globalStore = useStore()
     let route = useRoute()
     let userStore = useUserStore()
     let organizationStore = useOrganizationStore()
     
-    const minNav = ref(props.minNav)
     let isRTL = ref(globalStore?.state?.isRTL)
     let firstName = ref(userStore?.data?.firstName)
     let lastName = ref(userStore.data?.lastName)
     let roleType = ref(userStore.data?.roleType)
     let organizationName = ref(organizationStore?.data?.name)
-
-    onMounted(()=> {
-      minNav.value()
-    })
 
     const currentRouteName = () => {
       return route.name

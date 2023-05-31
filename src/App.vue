@@ -4,9 +4,7 @@
     :custom-class="color"
     :class="[isTransparent, isRTL ? 'fixed-end' : 'fixed-start']"
   />
-  <main
-    class="main-content position-relative max-height-vh-100 h-100 border-radius-lg"
-  >
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
     <!-- nav -->
     <navbar
       v-if="showNavbar"
@@ -21,6 +19,17 @@
       :toggle="toggleConfigurator"
       :class="[showConfig ? 'show' : '', hideConfigButton ? 'd-none' : '']"
     />
+    <soft-spinner v-if="spinner"/>
+    <div class="position-fixed top-9 end-2 z-index-2">
+      <soft-snackbar
+        v-if="snackbar"
+        :isRawHtml="snackbarIsRawHtml"
+        :title="snackbarTitle"
+        :description="snackbarDescription"
+        color="white"
+        :close-handler="closeSnackbar"
+      />
+    </div>
   </main>
 </template>
 <script>
@@ -31,6 +40,8 @@ import Navbar from "@/examples/Navbars/Navbar.vue"
 import AppFooter from "@/examples/Footer.vue"
 import { useStore } from "vuex"
 import { useUserStore } from "./store/user"
+import SoftSpinner from "@/components/SoftSpinner.vue"
+import SoftSnackbar from "@/components/SoftSnackbar.vue"
 import { retrieveAuthenticationDetailsFromLocalStorage } from "./utils/localStorage"
 export default defineComponent({
   name: "App",
@@ -39,6 +50,8 @@ export default defineComponent({
     Configurator,
     Navbar,
     AppFooter,
+    SoftSpinner,
+    SoftSnackbar
   },
 
   setup() {
@@ -59,6 +72,11 @@ export default defineComponent({
       showFooter,
       showConfig,
       hideConfigButton,
+      spinner,
+      snackbar,
+      snackbarTitle,
+      snackbarDescription,
+      snackbarIsRawHtml
     } = toRefs(globalStore.state)
 
     const toggleConfigurator = () => {
@@ -67,6 +85,10 @@ export default defineComponent({
 
     const navbarMinimize = () => {
       globalStore.commit("navbarMinimize")
+    }
+
+    const closeSnackbar = () => {
+      globalStore.state.snackbar = false
     }
 
     watch(() => userStore.userJWT, (newValue) => isAuthenticated.value = newValue )
@@ -92,8 +114,14 @@ export default defineComponent({
       showConfig,
       hideConfigButton,
       isAuthenticated,
+      spinner,
+      snackbar,
+      snackbarTitle,
+      snackbarDescription,
+      snackbarIsRawHtml,
       toggleConfigurator,
-      navbarMinimize
+      navbarMinimize,
+      closeSnackbar,
     }
   }
 })

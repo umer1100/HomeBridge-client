@@ -23,7 +23,7 @@
       <div class="d-flex pt-0 card-body pb-sm-0 button-block">
         <router-link
         id="btn-transparent"
-        to="/pages/profile/overview"
+        to="/profile"
         class="px-3 mb-2 btn w-100 h-auto"
       >
         My Profile

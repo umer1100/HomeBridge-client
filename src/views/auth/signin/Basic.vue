@@ -171,15 +171,6 @@
       </div>
     </div>
   </div>
-  <div class="position-fixed top-1 end-1 z-index-2">
-    <soft-snackbar
-      v-if="snackbar"
-      :title="snackbarTitle"
-      :description="snackbarDescription"
-      color="white"
-      :close-handler="() => snackbar = null"
-    />
-  </div>
   <app-footer />
 </template>
 
@@ -188,19 +179,18 @@ import { defineComponent, onBeforeMount, onBeforeUnmount, ref } from "vue"
 import { useStore } from "vuex"
 import Navbar from "@/examples/PageLayout/Navbar.vue"
 import AppFooter from "@/examples/PageLayout/Footer.vue"
-import SoftSnackbar from "@/components/SoftSnackbar.vue"
 import { login } from "../../../api/user/login"
 import { useUserStore } from "../../../store/user"
 import { useOrganizationStore } from "../../../store/organization"
 import { persistAuthenticationDetails } from "../../../utils/localStorage"
 import { useRouter } from "vue-router"
+import { showSnackBar } from "../../../utils/helper"
 
 export default defineComponent({
   name: "SigninBasic",
   components: {
     Navbar,
     AppFooter,
-    SoftSnackbar,
   },
   setup() {
     const globalStore = useStore()
@@ -210,9 +200,6 @@ export default defineComponent({
 
     const emailAddress = ref("")
     const password = ref("")
-    const snackbar = ref(false)
-    const snackbarTitle = ref("")
-    const snackbarDescription = ref("")
 
     const handleFormSubmit = async (event) => {
       event.preventDefault()
@@ -226,11 +213,9 @@ export default defineComponent({
         organizationStore.data = organization
 
         persistAuthenticationDetails(token)
-        router.push('/')
+        router.push("/")
       } else {
-        snackbar.value = true
-        snackbarTitle.value = 'Something Went Wrong'
-        snackbarDescription.value = response.message
+        showSnackBar("Something Went Wrong", response.message)
       }
     }
 
@@ -246,16 +231,13 @@ export default defineComponent({
     return{
       emailAddress,
       password,
-      snackbar,
-      snackbarTitle,
-      snackbarDescription,
       handleFormSubmit
     }
   }
 })
 </script>
 
-<style>
+<style scoped>
  .underline {
   text-decoration: underline;
  }
