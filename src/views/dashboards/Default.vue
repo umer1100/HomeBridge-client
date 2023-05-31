@@ -204,16 +204,16 @@
   </div>
 </template>
 <script>
-import MiniStatisticsCard from "../../examples/Cards/MiniStatisticsCard.vue";
-import ReportsBarChart from "../../examples/Charts/ReportsBarChart.vue";
-import GradientLineChart from "../../examples/Charts/GradientLineChart.vue";
+import MiniStatisticsCard from "../../Cards/MiniStatisticsCard.vue";
+import ReportsBarChart from "../../Charts/ReportsBarChart.vue";
+import GradientLineChart from "../../Charts/GradientLineChart.vue";
 import SalesTable from "./components/SalesTable.vue";
 import US from "@/assets/img/icons/flags/US.png";
 import DE from "@/assets/img/icons/flags/DE.png";
 import GB from "@/assets/img/icons/flags/GB.png";
 import BR from "@/assets/img/icons/flags/BR.png";
 
-import Globe from "../../examples/Globe.vue";
+import Globe from "../../Globe.vue";
 import {
   faHandPointer,
   faUsers,

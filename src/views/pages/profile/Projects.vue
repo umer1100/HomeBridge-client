@@ -333,7 +333,7 @@ import invisionLogo from "../../../assets/img/small-logos/logo-invision.svg";
 import spotifyLogo from "../../../assets/img/small-logos/logo-spotify.svg";
 import xdLogo from "../../../assets/img/small-logos/logo-xd.svg";
 import asanaLogo from "../../../assets/img/small-logos/logo-asana.svg";
-import PlaceHolderCard from "../../../examples/Cards/PlaceHolderCard.vue";
+import PlaceHolderCard from "../../../Cards/PlaceHolderCard.vue";
 import ProjectsCard from "./components/ComplexProjectCard.vue";
 import setNavPills from "@/assets/js/nav-pills.js";
 

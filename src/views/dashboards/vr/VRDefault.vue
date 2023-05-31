@@ -177,17 +177,17 @@
 </template>
 
 <script>
-import Sidenav from "@/examples/Sidenav";
-import AppFooter from "@/examples/Footer.vue";
-import Navbar from "@/examples/Navbars/Navbar.vue";
-import MiniStatisticsCard from "@/examples/Cards/MiniStatisticsCard.vue";
+import Sidenav from "@/Sidenav";
+import AppFooter from "@/Footer.vue";
+import Navbar from "@/Navbars/Navbar.vue";
+import MiniStatisticsCard from "@/Cards/MiniStatisticsCard.vue";
 import SalesTable from "../components/SalesTable.vue";
 import US from "@/assets/img/icons/flags/US.png";
 import DE from "@/assets/img/icons/flags/DE.png";
 import GB from "@/assets/img/icons/flags/GB.png";
 import BR from "@/assets/img/icons/flags/BR.png";
 
-import Globe from "@/examples/Globe.vue";
+import Globe from "@/Globe.vue";
 const body = document.getElementsByTagName("body")[0];
 
 import { mapMutations, mapState } from "vuex";

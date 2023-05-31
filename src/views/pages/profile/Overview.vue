@@ -561,7 +561,7 @@ import {
   faInstagram
 } from "@fortawesome/free-brands-svg-icons";
 import DefaultProjectCard from "./components/DefaultProjectCard.vue";
-import PlaceHolderCard from "@/examples/Cards/PlaceHolderCard.vue";
+import PlaceHolderCard from "@/Cards/PlaceHolderCard.vue";
 import setNavPills from "@/assets/js/nav-pills.js";
 import setTooltip from "@/assets/js/tooltip.js";
 

@@ -302,9 +302,9 @@
   <app-footer />
 </template>
 <script>
-import Navbar from "@/examples/PageLayout/Navbar.vue";
+import Navbar from "@/PageLayout/Navbar.vue";
 import PricingCard from "./components/PricingCard.vue";
-import AppFooter from "@/examples/PageLayout/Footer.vue";
+import AppFooter from "@/PageLayout/Footer.vue";
 import AccordionItem from "./components/AccordionItem.vue";
 import setNavPills from "@/assets/js/nav-pills.js";
 import Accordion from "./components/Accordion.vue";

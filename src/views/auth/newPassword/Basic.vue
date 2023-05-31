@@ -57,7 +57,7 @@
 import { ref, onBeforeMount } from "vue"
 import { useRouter } from "vue-router"
 import { useStore } from "vuex"
-import AppFooter from "@/examples/PageLayout/Footer.vue"
+import AppFooter from "@/PageLayout/Footer.vue"
 import {
   PASSWORD_REGEX,
   PASSWORD_REGEX_MISMATCH_NOTICE
@@ -73,7 +73,7 @@ export default {
   setup() {
     const globalStore = useStore()
     const router = useRouter()
-    
+
     const newPassword = ref("")
     const confirmPassword = ref("")
     let showSpinner = ref(false)
@@ -105,7 +105,7 @@ export default {
     onBeforeMount(() => {
       globalStore.commit("hideEveryDisplay")
     })
-    
+
     return {
       newPassword,
       confirmPassword,

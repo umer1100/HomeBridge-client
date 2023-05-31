@@ -141,13 +141,13 @@
 </template>
 
 <script>
-import Sidenav from "@/examples/Sidenav";
-import AppFooter from "@/examples/Footer.vue";
-import Navbar from "@/examples/Navbars/Navbar.vue";
+import Sidenav from "@/Sidenav";
+import AppFooter from "@/Footer.vue";
+import Navbar from "@/Navbars/Navbar.vue";
 import CalendarCard from "./components/CalendarCard.vue";
 import EmailCard from "./components/EmailCard.vue";
 import TodoCard from "./components/TodoCard.vue";
-import MiniPlayerCard from "../../../examples/Cards/MiniPlayerCard.vue";
+import MiniPlayerCard from "../../../Cards/MiniPlayerCard.vue";
 import MessageCard from "./components/MessageCard.vue";
 import setTooltip from "@/assets/js/tooltip.js";
 

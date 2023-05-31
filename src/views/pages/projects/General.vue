@@ -246,7 +246,7 @@
 
 <script>
 import AnimatedStatisticsCard from "./components/AnimatedStatisticsCard.vue";
-import MiniStatisticsCard from "@/examples/Cards/MiniStatisticsCard.vue";
+import MiniStatisticsCard from "@/Cards/MiniStatisticsCard.vue";
 import AnnouncementCard from "./components/AnnouncementCard.vue";
 import ProgressLineChart from "./components/ProgressLineChart.vue";
 import ProgressDoughnutChart from "./components/ProgressDoughnutChart.vue";

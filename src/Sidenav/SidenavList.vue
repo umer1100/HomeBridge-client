@@ -6,8 +6,8 @@
     <ul class="navbar-nav">
       <li class="nav-item">
         <sidenav-collapse
-          collapse-ref="dashboard"
-          nav-text="dashboard"
+          collapse-ref="Dashboard"
+          nav-text="Dashboard"
           :collapse="false"
           :class="getRoute() === 'dashboards' ? 'active' : ''"
         >
@@ -459,14 +459,14 @@
 <script>
 import SidenavCollapse from "./SidenavCollapse.vue";
 import SidenavCard from "./SidenavCard.vue";
-import Settings from "../../components/Icon/Settings.vue";
-import Basket from "../../components/Icon/Basket.vue";
-// import Box3d from "../../components/Icon/Box3d.vue";
-import Shop from "../../components/Icon/Shop.vue";
-import Office from "../../components/Icon/Office.vue";
-import Document from "../../components/Icon/Document.vue";
-// import Spaceship from "../../components/Icon/Spaceship.vue";
-// import CreditCard from "../../components/Icon/CreditCard.vue";
+import Settings from "../components/Icon/Settings.vue";
+import Basket from "../components/Icon/Basket.vue";
+// import Box3d from "../components/Icon/Box3d.vue";
+import Shop from "../components/Icon/Shop.vue";
+import Office from "../components/Icon/Office.vue";
+import Document from "../components/Icon/Document.vue";
+// import Spaceship from "../components/Icon/Spaceship.vue";
+// import CreditCard from "../components/Icon/CreditCard.vue";
 
 import { mapState } from "vuex";
 export default {

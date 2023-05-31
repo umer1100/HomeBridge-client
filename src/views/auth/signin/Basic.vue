@@ -177,8 +177,8 @@
 <script>
 import { defineComponent, onBeforeMount, onBeforeUnmount, ref } from "vue"
 import { useStore } from "vuex"
-import Navbar from "@/examples/PageLayout/Navbar.vue"
-import AppFooter from "@/examples/PageLayout/Footer.vue"
+import Navbar from "@/PageLayout/Navbar.vue"
+import AppFooter from "@/PageLayout/Footer.vue"
 import { login } from "../../../api/user/login"
 import { useUserStore } from "../../../store/user"
 import { useOrganizationStore } from "../../../store/organization"

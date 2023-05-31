@@ -618,7 +618,7 @@
                       >
                         <span>Lock</span>
                         <img
-                          src="../../assets/img/down-arrow.svg"
+                          src="../assets/img/down-arrow.svg"
                           alt="down-arrow"
                           class="arrow"
                         />
@@ -1542,14 +1542,14 @@
 /*eslint-disable*/
 import downArrWhite from "@/assets/img/down-arrow-white.svg";
 import downArrBlack from "@/assets/img/down-arrow-dark.svg";
-import Office from "../../components/Icon/Office.vue";
-import Shop from "../../components/Icon/Shop.vue";
-import CustomerSupport from "../../components/Icon/CustomerSupport.vue";
-import Document from "../../components/Icon/Document.vue";
-import Spaceship from "../../components/Icon/Spaceship.vue";
-import GettingStarted from "../../components/Icon/GettingStarted.vue";
-import Box3d from "../../components/Icon/Box3d.vue";
-import Settings from "../../components/Icon/Settings.vue";
+import Office from "../components/Icon/Office.vue";
+import Shop from "../components/Icon/Shop.vue";
+import CustomerSupport from "../components/Icon/CustomerSupport.vue";
+import Document from "../components/Icon/Document.vue";
+import Spaceship from "../components/Icon/Spaceship.vue";
+import GettingStarted from "../components/Icon/GettingStarted.vue";
+import Box3d from "../components/Icon/Box3d.vue";
+import Settings from "../components/Icon/Settings.vue";
 
 export default {
   name: "Navbar",

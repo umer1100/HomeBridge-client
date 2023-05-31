@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import MiniStatisticsCard from "../../examples/Cards/MiniStatisticsCard.vue";
+import MiniStatisticsCard from "../../Cards/MiniStatisticsCard.vue";
 import PlayerCard from "./components/PlayerCard.vue";
 import CardDetail from "./components/CardDetail.vue";
 import setTooltip from "@/assets/js/tooltip.js";

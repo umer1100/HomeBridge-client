@@ -218,8 +218,8 @@ import { defineComponent, ref, watch } from "vue"
 import { useStore } from "vuex"
 import { useRoute } from "vue-router"
 //import Breadcrumbs from "../Breadcrumbs.vue"
-import { useUserStore } from "../../store/user"
-import { useOrganizationStore } from "../../store/organization"
+import { useUserStore } from "../store/user"
+import { useOrganizationStore } from "../store/organization"
 
 export default defineComponent({
   name: "Navbar",
@@ -241,7 +241,7 @@ export default defineComponent({
     let route = useRoute()
     let userStore = useUserStore()
     let organizationStore = useOrganizationStore()
-    
+
     let isRTL = ref(globalStore?.state?.isRTL)
     let firstName = ref(userStore?.data?.firstName)
     let lastName = ref(userStore.data?.lastName)

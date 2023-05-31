@@ -110,7 +110,7 @@
           </div>
         </div>
         <div class="mt-4 col-xl-4 col-lg-5 mt-lg-0">
-          <div class="mb-4 col-lg-12 col-sm-6"> 
+          <div class="mb-4 col-lg-12 col-sm-6">
                 <announcement-card
                   title="Hey Marcus! Did you know..."
                   description="Our research has shown that, by increasing your Employer Contribution amount, you will retain and attract more employees."
@@ -124,8 +124,8 @@
                   :action="{ route: 'javascript:;', label: 'Modify' }"
                 />
               </div>
-          
-          
+
+
           <div class="row">
             <div class="col-lg-12">
               <background-blog-card
@@ -138,9 +138,9 @@
                 }"
               />
             </div>
-              
 
-            
+
+
             <div class="col-lg-12 col-sm-6">
               <categories-list
                 :items="[
@@ -241,13 +241,13 @@
 
 <script>
 import MiniGradientLineChart from "@/views/dashboards/components/MiniGradientLineChart.vue";
-// import PlaceHolderCard from "@/examples/Cards/PlaceHolderCard.vue";
+// import PlaceHolderCard from "@/Cards/PlaceHolderCard.vue";
 import BackgroundBlogCard from "./components/BackgroundBlogCard.vue";
 import CategoriesList from "./components/CategoriesList.vue";
 import MessageCard from "./components/MessageCard.vue";
-import RankingListCard from "../../examples/Cards/RankingListCard.vue";
-// import Calendar from "../../examples/Calendar.vue";
-import AppFooter from "../../examples/Footer.vue";
+import RankingListCard from "../../Cards/RankingListCard.vue";
+// import Calendar from "../../Calendar.vue";
+import AppFooter from "../../Footer.vue";
 import DefaultDoughnutChart from "@/views/applications/analytics/components/DefaultDoughnutChart.vue";
 import RevenueChartCard from "@/views/ecommerce/overview/components/RevenueChartCard.vue";
 import AnnouncementCard from "@/views/pages/projects/components/AnnouncementCard.vue";

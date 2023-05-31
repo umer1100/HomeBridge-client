@@ -34,10 +34,10 @@
 </template>
 <script>
 import { defineComponent, onMounted, ref, toRefs, watch } from "vue"
-import Sidenav from "./examples/Sidenav"
-import Configurator from "@/examples/Configurator.vue"
-import Navbar from "@/examples/Navbars/Navbar.vue"
-import AppFooter from "@/examples/Footer.vue"
+import Sidenav from "./Sidenav"
+import Configurator from "@/Configurator.vue"
+import Navbar from "@/Navbars/Navbar.vue"
+import AppFooter from "@/Footer.vue"
 import { useStore } from "vuex"
 import { useUserStore } from "./store/user"
 import SoftSpinner from "@/components/SoftSpinner.vue"

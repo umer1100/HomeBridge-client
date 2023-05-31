@@ -193,10 +193,10 @@
 <script>
 import { defineComponent, onMounted, ref, watch } from "vue"
 import { useStore } from "vuex"
-import { logout } from "../utils/logout"
-import router from "../router/index"
-import { useUserStore } from "../store/user"
-import { useOrganizationStore } from "../store/organization"
+import { logout } from "./utils/logout"
+import router from "./router/index"
+import { useUserStore } from "./store/user"
+import { useOrganizationStore } from "./store/organization"
 export default defineComponent({
   name: "Configurator",
   props: {
@@ -267,13 +267,13 @@ export default defineComponent({
       roleType.value = userStore.data?.roleType
       organizationName.value = organizationStore?.data?.name
     })
-    
+
     onMounted(() => {
       isTransparent.value = "bg-transparent"
       window.addEventListener("resize", sidenavTypeOnResize)
       window.addEventListener("load", sidenavTypeOnResize)
     })
-    
+
     return {
       firstName,
       lastName,

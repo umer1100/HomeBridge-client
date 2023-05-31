@@ -54,8 +54,8 @@
 <script>
 import { defineComponent, onBeforeMount, onBeforeUnmount, ref } from "vue"
 import { useStore } from "vuex"
-import Navbar from "@/examples/PageLayout/Navbar.vue"
-import AppFooter from "@/examples/PageLayout/Footer.vue"
+import Navbar from "@/PageLayout/Navbar.vue"
+import AppFooter from "@/PageLayout/Footer.vue"
 import { EMAIL_REGEX, EMAIL_REGEX_MISMATCH_NOTICE } from "../../../constant/index"
 import { sendResetPasswordToken } from "../../../api/user/sendResetPasswordToken"
 import { handleSpinner, showSnackBar } from "../../../utils/helper"
