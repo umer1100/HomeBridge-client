@@ -28,12 +28,12 @@ export const handleHRISSync = async () => {
   handleSpinner(false)
 }
 
-const onError = ({ errorMessage }) => {
+export const onError = ({ errorMessage }) => {
   console.error(errorMessage)
   showSnackBar("Something went Wrong", errorMessage)
 }
 
-const onClose = () => {
+export const onClose = () => {
   console.log("Finch Connect Closed")
 }
 

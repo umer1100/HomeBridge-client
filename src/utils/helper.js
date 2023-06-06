@@ -1,4 +1,5 @@
 import store from "../store"
+import { USER_ROLE_TYPES, USER_STATUSES } from "../constant"
 
 export const htmlErrorString = (errorMessage) => {
   let htmlString = null
@@ -22,4 +23,12 @@ export const showSnackBar = (title = "", description = "", isRawHtml = false) =>
   store.state.snackbarDescription = description
   store.state.snackbarIsRawHtml = isRawHtml
   store.state.snackbar = true
+}
+
+export const checkIsOnboardingUser = (userStatus) => {
+  return userStatus === USER_STATUSES.ONBOARDING
+}
+
+export const checkIsEmployerUser = (userRoleType) => {
+  return userRoleType === USER_ROLE_TYPES.EMPLOYER
 }

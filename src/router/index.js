@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router"
+import { storeToRefs } from "pinia"
+import routes from "./routes"
+import { PUBLIC_ROUTES, ROUTES } from "./routeAccessControl"
 import { useUserStore } from "../store/user"
 import { useOrganizationStore } from "../store/organization"
-import { storeToRefs } from "pinia"
 import { read } from "../api/user/read"
-import routes from "./routes"
-import { PUBLIC_ROUTES } from "./routeAccessControl"
+import { checkIsOnboardingUser } from "../utils/helper"
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
@@ -16,7 +17,6 @@ router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore()
   const organizationStore = useOrganizationStore()
   const { userJWT } = storeToRefs(userStore)
-  const shouldNotRedirect = PUBLIC_ROUTES.includes(to.path)
 
   if (!userStore?.data && userJWT.value) {
     let response = await read()
@@ -26,8 +26,13 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 
+  const onboardingUser = checkIsOnboardingUser(userStore?.data?.status)
+  const shouldNotRedirect = PUBLIC_ROUTES.includes(to.path) || (!onboardingUser && to.path === ROUTES.ONBOARDING)
+
   if (userJWT.value) {
-    if (shouldNotRedirect) {
+    if (to.path !== ROUTES.ONBOARDING && onboardingUser) {
+      next({ path: ROUTES.ONBOARDING })
+    } else if (shouldNotRedirect) {
       next({ path: from.path })
     } else {
       next()
@@ -36,7 +41,7 @@ router.beforeEach(async (to, from, next) => {
     if (PUBLIC_ROUTES.includes(to.path)) {
       next()
     } else {
-      next({ path: '/authentication/signin' })
+      next({ path: ROUTES.SIGNIN })
     }
   }
 })

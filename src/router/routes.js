@@ -54,6 +54,8 @@ import Error500 from "../views/auth/error/Error500.vue"
 // import lockBasic from "../views/auth/lock/Basic.vue";
 // import lockCover from "../views/auth/lock/Cover.vue";
 // import lockIllustration from "../views/auth/lock/Illustration.vue";
+import ConfirmEmail from "../views/onboarding/ConfirmEmail.vue"
+import Onboarding from "../views/onboarding/Onboarding.vue"
 
 const routes = [
   {
@@ -100,6 +102,16 @@ const routes = [
     path: "/integrations",
     name: "Integrations",
     component: Integrations
+  },
+  {
+    path: "/onboarding",
+    name: "Onboarding",
+    component: Onboarding
+  },
+  {
+    path: "/ConfirmEmail",
+    name: "ConfirmEmail",
+    component: ConfirmEmail
   },
   // {
   //   path: "/pages/profile/teams",

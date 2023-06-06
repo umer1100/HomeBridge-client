@@ -4,7 +4,7 @@ import {
 } from "../api/plaidAccounts/createTokens"
 import { showSnackBar, handleSpinner, htmlErrorString } from "../utils/helper"
 
-export const plaidInitialize = async () => {
+export const plaidInitialize = async (success = {}) => {
   handleSpinner(true)
   const LinkTokenResponse = await createPlaidLinkToken()
   if (LinkTokenResponse && LinkTokenResponse?.success) {
@@ -21,10 +21,12 @@ export const plaidInitialize = async () => {
         })
         handleSpinner(false)
         if (plaidAccessTokenResponse && plaidAccessTokenResponse?.success) {
+          success.value = true
           showSnackBar("Congratulations", "Congratulations, your bank accounts linked successfully.")
         } else {
           let message = htmlErrorString(plaidAccessTokenResponse?.message)
           showSnackBar("Something went Wrong", message, true)
+          success.value = false
         }
       },
       onLoad: () => { },

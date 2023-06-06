@@ -5,3 +5,19 @@ export const PASSWORD_REGEX_MISMATCH_NOTICE = '<div>You have entered an invalid 
 export const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 export const EMAIL_REGEX_MISMATCH_NOTICE = 'You have entered an invalid email address, please try again.'
 
+export const USER_STATUSES = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  PENDING: 'PENDING',
+  ONBOARDING: 'ONBOARDING',
+  PAUSE: 'PAUSE',
+  NEW: 'NEW'
+}
+
+export const USER_ROLE_TYPES = {
+  ADMIN: 'ADMIN',
+  MANAGER: 'MANAGER',
+  EMPLOYEE: 'EMPLOYEE',
+  EMPLOYER: 'EMPLOYER',
+  GUEST: 'GUEST'
+}
