@@ -6,10 +6,10 @@
     <ul class="navbar-nav">
       <li class="nav-item">
         <sidenav-collapse
-          collapse-ref="Dashboard"
+          collapse-ref="dashboard"
           nav-text="Dashboard"
           :collapse="false"
-          :class="getRoute() === 'dashboards' ? 'active' : ''"
+          :class="getRoute() === 'dashboard' ? 'active' : ''"
         >
           <template #icon>
             <Shop />
@@ -29,10 +29,10 @@
           Manage
         </h6>
         <sidenav-collapse
-          collapse-ref="People"
+          collapse-ref="people"
           nav-text="People"
           :collapse="false"
-          :class="getRoute() === 'pages' ? 'active' : ''"
+          :class="getRoute() === 'people' ? 'active' : ''"
         >
           <template #icon>
             <Office />
@@ -54,10 +54,10 @@
 
       <li class="nav-item">
         <sidenav-collapse
-          collapse-ref="Program"
+          collapse-ref="program"
           nav-text="Program"
           :collapse="false"
-          :class="getRoute() === 'applications' ? 'active' : ''"
+          :class="getRoute() === 'program' ? 'active' : ''"
         >
           <template #icon>
             <Settings />
@@ -67,10 +67,10 @@
 
       <li class="nav-item">
         <sidenav-collapse
-          collapse-ref="Brokerage"
+          collapse-ref="brokerage"
           nav-text="Brokerage"
           :collapse="false"
-          :class="getRoute() === 'ecommerce' ? 'active' : ''"
+          :class="getRoute() === 'brokerage' ? 'active' : ''"
         >
           <template #icon>
             <Basket />
@@ -83,7 +83,7 @@
           collapse-ref="integrations"
           nav-text="Integrations"
           :collapse="false"
-          :class="getRoute() === 'authentication' ? 'active' : ''"
+          :class="getRoute() === 'integrations' ? 'active' : ''"
         >
           <template #icon>
             <Document />
