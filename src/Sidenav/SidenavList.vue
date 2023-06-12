@@ -52,7 +52,7 @@
         </sidenav-collapse>
       </li> -->
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <sidenav-collapse
           collapse-ref="program"
           nav-text="Program"
@@ -63,7 +63,7 @@
             <Settings />
           </template>
         </sidenav-collapse>
-      </li>
+      </li> -->
 
       <li class="nav-item">
         <sidenav-collapse
@@ -459,7 +459,7 @@
 <script>
 import SidenavCollapse from "./SidenavCollapse.vue";
 import SidenavCard from "./SidenavCard.vue";
-import Settings from "../components/Icon/Settings.vue";
+// import Settings from "../components/Icon/Settings.vue";
 import Basket from "../components/Icon/Basket.vue";
 // import Box3d from "../components/Icon/Box3d.vue";
 import Shop from "../components/Icon/Shop.vue";
@@ -474,7 +474,7 @@ export default {
   components: {
     SidenavCollapse,
     SidenavCard,
-    Settings,
+    // Settings,
     Basket,
     // Box3d,
     Shop,
