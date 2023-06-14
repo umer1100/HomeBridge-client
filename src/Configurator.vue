@@ -36,16 +36,17 @@
         Sign Out
       </button>
         </div>
-      <hr class="my-1 horizontal dark" />
+      <!-- <hr class="my-1 horizontal dark" /> -->
 
-      <div class="pt-3 pb-0 bg-transparent card-header">
+      <!-- <div class="pt-3 pb-0 bg-transparent card-header">
         <div class="float-start">
           <h5 class="mt-3 mb-0">App Settings</h5>
           <p>Make your account your own.</p>
         </div>
 
-        <!-- End Toggle Button -->
-      </div>
+      </div> -->
+      <!-- End Toggle Button -->
+
       <hr class="my-1 horizontal dark" />
       <div class="pt-0 card-body pt-sm-3">
         <!-- Sidebar Backgrounds -->
@@ -90,7 +91,7 @@
           </div>
         </a> -->
         <!-- Sidenav Type -->
-        <div class="mt-3">
+        <!-- <div class="mt-3">
           <h6 class="mb-0">Left-Side Navigation Menu</h6>
           <p class="text-sm">Select a side navigation type.</p>
         </div>
@@ -114,9 +115,9 @@
         </div>
         <p class="mt-2 text-sm d-xl-none d-block">
           You can change the sidenav type just on desktop view.
-        </p>
+        </p> -->
         <!-- Navbar Fixed -->
-        <div class="mt-2">
+        <!-- <div class="mt-2">
           <h6 class="mb-0">Side Navigation Menu | Compact</h6>
         </div>
         <div class="form-check form-switch ps-0">
@@ -142,8 +143,8 @@
             :checked="isNavFixed"
             @click="setNavbarFixed"
           />
-        </div>
-        <hr class="horizontal dark my-sm-4" />
+        </div> -->
+        <!-- <hr class="horizontal dark my-sm-4" /> -->
         <a
           class="btn bg-gradient-info w-100"
           href="https://www.creative-tim.com/product/vue-soft-ui-dashboard-pro"
@@ -159,8 +160,8 @@
           href="https://www.creative-tim.com/learning-lab/vue/overview/soft-ui-dashboard/"
           >Request a Feature</a
         >
-        <div class="text-center w-100">
-          <!-- <a
+        <!-- <div class="text-center w-100">
+          <a
             class="github-button"
             href="https://github.com/creativetimofficial/ct-vue-soft-ui-dashboard-pro"
             data-icon="octicon-star"
@@ -168,7 +169,7 @@
             data-show-count="true"
             aria-label="Star creativetimofficial/soft-ui-dashboard on GitHub"
             >Star</a
-          > -->
+          >
           <h6 class="mt-3">Leave us a review!</h6>
           <a
             href="https://trustpilot.com/"
@@ -184,7 +185,7 @@
           >
             <i class="fab fa-google me-1" aria-hidden="true"></i> Google
           </a>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
