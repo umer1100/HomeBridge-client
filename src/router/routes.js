@@ -57,6 +57,7 @@ import Error500 from "../views/auth/error/Error500.vue"
 // import lockIllustration from "../views/auth/lock/Illustration.vue";
 import ConfirmEmail from "../views/onboarding/ConfirmEmail.vue"
 import Onboarding from "../views/onboarding/Onboarding.vue"
+import People from "../views/pages/People.vue"
 
 const routes = [
   {
@@ -108,6 +109,11 @@ const routes = [
     path: "/integrations",
     name: "Integrations",
     component: Integrations
+  },
+  {
+    path: "/people",
+    name: "People",
+    component: People
   },
   {
     path: "/onboarding",
@@ -220,7 +226,7 @@ const routes = [
   //   component: ProductPage,
   // },
   // {
-  //   path: "/ecommerce/products/products-list",
+  //   path: "/products",
   //   name: "Products List",
   //   component: ProductsList,
   // },

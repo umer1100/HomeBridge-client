@@ -21,3 +21,27 @@ export const USER_ROLE_TYPES = {
   EMPLOYER: 'EMPLOYER',
   GUEST: 'GUEST'
 }
+
+export const PEOPLE_TAB_IMPORT_TEMPLATE = 'First Name,Last Name,Email'
+
+export const PRIMARY_GOAL_OPTIONS = [
+  'Save up for a down payment',
+  'Home projects and renovations',
+  'Move closer to work',
+  'Buy a second home',
+  'Buy a rental property'
+]
+export const GOAL_TIMELINE_OPTIONS = [
+  'Less than one year',
+  '1-2 years',
+  '3+ years'
+]
+
+export const GOAL_AMOUNT_OPTIONS = [
+  '$0-$9,999',
+  '$10,000-$19,999',
+  '$20,000-$29,999',
+  '$30,000-$39,999',
+  '$40,000-$49,999',
+  '$50,000 or more'
+]
