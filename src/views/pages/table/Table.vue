@@ -12,7 +12,9 @@
         <thead class="thead-light">
           <tr>
             <th v-for="column in tableColumns"
-                :key="column">
+                :key="column"
+                class="p-1"
+            >
               {{ column }}
             </th>
           </tr>
@@ -149,6 +151,7 @@
       }
 
       const searchPeople = () => {
+        currentPage.value = 1
         tableRows.value = props.rows.filter(data => {
           return data.fullName.toLowerCase().includes(search.value.toLowerCase())
         })

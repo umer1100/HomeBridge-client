@@ -339,10 +339,10 @@
         const res = await updateBulkUsers(filterUserData(data.value, selectedTeamMember.value), payload)
         if (res && res?.success) {
           showSnackBar("Congratulations!", "Users successfully updated.")
-          organizationUsers()
         } else {
           showSnackBar("Something went wrong", res?.message)
         }
+        organizationUsers()
         // eslint-disable-next-line require-atomic-updates
         selectedTeamMember.value = []
       }

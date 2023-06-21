@@ -19,7 +19,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" 
+        <button type="button"
               class="btn bg-gradient-info"
               data-bs-dismiss="modal"
               @click="handleClickApply">Apply</button>
@@ -45,6 +45,10 @@
       const handleModalOptions = (item) => {
         emit("selected-options-changed", item)
       }
+
+      watch(()=> [props.modalOption], ([updatedData]) => {
+        modalOptions.value = updatedData
+      }, { deep: true })
 
       watch(()=> [props.selectedOptions], ([updatedData]) => {
         modalSelectedOptions.value = updatedData
