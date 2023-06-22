@@ -13,9 +13,14 @@
           <tr>
             <th v-for="column in tableColumns"
                 :key="column"
-                class="p-1"
-            >
-              {{ column }}
+                class="p-1">
+                {{ column }}
+                <i
+                  :class="getIcon(column)"
+                  class="px-3 pointer"
+                  @click="sortableColumns[column]?.sortable && sortTableData(column)"
+                >
+                </i>
             </th>
           </tr>
         </thead>
@@ -23,8 +28,12 @@
           <!--eslint-disable-next-line vue/no-parsing-error-->
           <tr v-for="userData in pageUserData"
               :key="userData.name">
-            <td v-for="item in tableColumns" :key="item+'-'+userData.id">
-              <div v-if="item == 'Name'" class="d-flex">
+            <td
+              v-for="item in tableColumns"
+              :key="item+'-'+userData.id"
+              :class="item === 'Name' ? 'w-50' : ''"
+            >
+              <div v-if="item === 'Name'" class="d-flex">
                 <div class="my-auto form-check">
                   <input
                     :id="userData.name"
@@ -36,7 +45,7 @@
                 </div>
                 <h6 class="my-auto ms-3">{{ userData[columnFields[item]] }} </h6>
               </div>
-              <span v-else-if="item == 'Status'" :class="`badge badge-sm badge-${getBadgeColor(userData[columnFields[item]])}`">
+              <span v-else-if="item === 'Status'" :class="`badge badge-sm badge-${getBadgeColor(userData[columnFields[item]])}`">
                 {{ userData[columnFields[item]] }}
               </span>
               <div v-else>
@@ -88,7 +97,7 @@
 <script>
   import { defineComponent, onBeforeMount, ref, watch } from 'vue'
   import {
-    convertArrayToObjet
+    convertArrayToObjet, extractSortableLabels, isDate, sortDate
   } from "../../../utils/helper"
 
   export default defineComponent({
@@ -101,6 +110,7 @@
       const tableRows = ref(props.rows)
       const availableColumnOptions = ref(props.availableColumnsOption)
       const columnFields = ref({})
+      const sortableColumns = ref({})
       const pageUserData = ref(props.rows.slice(1,10))
       const currentPage = ref(1)
       const rowsPerPage = ref(10)
@@ -127,26 +137,26 @@
 
       const onSelectTeamMember = (userId) => emit("selected-user-changed", userId)
 
-      const dataToShowOnPage = () => {
+      const setPaginatedData = () => {
         pageUserData.value = tableRows.value.slice((currentPage.value - 1) * rowsPerPage.value, currentPage.value * rowsPerPage.value)
       }
 
       const setCurrentPage = (pageNo) => {
         currentPage.value = pageNo
-        dataToShowOnPage()
+        setPaginatedData()
       }
 
       const previousPage = () => {
         if(!currentPage.value <= 1) {
           currentPage.value = currentPage.value - 1
-          dataToShowOnPage()
+          setPaginatedData()
         }
       }
 
       const nextPage = () => {
         if(!(currentPage.value >= tableRows.value.legth/10)) {
           currentPage.value = currentPage.value + 1
-          dataToShowOnPage()
+          setPaginatedData()
         }
       }
 
@@ -156,25 +166,66 @@
           return data.fullName.toLowerCase().includes(search.value.toLowerCase())
         })
         calculateTotalPages()
-        dataToShowOnPage()
+        setPaginatedData()
       }
 
       const calculateTotalPages = () => {
         totalPages.value = Math.ceil(tableRows.value.length / rowsPerPage.value)
       }
 
+      const sortTableData = (currentColumn) => {
+        sortableColumns.value.current = currentColumn;
+        const isAscending = sortableColumns.value[currentColumn].isAscending;
+        const sortOrder = isAscending ? 1 : -1;
+
+        tableRows.value = [...tableRows.value].sort((a, b) => {
+          const field = columnFields.value[currentColumn];
+          const valueA = a[field];
+          const valueB = b[field];
+
+          if ((valueA?.trim() === '' && valueB?.trim() === '') || (valueA === '-' && valueB === '-')) {
+            return 0;
+          } else if ((valueB?.trim() === '') || (valueB === '-')) {
+            return -1;
+          } else if ((valueA === '-') || (valueA?.trim() === '')) {
+            return 1;
+          } else if (isDate(valueA) && isDate(valueB)) {
+            return sortDate(valueA, valueB) * sortOrder;
+          } else {
+            if (valueA < valueB) return -1 * sortOrder;
+            if (valueA > valueB) return 1 * sortOrder;
+            return 0;
+          }
+        });
+
+        sortableColumns.value[currentColumn].isAscending = !sortableColumns.value[currentColumn].isAscending;
+        setPaginatedData();
+      };
+
+      const getIcon = (col) => {
+        if (sortableColumns.value[col].sortable) {
+          if (sortableColumns.value.current == col) {
+            return sortableColumns.value[col].isAscending == true ? "fas fa-sort-down" : "fas fa-sort-up"
+          } else {
+            return "fas fa-sort"
+          }
+        } else {
+          return ""
+        }
+      }
+
       watch(()=> [props.rows], ([updatedData]) => {
         currentPage.value = 1
         tableRows.value = updatedData
         calculateTotalPages()
-        dataToShowOnPage()
+        setPaginatedData()
       }, { deep: true })
 
       watch(()=> [rowsPerPage.value], ([updatedData]) => {
         currentPage.value = 1
         rowsPerPage.value = updatedData
         calculateTotalPages()
-        dataToShowOnPage()
+        setPaginatedData()
       }, { deep: true })
 
       watch(()=> props.columns, (valueNew) => tableColumns.value = valueNew)
@@ -182,6 +233,8 @@
 
       onBeforeMount(()=> {
         columnFields.value = convertArrayToObjet(availableColumnOptions.value)
+        sortableColumns.value = extractSortableLabels(availableColumnOptions.value)
+        sortTableData("Name")
       })
 
       return {
@@ -191,11 +244,14 @@
       tableColumns,
       tableRows,
       columnFields,
+      sortableColumns,
       currentPage,
       totalPages,
       rowsPerPage,
+      getIcon,
       previousPage,
       nextPage,
+      sortTableData,
       getBadgeColor,
       onSelectTeamMember,
       setCurrentPage
@@ -205,6 +261,10 @@
 </script>
 
 <style>
+  .pointer {
+    cursor: pointer;
+  }
+
   @media only screen and (max-width: 768px) {
     .pagination-bar {
       justify-content: end;

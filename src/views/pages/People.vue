@@ -157,25 +157,25 @@
   } from "../../utils/helper"
 
   let availableColumnOptions = [
-    { label: "Name", field: "fullName" },
-    { label: "Email", field: "email" },
-    { label: "Role", field: "roleType" },
-    { label: "Status", field: "status" },
-    { label: "Source", field: "source" },
-    { label: "Address", field: "address" },
-    { label: "Gender", field: "sex" },
-    { label: "State", field: "state" },
-    { label: "Title", field: "title" },
-    { label: "Department", field: "department" },
-    { label: "Employment Type", field: "employmentType" },
-    { label: "Date of Birth", field: "formattedDateOfBirth" },
-    { label: "Last Seen", field: "formattedLastSeen" },
-    { label: "Hired", field: "formattedStartDate" },
-    { label: "End Date", field: "formattedEndDate" },
-    { label: "Enrolled", field: "formattedCreatedAt" },
-    { label: "Primary Goal", field: "primaryGoal" },
-    { label: "Goal Timeline", field: "goalTimeline" },
-    { label: "Goal Amount", field: "goalAmount" }
+    { label: "Name", field: "fullName", isSortable: true },
+    { label: "Email", field: "email", isSortable: true },
+    { label: "Role", field: "roleType", isSortable: true },
+    { label: "Status", field: "status", isSortable: true },
+    { label: "Source", field: "source", isSortable: true },
+    { label: "Address", field: "address", isSortable: true },
+    { label: "Gender", field: "sex", isSortable: true },
+    { label: "State", field: "state", isSortable: true },
+    { label: "Title", field: "title", isSortable: true },
+    { label: "Department", field: "department", isSortable: true },
+    { label: "Employment Type", field: "employmentType", isSortable: true },
+    { label: "Date of Birth", field: "formattedDateOfBirth", isSortable: true },
+    { label: "Last Seen", field: "formattedLastSeen", isSortable: true },
+    { label: "Hired", field: "formattedStartDate", isSortable: true },
+    { label: "End Date", field: "formattedEndDate", isSortable: true},
+    { label: "Enrolled", field: "formattedCreatedAt", isSortable: true },
+    { label: "Primary Goal", field: "primaryGoal", isSortable: true },
+    { label: "Goal Timeline", field: "goalTimeline", isSortable: true },
+    { label: "Goal Amount", field: "goalAmount", isSortable: true }
   ]
 
   export default defineComponent({
@@ -195,7 +195,7 @@
       const allDepartments = ref([])
 
       const columns = ref([])
-      const selectedColumns = ref(["Name", "Department", "Hired", "Enrolled", "Title", "Status"])
+      const selectedColumns = ref(["Name", "Status", "Email", "Source", "Role"])
 
       const filtersToShow = ["Status", "Gender", "State", "Department", "Primary Goal", "Goal Timeline", "Goal Amount"]
       const filterData = ref([])
@@ -213,7 +213,7 @@
       const readOrganizationUsers = async () => {
         const res = await readUsers()
         if (res && res?.success) {
-          data.value = res?.data.map(user => {
+          data.value = res?.data.filter(user => user.roleType !== 'EMPLOYER').map(user => {
             let { firstName, lastName, addressLine1, addressLine2, city, state, zipcode, lastLogin, createdAt, endDate, startDate, dateOfBirth, department, source, sex, roleType, title, primaryGoal, goalTimeline, goalAmount } = user
             allDepartments.value.push(department)
             return {
@@ -236,6 +236,7 @@
               goalAmount: goalAmount || "-",
             }
           })
+
           peopleDataToDisplay.value = data.value
           handleShowColumns()
           initializeModalOptions()
@@ -364,7 +365,7 @@
           case "Goal Amount":
             return GOAL_AMOUNT_OPTIONS.map(item => ({ label: item }))
           case "Column Options":
-            return availableColumnOptions
+            return availableColumnOptions.filter(option => option.label !== "Name")
           default:
             console.warn(`No such option i.e, ${label}`)
         }

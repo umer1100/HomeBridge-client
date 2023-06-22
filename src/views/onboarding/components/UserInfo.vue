@@ -139,7 +139,7 @@
 import { defineComponent, ref, watch } from "vue"
 import SoftButton from "@/components/SoftButton.vue"
 import { useUserStore } from "../../../store/user"
-import { checkIsEmployerUser } from "../../../utils/helper"
+import { isRoleEmployer } from "../../../utils/helper"
 
 export default defineComponent({
   name: "UserInfo",
@@ -158,7 +158,7 @@ export default defineComponent({
     const userEmailAddress = ref(props.userInfo?.userEmail)
     const userOrganizationName = ref(props.userInfo?.organizationName)
     const NoOfEmployees = ref(null)
-    const isEmployer = ref(checkIsEmployerUser(userStore?.data?.roleType))
+    const isEmployer = ref(isRoleEmployer(userStore?.data?.roleType))
 
     const handleNextStep = () => {
       emit("next-step")
@@ -167,7 +167,7 @@ export default defineComponent({
     const handlePrevStep = () => {
       emit("prev-step")
     }
-    
+
     watch([userFirstName, userLastName], ([newFirstName, newLastName], [oldFirstName, oldLastName]) => {
       if (newFirstName !== oldFirstName || newLastName !== oldLastName) {
         emit("user-info-update", {

@@ -20,7 +20,7 @@
       <li class="mt-3 nav-item">
       </li>
 
-      <li class="nav-item">
+      <li v-if="getUserRole() === 'EMPLOYER'" class="nav-item">
         <hr class="mt-0 horizontal dark" />
         <h6
           class="text-xs ps-4 ms-2 text-uppercase font-weight-bolder opacity-6"
@@ -467,8 +467,9 @@ import Office from "../components/Icon/Office.vue";
 import Document from "../components/Icon/Document.vue";
 // import Spaceship from "../components/Icon/Spaceship.vue";
 // import CreditCard from "../components/Icon/CreditCard.vue";
-
 import { mapState } from "vuex";
+import { useUserStore } from "../store/user";
+
 export default {
   name: "SidenavList",
   components: {
@@ -497,6 +498,11 @@ export default {
       const routeArr = this.$route.path.split("/");
       return routeArr[1];
     },
+    getUserRole() {
+      const userStore = useUserStore();
+      const roleType = userStore?.data?.roleType;
+      return roleType;
+    }
   },
 };
 </script>

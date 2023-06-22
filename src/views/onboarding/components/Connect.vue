@@ -8,15 +8,15 @@
     <div class="multisteps-form__content">
       <div class="d-flex flex-column align-items-center">
         <img v-if="isEmployer" alt="Finch Logo" class="img-size" :src="FinchLogo"/>
-        <img v-else alt="Plaid Logo" class="img-size" :src="PlaidLogo"/> 
-        <button v-if="isEmployer" 
+        <img v-else alt="Plaid Logo" class="img-size" :src="PlaidLogo"/>
+        <button v-if="isEmployer"
                 @click="onClickFinch"
                 type="button"
                 class="btn mb-0 mt-2 bg-gradient-info btn-md w-fit">
           Connect with Finch
         </button>
-        <button v-else 
-                type="button" 
+        <button v-else
+                type="button"
                 @click="plaidConnect"
                 class="btn mb-0 bg-gradient-info btn-md w-fit">
           Connect with Plaid
@@ -43,7 +43,7 @@
     </div>
   </div>
 </template>
-  
+
 <script>
 import { defineComponent, ref, watch } from "vue"
 import SoftButton from "@/components/SoftButton.vue"
@@ -56,7 +56,7 @@ import { scheduleImportOrganizationUsers } from "../../../api/employeeSync/impor
 import { storeHrisAccessToken } from "../../../api/organization/finchAccessToken"
 import { onError, onClose } from "../../../services/finch"
 import { plaidInitialize } from "../../../services/plaid"
-import { checkIsEmployerUser, handleSpinner, showSnackBar } from "../../../utils/helper"
+import { isRoleEmployer, handleSpinner, showSnackBar } from "../../../utils/helper"
 
 const { VUE_APP_FINCH_CLIENT_ID, VUE_APP_FINCH_ENV_IS_SANDBOX } = process.env
 
@@ -68,8 +68,8 @@ export default defineComponent({
   setup(_, {emit}) {
     const userStore = useUserStore()
     const isSuccess = ref(false)
-    const isEmployer = ref(checkIsEmployerUser(userStore?.data?.roleType))
-    
+    const isEmployer = ref(isRoleEmployer(userStore?.data?.roleType))
+
     const handleNextStep = () => {
       emit("next-step")
     }
@@ -119,7 +119,7 @@ export default defineComponent({
       onError,
       onClose,
     })
-    
+
     watch(isSuccess, () => {
       if (isSuccess.value == true) emit("next-step")
     })

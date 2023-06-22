@@ -52,6 +52,7 @@ import NewPassword from "../views/auth/newPassword/Basic.vue"
 // import SignupIllustration from "../views/auth/signup/Illustration.vue";
 import Error404 from "../views/auth/error/Error404.vue"
 import Error500 from "../views/auth/error/Error500.vue"
+import Paused from "../views/auth/error/Paused.vue"
 // import lockBasic from "../views/auth/lock/Basic.vue";
 // import lockCover from "../views/auth/lock/Cover.vue";
 // import lockIllustration from "../views/auth/lock/Illustration.vue";
@@ -355,6 +356,11 @@ const routes = [
   //   name: "Signup Illustration",
   //   component: SignupIllustration,
   // },
+  {
+    path: "/authentication/temporary-block",
+    name: "User Paused",
+    component: Paused,
+  },
   {
     path: "/authentication/error/error404",
     name: "Error Error404",

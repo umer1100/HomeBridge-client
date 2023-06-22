@@ -25,11 +25,15 @@ export const showSnackBar = (title = "", description = "", isRawHtml = false) =>
   store.state.snackbar = true
 }
 
-export const checkIsOnboardingUser = (userStatus) => {
+export const isStatusOnboarding = (userStatus) => {
   return userStatus === USER_STATUSES.ONBOARDING
 }
 
-export const checkIsEmployerUser = (userRoleType) => {
+export const isStatusPause = (userStatus) => {
+  return userStatus === USER_STATUSES.PAUSE
+}
+
+export const isRoleEmployer = (userRoleType) => {
   return userRoleType === USER_ROLE_TYPES.EMPLOYER
 }
 
@@ -38,7 +42,7 @@ export const uniqueElements = (value, index, self) => {
 }
 
 export const titleCase = (str) => {
-  return str?.toLowerCase().replace(/\b\w/g, function(txt) {
+  return str?.toLowerCase().replace(/\b\w/g, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.substr(1)
   })
 }
@@ -59,16 +63,43 @@ export const convertArrayToObjet = (array) => {
   return result
 }
 
+export const extractSortableLabels = (array) => {
+  let sortableInfo = {}
+
+  for (let option of array) {
+    if (option.isSortable) {
+      sortableInfo[option.label] = {
+        sortable: true,
+        isAscending: true
+      }
+    } else {
+      sortableInfo[option.label] = {
+        sortable: false
+      }
+    }
+  }
+  sortableInfo.current = ''
+  return sortableInfo
+}
+
 export const downloadCSV = (csvContent) => {
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
   const url = URL.createObjectURL(blob)
   const link = document.createElement('a')
   link.href = url
   link.setAttribute('download', 'data.csv')
-  link.click();
-  URL.revokeObjectURL(url);
+  link.click()
+  URL.revokeObjectURL(url)
 }
 
 export const filterUserData = (usersData, userIds) => {
   return usersData.filter(item => userIds.includes(item.id))
+}
+
+export const isDate = (value) => {
+  return !isNaN(Date.parse(value));
+}
+
+export const sortDate = (a, b) => {
+  return Date.parse(a) - Date.parse(b)
 }
