@@ -234,7 +234,6 @@
       onBeforeMount(()=> {
         columnFields.value = convertArrayToObjet(availableColumnOptions.value)
         sortableColumns.value = extractSortableLabels(availableColumnOptions.value)
-        sortTableData("Name")
       })
 
       return {
