@@ -78,7 +78,7 @@
         </sidenav-collapse>
       </li>
 
-      <li class="nav-item">
+      <li v-if="getUserRole() === 'EMPLOYER'" class="nav-item">
         <sidenav-collapse
           collapse-ref="integrations"
           nav-text="Integrations"
