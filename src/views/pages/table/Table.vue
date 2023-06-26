@@ -13,12 +13,12 @@
           <tr>
             <th v-for="column in tableColumns"
                 :key="column"
-                class="p-1">
+                :class="column === 'Name' ? 'padding-left-50' : ''">
                 {{ column }}
                 <i
                   :class="getIcon(column)"
                   class="px-3 pointer"
-                  @click="sortableColumns[column]?.sortable && sortTableData(column)"
+                  @click="availableColumnOptions[column]?.sortable && sortTableData(column)"
                 >
                 </i>
             </th>
@@ -43,13 +43,13 @@
                     @click="onSelectTeamMember(userData.id)"
                   />
                 </div>
-                <h6 class="my-auto ms-3">{{ userData[columnFields[item]] }} </h6>
+                <h6 class="my-auto ms-3">{{ userData[availableColumnOptions[item].field] }} </h6>
               </div>
-              <span v-else-if="item === 'Status'" :class="`badge badge-sm badge-${getBadgeColor(userData[columnFields[item]])}`">
-                {{ userData[columnFields[item]] }}
+              <span v-else-if="item === 'Status'" :class="`badge badge-sm badge-${getBadgeColor(userData[availableColumnOptions[item].field])}`">
+                {{ userData[availableColumnOptions[item].field] }}
               </span>
               <div v-else>
-                {{ userData[columnFields[item]] }}
+                {{ userData[availableColumnOptions[item].field] }}
               </div>
             </td>
           </tr>
@@ -95,10 +95,8 @@
 </template>
 
 <script>
-  import { defineComponent, onBeforeMount, ref, watch } from 'vue'
-  import {
-    convertArrayToObjet, extractSortableLabels, isDate, sortDate
-  } from "../../../utils/helper"
+  import { defineComponent, ref, watch } from 'vue'
+  import { isDate, sortDate } from "../../../utils/helper"
 
   export default defineComponent({
     name: "UserTable",
@@ -109,8 +107,7 @@
       const tableColumns = ref(props.columns)
       const tableRows = ref(props.rows)
       const availableColumnOptions = ref(props.availableColumnsOption)
-      const columnFields = ref({})
-      const sortableColumns = ref({})
+      const columnToSort = ref("")
       const pageUserData = ref(props.rows.slice(1,10))
       const currentPage = ref(1)
       const rowsPerPage = ref(10)
@@ -174,38 +171,39 @@
       }
 
       const sortTableData = (currentColumn) => {
-        sortableColumns.value.current = currentColumn;
-        const isAscending = sortableColumns.value[currentColumn].isAscending;
-        const sortOrder = isAscending ? 1 : -1;
+        columnToSort.value = currentColumn
+        const isAscending = availableColumnOptions.value[currentColumn].isAscending
+        const sortOrder = isAscending ? 1 : -1
 
         tableRows.value = [...tableRows.value].sort((a, b) => {
-          const field = columnFields.value[currentColumn];
-          const valueA = a[field];
-          const valueB = b[field];
+          const field = availableColumnOptions.value[currentColumn].field
+          
+          const valueA = a[field] || ''
+          const valueB = b[field] || ''
 
           if ((valueA?.trim() === '' && valueB?.trim() === '') || (valueA === '-' && valueB === '-')) {
-            return 0;
+            return 0
           } else if ((valueB?.trim() === '') || (valueB === '-')) {
-            return -1;
+            return -1
           } else if ((valueA === '-') || (valueA?.trim() === '')) {
-            return 1;
+            return 1
           } else if (isDate(valueA) && isDate(valueB)) {
-            return sortDate(valueA, valueB) * sortOrder;
+            return sortDate(valueA, valueB) * sortOrder
           } else {
-            if (valueA < valueB) return -1 * sortOrder;
-            if (valueA > valueB) return 1 * sortOrder;
-            return 0;
+            if (valueA < valueB) return -1 * sortOrder
+            if (valueA > valueB) return 1 * sortOrder
+            return 0
           }
-        });
+        })
 
-        sortableColumns.value[currentColumn].isAscending = !sortableColumns.value[currentColumn].isAscending;
-        setPaginatedData();
-      };
+        availableColumnOptions.value[currentColumn].isAscending = !availableColumnOptions.value[currentColumn].isAscending
+        setPaginatedData()
+      }
 
       const getIcon = (col) => {
-        if (sortableColumns.value[col].sortable) {
-          if (sortableColumns.value.current == col) {
-            return sortableColumns.value[col].isAscending == true ? "fas fa-sort-down" : "fas fa-sort-up"
+        if (availableColumnOptions.value[col].sortable) {
+          if (columnToSort.value == col) {
+            return availableColumnOptions.value[col].isAscending == true ? "fas fa-sort-down" : "fas fa-sort-up"
           } else {
             return "fas fa-sort"
           }
@@ -231,22 +229,17 @@
       watch(()=> props.columns, (valueNew) => tableColumns.value = valueNew)
       watch(search, () => searchPeople())
 
-      onBeforeMount(()=> {
-        columnFields.value = convertArrayToObjet(availableColumnOptions.value)
-        sortableColumns.value = extractSortableLabels(availableColumnOptions.value)
-      })
-
       return {
       tableData,
       search,
       pageUserData,
       tableColumns,
       tableRows,
-      columnFields,
-      sortableColumns,
+      columnToSort,
       currentPage,
       totalPages,
       rowsPerPage,
+      availableColumnOptions,
       getIcon,
       previousPage,
       nextPage,
@@ -268,6 +261,10 @@
     .pagination-bar {
       justify-content: end;
       flex-direction: column-reverse;
+    }
+
+    .padding-left-50 {
+      padding-left: 50px !important;
     }
 
     .pagination-row-count {

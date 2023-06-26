@@ -57,7 +57,7 @@
                       Filters
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownFilterButton">
-                      <li v-for="filter in filtersToShow" :key="filter">
+                      <li v-for="filter in availableFilters" :key="filter">
                         <a class="dropdown-item" data-bs-toggle="modal" :data-bs-target="`#modal-filter${ hyphenateString(filter) }`">
                           {{ filter }}
                         </a>
@@ -114,7 +114,7 @@
   >
     <import-users @post-submit-callback='organizationUsers'/>
   </div>
-  <div  v-for="(item, index) in filterDialogueProps"
+  <div  v-for="(item, index) in toggleOptionProps"
     :id="`modal-filter${item.name}`"
     :key="item.name"
     class="modal fade"
@@ -125,7 +125,7 @@
   >
     <options-modal
       :title="item.title"
-      :modalOption='availableModals[index].options'
+      :modalOption='availableToggleOption[index]?.options'
       :selectedOptions='item.selectedOptions'
       :showSearch='item.showSearch'
       @selected-options-changed='item.selectedOptionsChanged'
@@ -135,9 +135,7 @@
 
 <script>
   import { defineAsyncComponent, defineComponent, onBeforeMount, ref } from "vue"
-  import { useStore } from "vuex"
   import moment from "moment"
-  import setTooltip from "@/assets/js/tooltip.js"
   import { readUsers } from "../../api/organization/readUsers"
   import { sendBulkInvitation } from "../../api/user/sendBulkInvitation"
   import { updateBulkUsers } from "../../api/user/updateBulkUsers"
@@ -153,30 +151,32 @@
     titleCase,
     hyphenateString,
     filterUserData,
-    showSnackBar
+    showSnackBar,
+    downloadCSV,
+    parseCSV,
   } from "../../utils/helper"
 
-  let availableColumnOptions = [
-    { label: "Name", field: "fullName", isSortable: true },
-    { label: "Email", field: "email", isSortable: true },
-    { label: "Role", field: "roleType", isSortable: true },
-    { label: "Status", field: "status", isSortable: true },
-    { label: "Source", field: "source", isSortable: true },
-    { label: "Address", field: "address", isSortable: true },
-    { label: "Gender", field: "sex", isSortable: true },
-    { label: "State", field: "state", isSortable: true },
-    { label: "Title", field: "title", isSortable: true },
-    { label: "Department", field: "department", isSortable: true },
-    { label: "Employment Type", field: "employmentType", isSortable: true },
-    { label: "Date of Birth", field: "formattedDateOfBirth", isSortable: true },
-    { label: "Last Seen", field: "formattedLastSeen", isSortable: true },
-    { label: "Hired", field: "formattedStartDate", isSortable: true },
-    { label: "End Date", field: "formattedEndDate", isSortable: true},
-    { label: "Enrolled", field: "formattedCreatedAt", isSortable: true },
-    { label: "Primary Goal", field: "primaryGoal", isSortable: true },
-    { label: "Goal Timeline", field: "goalTimeline", isSortable: true },
-    { label: "Goal Amount", field: "goalAmount", isSortable: true }
-  ]
+  let availableColumnOptions = {
+    "Name": { field: "fullName", sortable: true, isAscending: true },
+    "Email": { field: "email", sortable: true, isAscending: true },
+    "Role": { field: "roleType", sortable: true, isAscending: true },
+    "Status": { field: "status", sortable: true, isAscending: true },
+    "Source": { field: "source", sortable: true, isAscending: true },
+    "Address": { field: "address", sortable: true, isAscending: true },
+    "Gender": { field: "sex", sortable: true, isAscending: true },
+    "State": { field: "state", sortable: true, isAscending: true },
+    "Title": { field: "title", sortable: true, isAscending: true },
+    "Departmet": { field: "department", sortable: true, isAscending: true },
+    "Employment Type": { field: "employmntType", sortable: true, isAscending: true },
+    "Date of Birth": { field: "formattedDateOfBirth", sortable: true, isAscending: true },
+    "Last Seen": { field: "formattedLastSeen", sortable: true, isAscending: true },
+    "Hired": { field: "formattedStartDate", sortable: true, isAscending: true },
+    "End Date": { field: "formattedEndDate", sortable: true, isAscending: true },
+    "Enrolled": { field: "formattedCreatedAt", sortable: true, isAscending: true },
+    "Primary Goal": { field: "primaryGoal", sortable: true, isAscending: true },
+    "Goal Timeline": { field: "goalTimeline", sortable: true, isAscending: true },
+    "Goal Amount": { field: "goalAmount", sortable: true, isAscending: true },
+  }
 
   export default defineComponent({
     name: "People",
@@ -187,9 +187,6 @@
       UserTable: defineAsyncComponent(()=> import("./table/Table.vue"))
     },
     setup() {
-      let tableData = null
-      const globalStore = useStore()
-
       const data = ref([])
       const peopleDataToDisplay = ref([])
       const allDepartments = ref([])
@@ -197,9 +194,9 @@
       const columns = ref([])
       const selectedColumns = ref(["Name", "Status", "Email", "Source", "Role"])
 
-      const filtersToShow = ["Status", "Gender", "State", "Department", "Primary Goal", "Goal Timeline", "Goal Amount"]
+      const availableFilters = ["Status", "Gender", "State", "Department", "Primary Goal", "Goal Timeline", "Goal Amount"]
       const filterData = ref([])
-      const availableModals = ref([...filtersToShow, "Column Options"])
+      const availableToggleOption = ref([...availableFilters, "Column Options"])
 
       const selectedStatusFilters = ref([])
       const selectedGenderFilters = ref([])
@@ -239,7 +236,7 @@
 
           peopleDataToDisplay.value = data.value
           handleShowColumns()
-          initializeModalOptions()
+          initializeToggleOptions()
         } else {
           showSnackBar("Something went wrong.", res?.message || "Failed to read users detail")
         }
@@ -260,6 +257,77 @@
           return "danger"
         } else {
           return "dark"
+        }
+      }
+
+      const initializeToggleOptions = () => {
+        availableToggleOption.value = availableToggleOption.value.map(item => ({ name: item, options: serializeModalOptions(item) }))
+      }
+
+      const handleSelectedTeamMember = (item) => handleSelectedOptions(selectedTeamMember, item)
+      const handleSelectedOptions = (array, item) => {
+        const index = array.value.indexOf(item)
+        index !== -1 ? array.value.splice(index, 1) : array.value.push(item)
+      }
+
+      const organizationUsers = async () => await readOrganizationUsers()
+      const handleShowColumns = () => columns.value = Array.from(selectedColumns.value)
+
+      const exportTable = () => {
+        const filteredData = peopleDataToDisplay.value.map((item) => {
+          const filteredItem = {}
+          columns.value.forEach((columnName) => {
+            filteredItem[columnName] = item[availableColumnOptions[columnName].field]
+          })
+          return filteredItem
+        })
+        // ParseCSV converts an array of objects into a CSV format
+        const csvData = parseCSV(filteredData)
+        downloadCSV(csvData)
+      }
+
+      const sendBulkEmail = async () => {
+        const res = await sendBulkInvitation(filterUserData(data.value, selectedTeamMember.value))
+        if (res?.success) {
+          showSnackBar("Wait a moment", "Scheduling job to send emails.")
+          organizationUsers()
+          // eslint-disable-next-line require-atomic-updates
+          selectedTeamMember.value = []
+        }
+      }
+
+      const bulkUpdate = async (payload) => {
+        const res = await updateBulkUsers(filterUserData(data.value, selectedTeamMember.value), payload)
+        if (res && res?.success) {
+          showSnackBar("Congratulations!", "Users successfully updated.")
+        } else {
+          showSnackBar("Something went wrong", res?.message)
+        }
+        organizationUsers()
+        // eslint-disable-next-line require-atomic-updates
+        selectedTeamMember.value = []
+      }
+
+      const serializeModalOptions = (label) => {
+        switch (label) {
+          case "Status":
+            return Object.values(USER_STATUSES).map(item => ({ label: item }))
+          case "Gender":
+            return [{ label: "Male" }, { label: "Female" }, { label: "Other" }]
+          case "State":
+            return Object.keys(STATES).map(item => ({ label: STATES[item]}))
+          case "Department":
+            return allDepartments.value.filter(uniqueElements).map(item => ({ label: item }))
+          case "Primary Goal":
+            return PRIMARY_GOAL_OPTIONS.map(item => ({ label: item }))
+          case "Goal Timeline":
+            return GOAL_TIMELINE_OPTIONS.map(item => ({ label: item }))
+          case "Goal Amount":
+            return GOAL_AMOUNT_OPTIONS.map(item => ({ label: item }))
+          case "Column Options":
+            return Object.keys(availableColumnOptions).filter(option => option !== "Name").map(item => ({label: item}))
+          default:
+            console.warn(`No such option i.e, ${label}`)
         }
       }
 
@@ -305,73 +373,7 @@
         peopleDataToDisplay.value = filterData.value
       }
 
-      const initializeModalOptions = () => {
-        availableModals.value = availableModals.value.map(item => ({ name: item, options: serializeModalOptions(item) }))
-      }
-
-      const handleSelectedTeamMember = (item) => handleSelectedOptions(selectedTeamMember, item)
-      const handleSelectedOptions = (array, item) => {
-        const index = array.value.indexOf(item)
-        index !== -1 ? array.value.splice(index, 1) : array.value.push(item)
-      }
-
-      const organizationUsers = async () => await readOrganizationUsers()
-      const handleShowColumns = () => columns.value = Array.from(selectedColumns.value)
-
-      const exportTable = () => {
-        var data = {
-          type: "csv",
-          filename: "sample-csv"
-        }
-        tableData.export(data)
-      }
-
-      const sendBulkEmail = async () => {
-        const res = await sendBulkInvitation(filterUserData(data.value, selectedTeamMember.value))
-        if (res?.success) {
-          showSnackBar("Wait a moment", "Scheduling job to send emails.")
-          organizationUsers()
-          // eslint-disable-next-line require-atomic-updates
-          selectedTeamMember.value = []
-        }
-      }
-
-      const bulkUpdate = async (payload) => {
-        const res = await updateBulkUsers(filterUserData(data.value, selectedTeamMember.value), payload)
-        if (res && res?.success) {
-          showSnackBar("Congratulations!", "Users successfully updated.")
-        } else {
-          showSnackBar("Something went wrong", res?.message)
-        }
-        organizationUsers()
-        // eslint-disable-next-line require-atomic-updates
-        selectedTeamMember.value = []
-      }
-
-      const serializeModalOptions = (label) => {
-        switch (label) {
-          case "Status":
-            return Object.values(USER_STATUSES).map(item => ({ label: item }))
-          case "Gender":
-            return [{ label: "Male" }, { label: "Female" }, { label: "Other" }]
-          case "State":
-            return Object.keys(STATES).map(item => ({ label: STATES[item]}))
-          case "Department":
-            return allDepartments.value.filter(uniqueElements).map(item => ({ label: item }))
-          case "Primary Goal":
-            return PRIMARY_GOAL_OPTIONS.map(item => ({ label: item }))
-          case "Goal Timeline":
-            return GOAL_TIMELINE_OPTIONS.map(item => ({ label: item }))
-          case "Goal Amount":
-            return GOAL_AMOUNT_OPTIONS.map(item => ({ label: item }))
-          case "Column Options":
-            return availableColumnOptions.filter(option => option.label !== "Name")
-          default:
-            console.warn(`No such option i.e, ${label}`)
-        }
-      }
-
-      const filterDialogueProps = ref([
+      const toggleOptionProps = ref([
         {
           name: "Status",
           title: "Filter by Status",
@@ -432,7 +434,6 @@
 
       onBeforeMount(async () => {
         await organizationUsers()
-        setTooltip(globalStore.state.bootstrap)
       })
 
       return{
@@ -440,10 +441,10 @@
         selectedColumns,
         peopleDataToDisplay,
         availableColumnOptions,
-        availableModals,
+        availableToggleOption,
         selectedTeamMember,
-        filterDialogueProps,
-        filtersToShow,
+        toggleOptionProps,
+        availableFilters,
         exportTable,
         bulkUpdate,
         sendBulkEmail,

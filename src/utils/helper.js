@@ -103,3 +103,13 @@ export const isDate = (value) => {
 export const sortDate = (a, b) => {
   return Date.parse(a) - Date.parse(b)
 }
+
+export const parseCSV = (tableData) => {
+  let csvContent = ''
+  csvContent += Object.keys(tableData[0]).join(',') + '\n'
+  tableData.forEach((item) => {
+    const column = Object.values(item)
+    csvContent += column.join(',') + '\n'
+  })
+  return csvContent
+}

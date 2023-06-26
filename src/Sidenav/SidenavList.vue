@@ -6,10 +6,10 @@
     <ul class="navbar-nav">
       <li class="nav-item">
         <sidenav-collapse
-          collapse-ref="dashboard"
           nav-text="Dashboard"
           :collapse="false"
           :class="getRoute() === 'dashboard' ? 'active' : ''"
+          @click="navigateToPath('/dashboard')"
         >
           <template #icon>
             <Shop />
@@ -29,10 +29,10 @@
           Manage
         </h6>
         <sidenav-collapse
-          collapse-ref="people"
           nav-text="People"
           :collapse="false"
           :class="getRoute() === 'people' ? 'active' : ''"
+          @click="navigateToPath('/people')"
         >
           <template #icon>
             <Office />
@@ -67,10 +67,10 @@
 
       <li class="nav-item">
         <sidenav-collapse
-          collapse-ref="brokerage"
           nav-text="Brokerage"
           :collapse="false"
           :class="getRoute() === 'brokerage' ? 'active' : ''"
+          @click="navigateToPath('/brokerage')"
         >
           <template #icon>
             <Basket />
@@ -80,10 +80,10 @@
 
       <li v-if="getUserRole() === 'EMPLOYER'" class="nav-item">
         <sidenav-collapse
-          collapse-ref="integrations"
           nav-text="Integrations"
           :collapse="false"
           :class="getRoute() === 'integrations' ? 'active' : ''"
+          @click="navigateToPath('/integrations')"
         >
           <template #icon>
             <Document />
@@ -457,32 +457,30 @@
   </div>
 </template>
 <script>
-import SidenavCollapse from "./SidenavCollapse.vue";
-import SidenavCard from "./SidenavCard.vue";
-// import Settings from "../components/Icon/Settings.vue";
-import Basket from "../components/Icon/Basket.vue";
-// import Box3d from "../components/Icon/Box3d.vue";
-import Shop from "../components/Icon/Shop.vue";
-import Office from "../components/Icon/Office.vue";
-import Document from "../components/Icon/Document.vue";
-// import Spaceship from "../components/Icon/Spaceship.vue";
-// import CreditCard from "../components/Icon/CreditCard.vue";
-import { mapState } from "vuex";
-import { useUserStore } from "../store/user";
+import { computed, defineComponent } from "vue"
+import { useRoute, useRouter } from "vue-router"
+import { mapState } from "vuex"
+import SidenavCollapse from "./SidenavCollapse.vue"
+import SidenavCard from "./SidenavCard.vue"
+// import Settings from "../components/Icon/Settings.vue"
+import Basket from "../components/Icon/Basket.vue"
+// import Box3d from "../components/Icon/Box3d.vue"
+import Shop from "../components/Icon/Shop.vue"
+import Office from "../components/Icon/Office.vue"
+import Document from "../components/Icon/Document.vue"
+// import Spaceship from "../components/Icon/Spaceship.vue"
+// import CreditCard from "../components/Icon/CreditCard.vue"
+import { useUserStore } from "../store/user"
 
-export default {
+export default defineComponent({
   name: "SidenavList",
   components: {
     SidenavCollapse,
     SidenavCard,
-    // Settings,
     Basket,
-    // Box3d,
     Shop,
     Office,
     Document,
-    // Spaceship,
-    // CreditCard,
   },
   props: {
     cardBg: {
@@ -490,19 +488,33 @@ export default {
       default: "",
     },
   },
-    computed: {
-      ...mapState(["isRTL"]),
-    },
-  methods: {
-    getRoute() {
-      const routeArr = this.$route.path.split("/");
-      return routeArr[1];
-    },
-    getUserRole() {
-      const userStore = useUserStore();
-      const roleType = userStore?.data?.roleType;
-      return roleType;
+  setup() {
+    const route = useRoute()
+    const router = useRouter()
+    const userStore = useUserStore()
+
+    const getRoute = () => {
+      const routeArr = route.path.split("/")
+      return routeArr[1]
+    }
+
+    const getUserRole = () => {
+      const roleType = userStore?.data?.roleType
+      return roleType
+    }
+
+    const isRTL = computed(() => mapState(["isRTL"]).isRTL)
+
+    const navigateToPath = (path) => {
+      router.push(path)
+    }
+
+    return {
+      getRoute,
+      getUserRole,
+      navigateToPath,
+      isRTL,
     }
   },
-};
+})
 </script>
