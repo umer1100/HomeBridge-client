@@ -257,14 +257,14 @@
     cursor: pointer;
   }
 
+  .padding-left-50 {
+    padding-left: 50px !important;
+  }
+
   @media only screen and (max-width: 768px) {
     .pagination-bar {
       justify-content: end;
       flex-direction: column-reverse;
-    }
-
-    .padding-left-50 {
-      padding-left: 50px !important;
     }
 
     .pagination-row-count {

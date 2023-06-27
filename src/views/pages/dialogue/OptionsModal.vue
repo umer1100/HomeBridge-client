@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+  <div class="modal-dialog modal- modal-dialog-centered modal- modal-width" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h6 id="modal-title-default" class="modal-title">{{ title }}</h6>
@@ -10,10 +10,18 @@
       <div class="modal-body">
         <form>
           <input v-if="showSearch" v-model="search" type="text" class="form-control" placeholder="e.g. Washington">
-          <div class="form-check form-switch custom-modal-body">
+          <div class="form-check form-switch custom-modal-body px-1">
             <div v-for="option in modalOptions" :key="option.label">
-              <label class="form-check-label">{{ option.label }}</label>
-              <input class="form-check-input" type="checkbox" @click="handleModalOptions(option.label)" :checked="modalSelectedOptions.includes(option.label)">
+              <div class="mb-1 d-flex">
+                <p class="form-check-label">{{ option.label }}</p>
+                <div class="form-check form-switch ms-auto">
+                  <input  class="form-check-input"
+                          type="checkbox"
+                          :checked="modalSelectedOptions.includes(option.label)"
+                          @click="handleModalOptions(option.label)"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </form>
@@ -76,5 +84,9 @@
   .custom-modal-body {
     max-height: 400px;
     overflow-y: auto;
+  }
+
+  .modal-width {
+    max-width: 400px;
   }
 </style>
