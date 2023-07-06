@@ -78,6 +78,19 @@
         </sidenav-collapse>
       </li>
 
+      <li v-if="getUserRole() === 'EMPLOYEE'" class="nav-item">
+        <sidenav-collapse
+          nav-text="Mortgage"
+          :collapse="false"
+          :class="getRoute() === 'lender' ? 'active' : ''"
+          @click="navigateToPath('/lender')"
+        >
+          <template #icon>
+            <Basket />
+          </template>
+        </sidenav-collapse>
+      </li>
+
       <li v-if="getUserRole() === 'EMPLOYER'" class="nav-item">
         <sidenav-collapse
           nav-text="Integrations"

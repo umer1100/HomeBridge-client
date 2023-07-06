@@ -9,6 +9,7 @@ export const ROUTES = {
   CONFIRM_EMAIL: '/ConfirmEmail',
   PEOPLE: '/people',
   PARTNERS: '/brokerage',
+  LENDERS: '/lender',
   BLOCKED: '/authentication/temporary-block',
 }
 
@@ -28,7 +29,7 @@ const COMMON_ROUTES = [
 ]
 
 //Routes which EMPLOYEE can access
-const EMPLOYEE_ROUTES = [...COMMON_ROUTES]
+const EMPLOYEE_ROUTES = [...COMMON_ROUTES, ROUTES.LENDERS]
 //Routes which EMPLOYER can access
 const EMPLOYER_ROUTES = [...COMMON_ROUTES, ROUTES.PEOPLE, ROUTES.INTEGRATIONS]
 

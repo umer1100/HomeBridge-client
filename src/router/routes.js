@@ -17,6 +17,7 @@ import Overview from "../views/pages/profile/Overview.vue"
 // import Notifications from "../views/pages/Notifications.vue";
 import Integrations from "../views/pages/Integrations.vue";
 import Brokerage from "../views/pages/Brokerage.vue";
+import Lender from "../views/pages/Lender.vue";
 // import Kanban from "../views/applications/Kanban.vue";
 // import Wizard from "../views/applications/wizard/Wizard.vue";
 // import DataTables from "../views/applications/DataTables.vue";
@@ -105,6 +106,11 @@ const routes = [
     path: "/brokerage",
     name: "Brokerage",
     component: Brokerage
+  },
+  {
+    path: "/lender",
+    name: "Lender",
+    component: Lender
   },
   {
     path: "/integrations",
