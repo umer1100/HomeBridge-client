@@ -108,7 +108,7 @@
       const tableRows = ref(props.rows)
       const availableColumnOptions = ref(props.availableColumnsOption)
       const columnToSort = ref("")
-      const pageUserData = ref(props.rows.slice(1,10))
+      const pageUserData = ref(props.rows.slice(0,10))
       const currentPage = ref(1)
       const rowsPerPage = ref(10)
       const totalPages = ref(Math.ceil(tableRows.value.length / rowsPerPage.value))

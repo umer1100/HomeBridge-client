@@ -69,7 +69,7 @@
                     class="mx-1 btn btn-outline-info btn-sm"
                     data-bs-toggle="modal"
                     data-bs-target="#import"
-                    @click="organizationUsers">
+                    @click="readOrganizationUsersData">
                     Refresh
                   </button>
                   <button
@@ -102,7 +102,7 @@
     aria-labelledby="modal-addSingleUser"
     aria-hidden="true"
   >
-    <add-user @post-submit-callback='organizationUsers'/>
+    <add-user @post-submit-callback="readOrganizationUsersData"/>
   </div>
   <div
     id="modal-importUser"
@@ -112,7 +112,7 @@
     aria-labelledby="modal-importUser"
     aria-hidden="true"
   >
-    <import-users @post-submit-callback='organizationUsers'/>
+    <import-users @post-submit-callback="readOrganizationUsersData"/>
   </div>
   <div  v-for="(item, index) in toggleOptionProps"
     :id="`modal-filter${item.name}`"
@@ -125,26 +125,28 @@
   >
     <options-modal
       :title="item.title"
-      :modalOption='availableToggleOption[index]?.options'
-      :selectedOptions='item.selectedOptions'
-      :showSearch='item.showSearch'
-      @selected-options-changed='item.selectedOptionsChanged'
-      :onClickApply='item.title.includes("Column Options") ? handleShowColumns : applyFilterByAttributes'/>
+      :modalOption="availableToggleOption[index]?.options"
+      :selectedOptions="item.selectedOptions"
+      :showSearch="item.showSearch"
+      @selected-options-changed="item.selectedOptionsChanged"
+      :onClickApply="item.title.includes('Column Options') ? handleShowColumns : applyFilterByAttributes"/>
   </div>
 </template>
 
 <script>
   import { defineAsyncComponent, defineComponent, onBeforeMount, ref } from "vue"
   import moment from "moment"
-  import { readUsers } from "../../api/organization/readUsers"
+  import { readUsers } from "../../api/organization/request"
   import { sendBulkInvitation } from "../../api/user/sendBulkInvitation"
   import { updateBulkUsers } from "../../api/user/updateBulkUsers"
   import { STATES } from "../../constant/states"
+  import { useOrganizationStore } from "../../store/organization"
   import {
     USER_STATUSES,
     PRIMARY_GOAL_OPTIONS,
     GOAL_TIMELINE_OPTIONS,
-    GOAL_AMOUNT_OPTIONS
+    GOAL_AMOUNT_OPTIONS,
+    USER_ROLE_TYPES
   } from "../../constant/index"
   import {
     uniqueElements,
@@ -167,7 +169,7 @@
     "State": { field: "state", sortable: true, isAscending: true },
     "Title": { field: "title", sortable: true, isAscending: true },
     "Departmet": { field: "department", sortable: true, isAscending: true },
-    "Employment Type": { field: "employmntType", sortable: true, isAscending: true },
+    "Employment Type": { field: "employmentType", sortable: true, isAscending: true },
     "Date of Birth": { field: "formattedDateOfBirth", sortable: true, isAscending: true },
     "Last Seen": { field: "formattedLastSeen", sortable: true, isAscending: true },
     "Hired": { field: "formattedStartDate", sortable: true, isAscending: true },
@@ -190,6 +192,7 @@
       const data = ref([])
       const peopleDataToDisplay = ref([])
       const allDepartments = ref([])
+      const organizationStore = useOrganizationStore()
 
       const columns = ref([])
       const selectedColumns = ref(["Name", "Status", "Email", "Source", "Role"])
@@ -207,19 +210,19 @@
       const selectedGoalAmountFilters = ref([])
       const selectedTeamMember = ref([])
 
-      const readOrganizationUsers = async () => {
-        const res = await readUsers()
-        if (res && res?.success) {
-          data.value = res?.data.filter(user => user.roleType !== 'EMPLOYER').map(user => {
-            let { firstName, lastName, addressLine1, addressLine2, city, state, zipcode, lastLogin, createdAt, endDate, startDate, dateOfBirth, department, source, sex, roleType, title, primaryGoal, goalTimeline, goalAmount } = user
+      const initializePeopleTab = async () => {
+        if (organizationStore?.users) {
+          data.value = organizationStore?.users?.filter(user => user.roleType !== USER_ROLE_TYPES.EMPLOYER).map(user => {
+            let { firstName, lastName, addressLine1, addressLine2, city, state, zipcode, lastLogin, createdAt, endDate, startDate, dateOfBirth, department, source, sex, roleType, title, employmentType, primaryGoal, goalTimeline, goalAmount } = user
             allDepartments.value.push(department)
             return {
               ...user,
               address: [addressLine1, addressLine2, city, state, zipcode].join(" "),
-              state: STATES[state],
-              source: titleCase(source),
-              sex: titleCase(sex),
-              roleType: titleCase(roleType),
+              state: state ? STATES[state] : "-",
+              source: titleCase(source || "-"),
+              sex: titleCase(sex || "-"),
+              roleType: titleCase(roleType || "-"),
+              employmentType: titleCase(employmentType || "-"),
               fullName: [firstName, lastName].join(" "),
               formattedLastSeen: lastLogin ? moment(lastLogin).format("MM/DD/YYYY") : "-",
               formattedCreatedAt: createdAt ? moment(createdAt).format("MM/DD/YYYY") : "-",
@@ -238,7 +241,7 @@
           handleShowColumns()
           initializeToggleOptions()
         } else {
-          showSnackBar("Something went wrong.", res?.message || "Failed to read users detail")
+          showSnackBar("Something went wrong.", "Failed to read users details")
         }
       }
 
@@ -270,7 +273,13 @@
         index !== -1 ? array.value.splice(index, 1) : array.value.push(item)
       }
 
-      const organizationUsers = async () => await readOrganizationUsers()
+      const readOrganizationUsersData = async () => {
+        let response = await readUsers()
+        if (response && response?.success) organizationStore.users = response.data
+        else showSnackBar("Something went wrong.", response?.message || "Failed to read users detail")
+        initializePeopleTab()
+      }
+
       const handleShowColumns = () => columns.value = Array.from(selectedColumns.value)
 
       const exportTable = () => {
@@ -290,7 +299,7 @@
         const res = await sendBulkInvitation(filterUserData(data.value, selectedTeamMember.value))
         if (res?.success) {
           showSnackBar("Wait a moment", "Scheduling job to send emails.")
-          organizationUsers()
+          await readOrganizationUsersData()
           // eslint-disable-next-line require-atomic-updates
           selectedTeamMember.value = []
         }
@@ -303,7 +312,7 @@
         } else {
           showSnackBar("Something went wrong", res?.message)
         }
-        organizationUsers()
+        await readOrganizationUsersData()
         // eslint-disable-next-line require-atomic-updates
         selectedTeamMember.value = []
       }
@@ -433,7 +442,11 @@
       ])
 
       onBeforeMount(async () => {
-        await organizationUsers()
+        if (!organizationStore.users) {
+          await readOrganizationUsersData()
+        }
+
+        await initializePeopleTab()
       })
 
       return{
@@ -451,9 +464,9 @@
         hyphenateString,
         handleShowColumns,
         getBadgeColor,
-        organizationUsers,
         handleSelectedTeamMember,
         applyFilterByAttributes,
+        readOrganizationUsersData,
       }
     }
   })

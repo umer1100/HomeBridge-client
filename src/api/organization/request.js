@@ -1,10 +1,10 @@
 import { api } from "../../boot/axios"
 import { useUserStore } from "../../store/user"
 
-export const readUsers = async () => {
+const request = async (endpoint) => {
   try {
     const userStore = useUserStore()
-    const response = await api.get("/v1/organizations/users", {
+    const response = await api.get(endpoint, {
       headers: {
         authorization: `jwt-user ${userStore.userJWT}`,
       },
@@ -20,3 +20,7 @@ export const readUsers = async () => {
     }
   }
 }
+
+export const readUsers = async () => await request("/v1/organizations/users")
+export const averageHomePrice = async () => await request("/v1/organizations/get-average-home-price")
+export const totalOwnerificCredit = async () => await request("/v1/organizations/get-total-ownerific-credit")

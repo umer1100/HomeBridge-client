@@ -29,7 +29,7 @@ router.beforeEach(async (to, from, next) => {
   const onboardingUser = isStatusOnboarding(userStore?.data?.status)
   const pausedUser = isStatusPause(userStore?.data?.status)
 
-  const allowedRoutes =  ROLE_BASE_PROTECTED_ROUTE[userStore?.data?.roleType] || [];
+  const allowedRoutes = ROLE_BASE_PROTECTED_ROUTE[userStore?.data?.roleType] || []
   const isAllowedRoute = to.path.includes('Profile/') || allowedRoutes.includes(to.path);
   const shouldNotRedirect = PUBLIC_ROUTES.includes(to.path) || (!onboardingUser && to.path === ROUTES.ONBOARDING) || (!pausedUser && to.path === ROUTES.BLOCKED) || !isAllowedRoute
 
