@@ -6,7 +6,7 @@
           <div>
             <div class="d-flex">
               <div class="avatar avatar-lg">
-                <img alt="Image placeholder" src="https://www.ownerific.com/wp-content/uploads/2022/08/Goodwin.png" />
+                <img alt="Image placeholder" src="https://ownerific-static-images.s3.amazonaws.com/Goodwin.png" />
               </div>
               <div class="my-auto ms-2">
                 <h6 class="mb-0">Marcus Goodwin</h6>
