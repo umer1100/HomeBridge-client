@@ -472,7 +472,7 @@
 <script>
 import { computed, defineComponent } from "vue"
 import { useRoute, useRouter } from "vue-router"
-import { mapState } from "vuex"
+import { useStore, mapState } from "vuex"
 import SidenavCollapse from "./SidenavCollapse.vue"
 import SidenavCard from "./SidenavCard.vue"
 // import Settings from "../components/Icon/Settings.vue"
@@ -504,6 +504,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
+    const globalStore = useStore()
     const userStore = useUserStore()
 
     const getRoute = () => {
@@ -519,7 +520,13 @@ export default defineComponent({
     const isRTL = computed(() => mapState(["isRTL"]).isRTL)
 
     const navigateToPath = (path) => {
+      toggleSidebar()
       router.push(path)
+    }
+
+    const toggleSidebar = () => {
+      globalStore.dispatch("toggleSidebarColor", "bg-white")
+      globalStore.commit("navbarMinimize")
     }
 
     return {

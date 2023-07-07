@@ -1,7 +1,7 @@
 export const ROUTES = {
   DASHBOARD: '/dashboard',
   SIGNIN: '/authentication/signin',
-  PROFILE: '/profile',
+  PROFILE: '/profile/:id',
   NEW_PASSWORD: '/ResetPassword',
   RESET_PASSWORD: '/authentication/reset',
   INTEGRATIONS: '/integrations',

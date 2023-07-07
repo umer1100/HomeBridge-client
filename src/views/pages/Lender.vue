@@ -38,7 +38,6 @@
 import { defineComponent, onMounted, ref } from "vue"
 import { useStore } from "vuex"
 import { useUserStore } from "../../store/user"
-import PlaidLogo from "../../assets/img/plaidlogo.png"
 
 export default defineComponent({
   name: "Lender",
@@ -125,7 +124,6 @@ export default defineComponent({
     return {
       roleType,
       lenders,
-      PlaidLogo,
       changeUrl
     }
   }
@@ -143,6 +141,11 @@ export default defineComponent({
   @media screen and (max-width: 768px) {
     .card-width {
       width: 100%;
+    }
+
+    .btn-width {
+      margin-right: 0rem !important;
+      margin-left: 0rem !important;
     }
   }
 

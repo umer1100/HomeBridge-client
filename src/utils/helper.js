@@ -1,3 +1,4 @@
+import { PHONE_NUMBER_REGEX } from "../constant"
 import store from "../store"
 import { USER_ROLE_TYPES, USER_STATUSES } from "../constant"
 
@@ -12,6 +13,18 @@ export const htmlErrorString = (errorMessage) => {
     htmlString = errorMessage
   }
   return htmlString
+}
+
+export const formatPhoneNumber = (phoneNumber) => {
+  if (phoneNumber.length == 10 && !PHONE_NUMBER_REGEX.test(phoneNumber)) {
+    const areaCode = phoneNumber.slice(0, 3)
+    const firstPart = phoneNumber.slice(3, 6)
+    const secondPart = phoneNumber.slice(6)
+
+    return `(${areaCode})${firstPart}-${secondPart}`
+  } else {
+    return phoneNumber
+  }
 }
 
 export const handleSpinner = (value = false) => {

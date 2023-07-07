@@ -13,7 +13,7 @@
               </div>
             </div>
             <!-- eslint-disable-next-line vue/no-v-html -->
-            <p class="mt-3"> 
+            <p class="mt-3">
               Utilizing Finch's payroll and benefits APIs, Ownerific helps create a full 360º experience to increase utilization and contributions while unlocking financial insights and cost savings in real-time.
             </p>
           </div>
@@ -25,7 +25,7 @@
               <span class='text-weight-bold'>Last Sync: </span>
               <span> {{ lastSyncStartedAt }} | {{ lastSyncStatus }} </span>
             </div>
-            
+
             <div v-if="lastSyncStartedAt !== ''">
               <button class="mb-0 btn btn-sm bg-gradient-success" @click="handleHRISSync">
                 Refresh
@@ -54,7 +54,7 @@
               </div>
             </div>
             <!-- eslint-disable-next-line vue/no-v-html -->
-            <p class="mt-3"> 
+            <p class="mt-3">
               Plaid is a data network that powers the apps and services millions of people rely on to live a healthier financial life. Ownerific's partnership with Plaid helps provide a suite of products to help you onboard customers, create better experiences, and drive business outcomes.
             </p>
           </div>
@@ -83,24 +83,24 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Account Details</h5>
-          <button type="button" 
-                  class="btn" 
+          <button type="button"
+                  class="btn"
                   @click="handlePlaidDetailsDialogue(false)"
                 >
                 Close
           </button>
         </div>
         <div class="modal-body max-height-50vh">
-          <div v-for="(bank, index) in accountDetails" 
-              :key="bank.itemId" 
+          <div v-for="(bank, index) in accountDetails"
+              :key="bank.itemId"
               class="card">
-            <h5 :id="bank.itemId" 
+            <h5 :id="bank.itemId"
                 class="accordion-header">
-              <button class="accordion-button border-bottom font-weight-bold collapsed" 
-                      type="button" 
-                      data-bs-toggle="collapse" 
-                      :data-bs-target="'#collaps' + index" 
-                      aria-expanded="false" 
+              <button class="accordion-button border-bottom font-weight-bold collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      :data-bs-target="'#collaps' + index"
+                      aria-expanded="false"
                       :aria-controls="'collaps' + index"
                     >
                 {{ bank.institutionName }}
@@ -118,10 +118,10 @@
                   data-bs-parent="#accordionRental"
                   style=""
                 >
-              <div v-for="(account, subIndex) in bank.accounts" 
+              <div v-for="(account, subIndex) in bank.accounts"
                   :key="subIndex"
                   class="card">
-                <h5 :id="account.id" 
+                <h5 :id="account.id"
                     class="accordion-header">
                   <button class="accordion-button border-bottom font-weight-bold collapsed"
                           type="button"
@@ -164,8 +164,8 @@
                 </div>
               </div>
             </div>
-            <button type="button" 
-                    class="btn btn-light " 
+            <button type="button"
+                    class="btn btn-light "
                     @click="unLinkAccount(bank.itemId)"
                   >
               Remove
@@ -212,7 +212,7 @@ export default defineComponent({
         organizationStore.lastSync = response?.data
       }
     }
-    
+
     const onClickFinch = () => {
       connect.open()
     }
@@ -257,7 +257,7 @@ export default defineComponent({
     }
 
     onMounted(async ()=> {
-      globalStore.state.showFooter = false 
+      globalStore.state.showFooter = false
       globalStore.state.showNavs = true
       handleSpinner(true)
       if (roleType.value === "EMPLOYER") await lastSyncDetails()
@@ -269,7 +269,7 @@ export default defineComponent({
       lastSyncStatus.value = organizationLastSyncData?.status
       lastSyncStartedAt.value = organizationLastSyncData?.startedAt ? moment(organizationLastSyncData?.startedAt).format("MM/DD/YYYY, h:mm A") : null
     }, { deep: true })
-    
+
     return {
       roleType,
       FinchLogo,

@@ -111,6 +111,7 @@
   // import Calendar from "../../Calendar.vue"
   import AppFooter from "../../Footer.vue"
   import { useOrganizationStore } from "../../store/organization"
+  import { useUserStore } from "../../store/user"
   import {
     readUsers,
     averageHomePrice,
@@ -133,7 +134,9 @@
     setup() {
       const globalStore = useStore()
       const organizationStore = useOrganizationStore()
+      const userStore = useUserStore()
 
+      const roleType = userStore?.data?.roleType
       const employeesCount = ref(0)
       const avgHomePrice = ref()
       const totalCredits = ref()
@@ -164,11 +167,11 @@
 
       onBeforeMount( async () => {
         globalStore.state.showFooter = false
-        await readUsersData()
-        await averageHomePriceData()
-        await totalOwnerificCreditsData()
+        if (roleType === 'EMPLOYER') await readUsersData()
+        if (roleType === 'EMPLOYER') await averageHomePriceData()
+        if (roleType === 'EMPLOYER') await totalOwnerificCreditsData()
 
-        employeesCount.value = organizationStore?.users?.filter(user => user.roleType === USER_ROLE_TYPES.EMPLOYEE).length
+        employeesCount.value = organizationStore?.users?.filter(user => user.roleType === USER_ROLE_TYPES.EMPLOYEE).length || 0
         avgHomePrice.value = `$${Number(organizationStore?.averageHomePrice).toLocaleString()}`
         totalCredits.value = `$${Number(organizationStore?.totalOwnerificCredits).toLocaleString()}`
       })

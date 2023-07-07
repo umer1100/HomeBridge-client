@@ -20,10 +20,10 @@
         </div>
         <!-- End Toggle Button -->
       </div>
-      <div class="d-flex pt-0 card-body pb-sm-0 button-block">
+      <div class="d-flex pt-0 card-body pb-0 button-block">
         <router-link
         id="btn-transparent"
-        to="/profile"
+        :to="`/profile/${userId}`"
         class="px-3 mb-2 btn w-100 h-auto"
       >
         My Profile
@@ -220,6 +220,7 @@ export default defineComponent({
     let firstName = ref(userStore.data?.firstName)
     let lastName = ref(userStore.data?.lastName)
     let roleType = ref(userStore.data?.roleType)
+    let userId = ref(userStore.data?.id)
     let organizationName = ref(organizationStore?.data?.name)
 
     const onClickLogout = () => {
@@ -258,7 +259,7 @@ export default defineComponent({
       }
       else {
         transparent.classList.remove("disabled")
-        white.classList.remove("disabled")
+        //white.classList.remove("disabled")
       }
     }
 
@@ -266,6 +267,7 @@ export default defineComponent({
       firstName.value = userStore.data?.firstName
       lastName.value = userStore.data?.lastName
       roleType.value = userStore.data?.roleType
+      userId.value = userStore.data?.id
       organizationName.value = organizationStore?.data?.name
     })
 
@@ -279,6 +281,7 @@ export default defineComponent({
       firstName,
       lastName,
       roleType,
+      userId,
       organizationName,
       isTransparent,
       isNavFixed,
