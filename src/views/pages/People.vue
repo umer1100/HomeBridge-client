@@ -64,14 +64,14 @@
                       </li>
                     </ul>
                   </div>
-                  <button
+                  <!-- <button
                     type="button"
                     class="mx-1 btn btn-outline-info btn-sm"
                     data-bs-toggle="modal"
                     data-bs-target="#import"
                     @click="readOrganizationUsersData">
                     Refresh
-                  </button>
+                  </button> -->
                   <button
                     type="button"
                     class="mx-1 btn btn-outline-info btn-sm"
@@ -134,7 +134,7 @@
 </template>
 
 <script>
-  import { defineAsyncComponent, defineComponent, onBeforeMount, ref } from "vue"
+  import { defineAsyncComponent, defineComponent, onMounted, ref } from "vue"
   import moment from "moment"
   import { readUsers } from "../../api/organization/request"
   import { sendBulkInvitation } from "../../api/user/sendBulkInvitation"
@@ -239,7 +239,6 @@
 
           peopleDataToDisplay.value = data.value
           handleShowColumns()
-          initializeToggleOptions()
         } else {
           showSnackBar("Something went wrong.", "Failed to read users details")
         }
@@ -441,12 +440,13 @@
         }
       ])
 
-      onBeforeMount(async () => {
+      onMounted(async () => {
         if (!organizationStore.users) {
           await readOrganizationUsersData()
         }
 
         await initializePeopleTab()
+        initializeToggleOptions()
       })
 
       return{

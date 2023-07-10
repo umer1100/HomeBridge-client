@@ -51,7 +51,7 @@
           </div>
           <div class="col-md-6 col-sm-12">
             <label class="form-label">Phone Number</label>
-            <input v-model="userData.phone" :disabled="!isCurrentUserProfile" class="form-control" type="text" placeholder="(123)456-7895"/>
+            <input v-model="userData.phone" :disabled="!isCurrentUserProfile" class="form-control" type="text" placeholder="(123)456-7895" @input="numberFormatHandler"/>
           </div>
         </div>
         <div class="col-12">
@@ -282,6 +282,8 @@
         }
       }
 
+      const numberFormatHandler = () => (userData.value.phone = formatPhoneNumber(userData.value.phone))
+
       onMounted( async ()=> {
         await readUserData(router?.currentRoute?.value?.params?.id)
         stateOptions.value = Object.values(STATES) || []
@@ -307,7 +309,8 @@
         newPassword,
         confirmNewPassword,
         updateUserDataHandler,
-        updatePasswordHandler
+        updatePasswordHandler,
+        numberFormatHandler,
       }
     }
   })

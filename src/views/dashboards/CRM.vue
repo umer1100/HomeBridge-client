@@ -53,7 +53,7 @@
                 title="Your Unique Ownerific Benefit"
                 description="Your employees qualify for a 2% discount on any home purchased through the Ownerific Brokerage Program. That amount is broken into monthly credit installments deposited into their Ownerific Wallets, based on the length of their Home Savings Timeline."
                 :action="{
-                  route: '/',
+                  route: 'https://www.ownerific.com/',
                   label: 'Learn more',
                 }"
               />
@@ -61,7 +61,7 @@
           </div>
         </div>
       </div>
-      <div class="mt-4 row">
+      <!-- <div class="mt-4 row">
         <div class="col-sm-6">
           <ranking-list-card
             :card="{ title: 'Newly Enrolled Employees', date: 'All Time' }"
@@ -87,7 +87,7 @@
             ]"
           />
         </div>
-      </div>
+      </div> -->
       <app-footer />
     </div>
   </main>
@@ -107,7 +107,7 @@
   } from "@fortawesome/free-solid-svg-icons"
   // import PlaceHolderCard from "@/Cards/PlaceHolderCard.vue"
   import BackgroundBlogCard from "./components/BackgroundBlogCard.vue"
-  import RankingListCard from "../../Cards/RankingListCard.vue"
+  // import RankingListCard from "../../Cards/RankingListCard.vue"
   // import Calendar from "../../Calendar.vue"
   import AppFooter from "../../Footer.vue"
   import { useOrganizationStore } from "../../store/organization"
@@ -127,7 +127,7 @@
       // PlaceHolderCard,
       BackgroundBlogCard,
       // Calendar,
-      RankingListCard,
+      // RankingListCard,
       AppFooter,
       DefaultDoughnutChart
     },

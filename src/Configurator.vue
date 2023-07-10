@@ -145,21 +145,21 @@
           />
         </div> -->
         <!-- <hr class="horizontal dark my-sm-4" /> -->
-        <a
-          class="btn bg-gradient-info w-100"
-          href="https://www.creative-tim.com/product/vue-soft-ui-dashboard-pro"
-          >Help Center</a
-        >
-        <a
-          class="btn bg-gradient-dark w-100"
-          href="https://demos.creative-tim.com/vue-soft-ui-dashboard/"
-          >Report an Issue</a
-        >
-        <a
-          class="btn btn-outline-dark w-100"
-          href="https://www.creative-tim.com/learning-lab/vue/overview/soft-ui-dashboard/"
-          >Request a Feature</a
-        >
+        <a class="btn bg-gradient-info w-100"
+          href="https://www.ownerific.com/help/"
+          target="_blank">
+          Help Center
+        </a>
+        <a class="btn bg-gradient-dark w-100"
+          href="https://forms.monday.com/forms/3e2a8d7916bcee4c1afce30843f71f2f?r=use1"
+          target="_blank">
+          Report an Issue
+        </a>
+        <a class="btn btn-outline-dark w-100"
+          href="https://forms.monday.com/forms/357d6938b19e24e02b732e6c7baab0fc?r=use1"
+          target="_blank">
+          Request a Feature
+        </a>
         <!-- <div class="text-center w-100">
           <a
             class="github-button"
@@ -198,6 +198,8 @@ import { logout } from "./utils/logout"
 import router from "./router/index"
 import { useUserStore } from "./store/user"
 import { useOrganizationStore } from "./store/organization"
+import { titleCase } from "./utils/helper"
+
 export default defineComponent({
   name: "Configurator",
   props: {
@@ -219,7 +221,7 @@ export default defineComponent({
     let color = ref(globalStore.state?.color)
     let firstName = ref(userStore.data?.firstName)
     let lastName = ref(userStore.data?.lastName)
-    let roleType = ref(userStore.data?.roleType)
+    let roleType = ref(titleCase(userStore.data?.roleType))
     let userId = ref(userStore.data?.id)
     let organizationName = ref(organizationStore?.data?.name)
 
@@ -266,7 +268,7 @@ export default defineComponent({
     watch(() => userStore.data?.firstName, () => {
       firstName.value = userStore.data?.firstName
       lastName.value = userStore.data?.lastName
-      roleType.value = userStore.data?.roleType
+      roleType.value = titleCase(userStore.data?.roleType)
       userId.value = userStore.data?.id
       organizationName.value = organizationStore?.data?.name
     })

@@ -67,7 +67,7 @@
 
       <li class="nav-item">
         <sidenav-collapse
-          nav-text="Brokerage"
+          nav-text="Buy"
           :collapse="false"
           :class="getRoute() === 'brokerage' ? 'active' : ''"
           @click="navigateToPath('/brokerage')"
@@ -80,7 +80,7 @@
 
       <li v-if="getUserRole() === 'EMPLOYEE'" class="nav-item">
         <sidenav-collapse
-          nav-text="Mortgage"
+          nav-text="Finance"
           :collapse="false"
           :class="getRoute() === 'lender' ? 'active' : ''"
           @click="navigateToPath('/lender')"
@@ -472,7 +472,7 @@
 <script>
 import { computed, defineComponent } from "vue"
 import { useRoute, useRouter } from "vue-router"
-import { useStore, mapState } from "vuex"
+import { mapState } from "vuex"
 import SidenavCollapse from "./SidenavCollapse.vue"
 import SidenavCard from "./SidenavCard.vue"
 // import Settings from "../components/Icon/Settings.vue"
@@ -504,7 +504,6 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const globalStore = useStore()
     const userStore = useUserStore()
 
     const getRoute = () => {
@@ -520,13 +519,7 @@ export default defineComponent({
     const isRTL = computed(() => mapState(["isRTL"]).isRTL)
 
     const navigateToPath = (path) => {
-      toggleSidebar()
       router.push(path)
-    }
-
-    const toggleSidebar = () => {
-      globalStore.dispatch("toggleSidebarColor", "bg-white")
-      globalStore.commit("navbarMinimize")
     }
 
     return {

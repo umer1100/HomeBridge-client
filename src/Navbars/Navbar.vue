@@ -220,6 +220,7 @@ import { useRoute } from "vue-router"
 //import Breadcrumbs from "../Breadcrumbs.vue"
 import { useUserStore } from "../store/user"
 import { useOrganizationStore } from "../store/organization"
+import { titleCase } from "../utils/helper"
 
 export default defineComponent({
   name: "Navbar",
@@ -245,7 +246,7 @@ export default defineComponent({
     let isRTL = ref(globalStore?.state?.isRTL)
     let firstName = ref(userStore?.data?.firstName)
     let lastName = ref(userStore.data?.lastName)
-    let roleType = ref(userStore.data?.roleType)
+    let roleType = ref(titleCase(userStore.data?.roleType))
     let organizationName = ref(organizationStore?.data?.name)
 
     const currentRouteName = () => {
@@ -269,7 +270,7 @@ export default defineComponent({
     watch(() => userStore.data?.firstName, () => {
       firstName.value = userStore.data?.firstName
       lastName.value = userStore.data?.lastName
-      roleType.value = userStore.data?.roleType
+      roleType.value = titleCase(userStore.data?.roleType)
       organizationName.value = organizationStore?.data?.name
     })
 

@@ -98,6 +98,7 @@ export default defineComponent({
 
       userStore.userJWT = userJWT
       userJWT ? isAuthenticated.value = true : null
+      globalStore.dispatch("toggleSidebarColor", "bg-white")
     })
 
     return{

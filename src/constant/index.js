@@ -5,7 +5,7 @@ export const PASSWORD_REGEX_MISMATCH_NOTICE = '<div>You have entered an invalid 
 export const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 export const EMAIL_REGEX_MISMATCH_NOTICE = 'You have entered an invalid email address, please try again.'
 export const ZIP_CODE_REGEX = /^\d{5}$/
-export const PHONE_NUMBER_REGEX = /^\(\d{3}\)\d{3}-\d{4}$/
+export const PHONE_NUMBER_REGEX = /^\(\d{3}\) \d{3}-\d{4}$/
 
 export const USER_STATUSES = {
   ACTIVE: 'ACTIVE',
