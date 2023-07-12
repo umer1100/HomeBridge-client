@@ -22,15 +22,15 @@
           <hr class="horizontal dark" />
 
           <div class="bottom-5 my-2 px-md py-md d-flex justify-content-between align-items-center">
-            <button v-if="roleType != 'EMPLOYER'" 
-                    class="mb-1 btn btn-sm bg-gradient-success mx-2 btn-width"
-                    @click="changeUrl(lender.profile)">
-              Apply
-            </button>
             <button v-if="roleType != 'EMPLOYER'"
                     class="mb-1 btn btn-sm bg-gradient-info mx-2 btn-width"
                     @click="changeUrl(lender.review)">
               Reviews
+            </button>
+            <button v-if="roleType != 'EMPLOYER'"
+                    class="mb-1 btn btn-sm bg-gradient-success mx-2 btn-width"
+                    @click="changeUrl(lender.profile)">
+              Apply
             </button>
           </div>
         </div>

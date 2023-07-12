@@ -126,5 +126,28 @@ export default defineComponent({
 </script>
 
 <style scoped>
+  .card-width {
+    width: 32%;
+  }
+  .btn-width {
+    margin-right: 0.5rem;
+  }
 
+  @media screen and (max-width: 768px) {
+    .card-width {
+      width: 100%;
+    }
+
+    .btn-width {
+      margin-right: 0rem !important;
+      margin-left: 0rem !important;
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    .btn-width {
+      width: 100%;
+      margin-right: 0rem;
+    }
+  }
 </style>
