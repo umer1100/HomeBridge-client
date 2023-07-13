@@ -4,10 +4,10 @@
       <div class="row">
         <div class="col-xl-8 col-lg-7">
           <div class="row">
-            <div class="col-sm-4">
+            <div  v-if="roleType === 'EMPLOYER'" class="col-sm-4">
               <mini-gradient-line-chart
                 id="second-chart"
-                title="Enrolled Employeess"
+                title="Enrolled Employees"
                 :description='employeesCount'
               />
             </div>
@@ -15,17 +15,23 @@
               <place-holder-card :title="{ variant: 'h6', text: 'New tab' }" />
             </div> -->
 
-            <div class="mt-4 col-sm-4 mt-sm-0">
+            <div  v-if="roleType === 'EMPLOYER'" class="mt-4 col-sm-4 mt-sm-0">
               <mini-gradient-line-chart
                 title="Average Home Price"
                 :description='avgHomePrice'
               />
             </div>
 
-            <div class="mt-4 col-sm-4 mt-sm-0">
+            <div  v-if="roleType === 'EMPLOYER'" class="mt-4 col-sm-4 mt-sm-0">
               <mini-gradient-line-chart
                 title="Total Ownerific Credit"
                 :description='totalCredits'
+              />
+            </div>
+            <div  v-if="roleType === 'EMPLOYEE'" class="mt-4 col-sm-4 mt-sm-0">
+              <mini-gradient-line-chart
+                title="Ownerific Credit"
+                :description='userCredits'
               />
             </div>
           </div>
@@ -117,6 +123,7 @@
     averageHomePrice,
     totalOwnerificCredit,
   } from "../../api/organization/request"
+  import { fetchCreditWalletBalance } from "../../api/creditWallet/read"
   import { USER_ROLE_TYPES } from "../../constant"
   import { showSnackBar } from "../../utils/helper"
 
@@ -140,6 +147,7 @@
       const employeesCount = ref(0)
       const avgHomePrice = ref()
       const totalCredits = ref()
+      const userCredits = ref()
 
       const readUsersData = async () => {
         const response = await readUsers()
@@ -165,11 +173,19 @@
         else showSnackBar("Something went wrong.", response?.message)
       }
 
+      const fetchCreditWallet = async () => {
+        const response = await fetchCreditWalletBalance()
+
+        if (response && response?.success) userCredits.value = `$${response.data.filter( item => (item.walletType == "PLATFORM"))[0].dollars}`
+        else showSnackBar("Something went wrong.", response?.message)
+      }
+
       onBeforeMount( async () => {
         globalStore.state.showFooter = false
         if (roleType === 'EMPLOYER') await readUsersData()
         if (roleType === 'EMPLOYER') await averageHomePriceData()
         if (roleType === 'EMPLOYER') await totalOwnerificCreditsData()
+        if (roleType === 'EMPLOYEE') await fetchCreditWallet()
 
         employeesCount.value = organizationStore?.users?.filter(user => user.roleType === USER_ROLE_TYPES.EMPLOYEE).length || 0
         avgHomePrice.value = `$${Number(organizationStore?.averageHomePrice).toLocaleString()}`
@@ -189,6 +205,8 @@
         faScrewdriverWrench,
         faCube,
         backgroundImage,
+        roleType,
+        userCredits
       }
     },
   })
