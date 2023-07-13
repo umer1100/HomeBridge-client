@@ -57,10 +57,10 @@ export default defineComponent({
       {
         name: 'Keith James',
         description: 'Coalition Properties, Keller Williams',
-        location: 'Washington, D.C.',
+        location: 'District of Columbia',
         phone: '(202) 808-1381',
         email: 'keith@coalitionpg.com',
-        licenseId: 'Washington, D.C., Maryland',
+        licenseId: 'District of Columbia, Maryland',
         profile: 'https://www.coalitionpg.com/agent-profile/keith-james-103665236',
         review: 'https://www.zillow.com/profile/keithjames70',
         image: 'https://ownerific-static-images.s3.amazonaws.com/Keith+James+Headshot.png'
@@ -68,10 +68,10 @@ export default defineComponent({
       {
         name: 'Margaret Babbington',
         description: 'Mollaan Babbington Group, Compass',
-        location: 'Washington, D.C.',
+        location: 'District of Columbia',
         phone: '(240) 460-4007',
         email: 'mbabbington@compass.com',
-        licenseId: 'Washington, D.C., Virginia',
+        licenseId: 'District of Columbia, Virginia',
         profile: 'https://mbgroupdmv.com/team/margaret-babbington',
         review: 'https://www.zillow.com/profile/babbingtonteam',
         image: 'https://ownerific-static-images.s3.amazonaws.com/Margaret+Babington+Headshot.png'
@@ -79,10 +79,10 @@ export default defineComponent({
       {
         name: 'Yasemin Hocaoglu',
         description: 'The Yas Team, Compass ',
-        location: 'Washington, D.C.',
+        location: 'District of Columbia',
         phone: '(571) 206-2380',
         email: 'yasemin.hocaoglu@compass.com',
-        licenseId: 'Washington, D.C., Virginia',
+        licenseId: 'District of Columbia, Virginia',
         profile: 'https://www.theyasteam.com/yasemin-hocaoglu',
         review: 'https://www.zillow.com/profile/yasemin%20hocaoglu',
         image: 'https://ownerific-static-images.s3.amazonaws.com/Yasemin+Hocaoglu+Headshot.png'
@@ -90,10 +90,10 @@ export default defineComponent({
       {
         name: 'Jon Lahey',
         description: 'The Fine Living Group, eXp Realty',
-        location: 'Washington, D.C.',
+        location: 'District of Columbia',
         phone: '(301) 651-4900',
         email: 'jonlahey@thefinelivinggroup.com',
-        licenseId: 'Washington, D.C., Maryland, Virginia',
+        licenseId: 'District of Columbia, Maryland, Virginia',
         profile: 'https://www.thefinelivinggroup.com/agents/jon-lahey/',
         review: 'https://www.zillow.com/profile/laheygroup',
         image: 'https://ownerific-static-images.s3.amazonaws.com/Jon+Lahey+Headshot.png'
@@ -101,10 +101,10 @@ export default defineComponent({
       {
         name: 'Dina Shaminova',
         description: 'Artifact Homes',
-        location: 'Washington, D.C.',
+        location: 'District of Columbia',
         phone: '(202) 640-8415',
         email: 'dina@homesbyartifact.com',
-        licenseId: 'Washington, D.C., Maryland, Virginia',
+        licenseId: 'District of Columbia, Maryland, Virginia',
         profile: 'https://homesbyartifact.com/agents/dina-shaminova',
         review: 'https://www.zillow.com/profile/Dina-Shaminova/',
         image: 'https://ownerific-static-images.s3.amazonaws.com/Dina+Shaminova+Headshot.png'
