@@ -94,14 +94,12 @@
           />
         </div>
       </div> -->
-      <app-footer />
     </div>
   </main>
 </template>
 
 <script>
-  import { defineComponent, onBeforeMount, onBeforeUnmount, ref} from "vue"
-  import { useStore } from "vuex"
+  import { defineComponent, onBeforeMount, ref } from "vue"
   import MiniGradientLineChart from "@/views/dashboards/components/MiniGradientLineChart.vue"
   import DefaultDoughnutChart from "@/views/applications/analytics/components/DefaultDoughnutChart.vue"
   import image from "@/assets/img/kal-visuals-square.jpg"
@@ -115,7 +113,6 @@
   import BackgroundBlogCard from "./components/BackgroundBlogCard.vue"
   // import RankingListCard from "../../Cards/RankingListCard.vue"
   // import Calendar from "../../Calendar.vue"
-  import AppFooter from "../../Footer.vue"
   import { useOrganizationStore } from "../../store/organization"
   import { useUserStore } from "../../store/user"
   import {
@@ -135,11 +132,9 @@
       BackgroundBlogCard,
       // Calendar,
       // RankingListCard,
-      AppFooter,
       DefaultDoughnutChart
     },
     setup() {
-      const globalStore = useStore()
       const organizationStore = useOrganizationStore()
       const userStore = useUserStore()
 
@@ -181,7 +176,6 @@
       }
 
       onBeforeMount( async () => {
-        globalStore.state.showFooter = false
         if (roleType === 'EMPLOYER') await readUsersData()
         if (roleType === 'EMPLOYER') await averageHomePriceData()
         if (roleType === 'EMPLOYER') await totalOwnerificCreditsData()
@@ -190,10 +184,6 @@
         employeesCount.value = organizationStore?.users?.filter(user => user.roleType === USER_ROLE_TYPES.EMPLOYEE).length || 0
         avgHomePrice.value = `$${Number(organizationStore?.averageHomePrice).toLocaleString()}`
         totalCredits.value = `$${Number(organizationStore?.totalOwnerificCredits).toLocaleString()}`
-      })
-
-      onBeforeUnmount(() => {
-        globalStore.state.showFooter = true
       })
 
       return {

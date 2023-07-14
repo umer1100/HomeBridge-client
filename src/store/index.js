@@ -58,7 +58,6 @@ export default createStore({
     toggleEveryDisplay(state) {
       state.showNavbar = !state.showNavbar;
       state.showSidenav = !state.showSidenav;
-      state.showFooter = !state.showFooter;
     },
     showEveryDisplay(state) {
       state.showNavbar = true;

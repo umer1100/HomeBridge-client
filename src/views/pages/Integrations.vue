@@ -257,7 +257,6 @@ export default defineComponent({
     }
 
     onMounted(async ()=> {
-      globalStore.state.showFooter = false
       globalStore.state.showNavs = true
       handleSpinner(true)
       if (roleType.value === "EMPLOYER") await lastSyncDetails()

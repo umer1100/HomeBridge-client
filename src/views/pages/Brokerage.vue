@@ -115,10 +115,7 @@ export default defineComponent({
       window.open(link, '_blank')
     }
 
-    onMounted(async ()=> {
-      globalStore.state.showFooter = false
-      globalStore.state.showNavs = true
-    })
+    onMounted(()=> (globalStore.state.showNavs = true))
 
     return {
       roleType,

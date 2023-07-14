@@ -12,8 +12,12 @@
       :text-white="isAbsolute ? 'text-white opacity-8' : ''"
       :min-nav="navbarMinimize"
     />
-    <router-view />
-    <app-footer v-show="showFooter" />
+    <div class="d-flex flex-column footer-position">
+      <router-view />
+      <div class="mt-auto">
+        <app-footer v-show="showFooter" />
+      </div>
+    </div>
     <configurator
       v-if="isAuthenticated"
       :toggle="toggleConfigurator"
@@ -127,3 +131,9 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped>
+.footer-position {
+  height: calc(100vh - 60px);
+}
+</style>
