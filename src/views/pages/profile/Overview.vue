@@ -146,13 +146,12 @@
 </template>
 
 <script>
-  import { defineComponent, onBeforeMount, onMounted, ref } from "vue"
+  import { defineComponent, onBeforeMount, onMounted, onUpdated, ref } from "vue"
   import { useRouter } from "vue-router"
   import { useStore } from "vuex"
   import * as Choices from "choices.js"
   import SoftButton from "@/components/SoftButton.vue"
   import { updateUser, updatePassword } from "../../../api/user/update"
-  import { read } from "../../../api/user/read"
   import { useUserStore } from "../../../store/user"
   import { showSnackBar, formatPhoneNumber } from "../../../utils/helper"
   import { STATES } from "../../../constant/states"
@@ -199,26 +198,25 @@
       const isCurrentUserProfile = ref(false)
       const stateOptions = ref([])
 
-      const readUserData = async (userId) => {
+      const readUserData = (userId) => {
         isCurrentUserProfile.value = userId == userStore?.data?.id
-        const response = await read(userId)
 
-        if (response && response?.success) {
-          userData.value.firstName = response?.data?.firstName
-          userData.value.lastName = response?.data?.lastName
-          userData.value.email = response?.data?.email
-          userData.value.addressLine1 = response?.data?.addressLine1
-          userData.value.addressLine2 = response?.data?.addressLine2
-          userData.value.city = response?.data?.city
-          userData.value.state = STATES[response?.data?.state]
-          userData.value.zipcode = response?.data?.zipcode
-          userData.value.phone = formatPhoneNumber(response?.data?.phone)
-          userData.value.primaryGoal = response?.data?.primaryGoal
-          userData.value.goalTimeline = response?.data?.goalTimeline
-          userData.value.goalAmount = response?.data?.goalAmount
-          userData.value.dreamHomeDescription = response?.data?.dreamHomeDescription
+        if (isCurrentUserProfile.value) {
+          userData.value.firstName = userStore?.data?.firstName || ""
+          userData.value.lastName = userStore?.data?.lastName || ""
+          userData.value.email = userStore?.data?.email || ""
+          userData.value.addressLine1 = userStore?.data?.addressLine1 || ""
+          userData.value.addressLine2 = userStore?.data?.addressLine2 || ""
+          userData.value.city = userStore?.data?.city || ""
+          userData.value.state = STATES[userStore?.data?.state] || ""
+          userData.value.zipcode = userStore?.data?.zipcode || ""
+          userData.value.phone = formatPhoneNumber(userStore?.data?.phone || "")
+          userData.value.primaryGoal = userStore?.data?.primaryGoal || ""
+          userData.value.goalTimeline = userStore?.data?.goalTimeline || ""
+          userData.value.goalAmount = userStore?.data?.goalAmount || ""
+          userData.value.dreamHomeDescription = userStore?.data?.dreamHomeDescription || ""
         } else {
-          showSnackBar("Something went wrong", response.message || "Error occurred while reading user")
+          showSnackBar("Something went wrong", "Error occurred while reading user")
         }
       }
 
@@ -284,9 +282,14 @@
 
       const numberFormatHandler = () => (userData.value.phone = formatPhoneNumber(userData.value.phone))
 
-      onMounted( async ()=> {
-        await readUserData(router?.currentRoute?.value?.params?.id)
+      onMounted(()=> {
+        const userId = router?.currentRoute?.value?.params?.id
+        if (userId != userStore?.data?.id) router.push(`/profile/${userStore?.data?.id}`) 
+        readUserData(userStore?.data?.id)
         stateOptions.value = Object.values(STATES) || []
+      })
+
+      onUpdated(()=> {
         initializeSelectOptions("choices-primary-goal", false)
         initializeSelectOptions("choices-goal-amount", false)
         initializeSelectOptions("choices-goal-timeline", false)

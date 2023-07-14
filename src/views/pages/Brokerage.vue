@@ -111,6 +111,10 @@ export default defineComponent({
       }
     ]
 
+    const changeUrl = (link) => {
+      window.open(link, '_blank')
+    }
+
     onMounted(async ()=> {
       globalStore.state.showFooter = false
       globalStore.state.showNavs = true
@@ -119,7 +123,8 @@ export default defineComponent({
     return {
       roleType,
       PlaidLogo,
-      agents
+      agents,
+      changeUrl
     }
   }
 })
