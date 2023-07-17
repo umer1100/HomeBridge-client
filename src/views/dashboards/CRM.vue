@@ -24,13 +24,13 @@
 
             <div  v-if="roleType === 'EMPLOYER'" class="mt-4 col-sm-4 mt-sm-0">
               <mini-gradient-line-chart
-                title="Total Ownerific Credit"
+                title="Ownerific Value Earned"
                 :description='totalCredits'
               />
             </div>
             <div  v-if="roleType === 'EMPLOYEE'" class="mt-4 col-sm-4 mt-sm-0">
               <mini-gradient-line-chart
-                title="Ownerific Credit"
+                title="Ownerific Wallet"
                 :description='userCredits'
               />
             </div>
