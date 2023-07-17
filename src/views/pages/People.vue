@@ -143,9 +143,9 @@
   import { useOrganizationStore } from "../../store/organization"
   import {
     USER_STATUSES,
-    PRIMARY_GOAL_OPTIONS,
-    GOAL_TIMELINE_OPTIONS,
-    GOAL_AMOUNT_OPTIONS,
+    // PRIMARY_GOAL_OPTIONS,
+    // GOAL_TIMELINE_OPTIONS,
+    // GOAL_AMOUNT_OPTIONS,
     USER_ROLE_TYPES
   } from "../../constant/index"
   import {
@@ -172,12 +172,12 @@
     "Employment Type": { field: "employmentType", sortable: true, isAscending: true },
     "Date of Birth": { field: "formattedDateOfBirth", sortable: true, isAscending: true },
     "Last Seen": { field: "formattedLastSeen", sortable: true, isAscending: true },
-    "Hired": { field: "formattedStartDate", sortable: true, isAscending: true },
+    "Hired Date": { field: "formattedStartDate", sortable: true, isAscending: true },
     "End Date": { field: "formattedEndDate", sortable: true, isAscending: true },
     "Enrolled": { field: "formattedCreatedAt", sortable: true, isAscending: true },
-    "Primary Goal": { field: "primaryGoal", sortable: true, isAscending: true },
-    "Goal Timeline": { field: "goalTimeline", sortable: true, isAscending: true },
-    "Goal Amount": { field: "goalAmount", sortable: true, isAscending: true },
+    // "Primary Goal": { field: "primaryGoal", sortable: true, isAscending: true },
+    // "Goal Timeline": { field: "goalTimeline", sortable: true, isAscending: true },
+    // "Goal Amount": { field: "goalAmount", sortable: true, isAscending: true },
   }
 
   export default defineComponent({
@@ -197,7 +197,7 @@
       const columns = ref([])
       const selectedColumns = ref(["Name", "Status", "Email", "Source", "Role"])
 
-      const availableFilters = ["Status", "Gender", "State", "Department", "Primary Goal", "Goal Timeline", "Goal Amount"]
+      const availableFilters = ["Status", "Gender", "State", "Department"]
       const filterData = ref([])
       const availableToggleOption = ref([...availableFilters, "Column Options"])
 
@@ -205,15 +205,15 @@
       const selectedGenderFilters = ref([])
       const selectedStatesFilters= ref([])
       const selectedDepartmentFilters= ref([])
-      const selectedPrimaryGoalFilters = ref([])
-      const selectedGoalTimelineFilters = ref([])
-      const selectedGoalAmountFilters = ref([])
+      // const selectedPrimaryGoalFilters = ref([])
+      // const selectedGoalTimelineFilters = ref([])
+      // const selectedGoalAmountFilters = ref([])
       const selectedTeamMember = ref([])
 
       const initializePeopleTab = async () => {
         if (organizationStore?.users) {
           data.value = organizationStore?.users?.filter(user => user.roleType !== USER_ROLE_TYPES.EMPLOYER).map(user => {
-            let { firstName, lastName, addressLine1, addressLine2, city, state, zipcode, lastLogin, createdAt, endDate, startDate, dateOfBirth, department, source, sex, roleType, title, employmentType, primaryGoal, goalTimeline, goalAmount } = user
+            let { firstName, lastName, addressLine1, addressLine2, city, state, zipcode, lastLogin, createdAt, endDate, startDate, dateOfBirth, department, source, sex, roleType, title, employmentType } = user
             allDepartments.value.push(department)
             return {
               ...user,
@@ -231,9 +231,9 @@
               formattedDateOfBirth: dateOfBirth ? moment(dateOfBirth).utc().format("MM/DD/YYYY") : "-",
               title: title || "-",
               department: department || "-",
-              primaryGoal: primaryGoal || "-",
-              goalTimeline: goalTimeline || "-",
-              goalAmount: goalAmount || "-",
+              // primaryGoal: primaryGoal || "-",
+              // goalTimeline: goalTimeline || "-",
+              // goalAmount: goalAmount || "-",
             }
           })
 
@@ -326,12 +326,12 @@
             return Object.keys(STATES).map(item => ({ label: STATES[item]}))
           case "Department":
             return allDepartments.value.filter(uniqueElements).map(item => ({ label: item }))
-          case "Primary Goal":
-            return PRIMARY_GOAL_OPTIONS.map(item => ({ label: item }))
-          case "Goal Timeline":
-            return GOAL_TIMELINE_OPTIONS.map(item => ({ label: item }))
-          case "Goal Amount":
-            return GOAL_AMOUNT_OPTIONS.map(item => ({ label: item }))
+          // case "Primary Goal":
+          //   return PRIMARY_GOAL_OPTIONS.map(item => ({ label: item }))
+          // case "Goal Timeline":
+          //   return GOAL_TIMELINE_OPTIONS.map(item => ({ label: item }))
+          // case "Goal Amount":
+          //   return GOAL_AMOUNT_OPTIONS.map(item => ({ label: item }))
           case "Column Options":
             return Object.keys(availableColumnOptions).filter(option => option !== "Name").map(item => ({label: item}))
           default:
@@ -344,9 +344,9 @@
             || selectedGenderFilters.value.length === 0
             || Object.values(selectedStatesFilters.value).length === 0
             || selectedDepartmentFilters.value.length === 0
-            || selectedPrimaryGoalFilters.value.length === 0
-            || selectedGoalTimelineFilters.value.length === 0
-            || selectedGoalAmountFilters.value.length === 0
+            // || selectedPrimaryGoalFilters.value.length === 0
+            // || selectedGoalTimelineFilters.value.length === 0
+            // || selectedGoalAmountFilters.value.length === 0
         ) {
           filterData.value = data.value
         }
@@ -367,17 +367,17 @@
           filterData.value = filterData.value.filter(person => selectedDepartmentFilters.value.includes(person.department))
         }
 
-        if (selectedPrimaryGoalFilters.value.length > 0) {
-          filterData.value = filterData.value.filter(person => selectedPrimaryGoalFilters.value.includes(person.primaryGoal))
-        }
+        // if (selectedPrimaryGoalFilters.value.length > 0) {
+        //   filterData.value = filterData.value.filter(person => selectedPrimaryGoalFilters.value.includes(person.primaryGoal))
+        // }
 
-        if (selectedGoalTimelineFilters.value.length > 0) {
-          filterData.value = filterData.value.filter(person => selectedGoalTimelineFilters.value.includes(person.goalTimeline))
-        }
+        // if (selectedGoalTimelineFilters.value.length > 0) {
+        //   filterData.value = filterData.value.filter(person => selectedGoalTimelineFilters.value.includes(person.goalTimeline))
+        // }
 
-        if (selectedGoalAmountFilters.value.length > 0) {
-          filterData.value = filterData.value.filter(person => selectedGoalAmountFilters.value.includes(person.goalAmount))
-        }
+        // if (selectedGoalAmountFilters.value.length > 0) {
+        //   filterData.value = filterData.value.filter(person => selectedGoalAmountFilters.value.includes(person.goalAmount))
+        // }
         peopleDataToDisplay.value = filterData.value
       }
 
@@ -410,27 +410,27 @@
           showSearch: false,
           selectedOptionsChanged: (item) => handleSelectedOptions(selectedDepartmentFilters, item)
         },
-        {
-          name: "Primary-Goal",
-          title: "Filter by Primary Goal",
-          selectedOptions: selectedPrimaryGoalFilters,
-          showSearch: false,
-          selectedOptionsChanged: (item) => handleSelectedOptions(selectedPrimaryGoalFilters, item)
-        },
-        {
-          name: "Goal-Timeline",
-          title: "Filter by Goal Timeline",
-          selectedOptions: selectedGoalTimelineFilters,
-          showSearch: false,
-          selectedOptionsChanged: (item) => handleSelectedOptions(selectedGoalTimelineFilters, item)
-        },
-        {
-          name: "Goal-Amount",
-          title: "Filter by Goal Amount",
-          selectedOptions: selectedGoalAmountFilters,
-          showSearch: false,
-          selectedOptionsChanged: (item) => handleSelectedOptions(selectedGoalAmountFilters, item)
-        },
+        // {
+        //   name: "Primary-Goal",
+        //   title: "Filter by Primary Goal",
+        //   selectedOptions: selectedPrimaryGoalFilters,
+        //   showSearch: false,
+        //   selectedOptionsChanged: (item) => handleSelectedOptions(selectedPrimaryGoalFilters, item)
+        // },
+        // {
+        //   name: "Goal-Timeline",
+        //   title: "Filter by Goal Timeline",
+        //   selectedOptions: selectedGoalTimelineFilters,
+        //   showSearch: false,
+        //   selectedOptionsChanged: (item) => handleSelectedOptions(selectedGoalTimelineFilters, item)
+        // },
+        // {
+        //   name: "Goal-Amount",
+        //   title: "Filter by Goal Amount",
+        //   selectedOptions: selectedGoalAmountFilters,
+        //   showSearch: false,
+        //   selectedOptionsChanged: (item) => handleSelectedOptions(selectedGoalAmountFilters, item)
+        // },
         {
           name: "Options",
           title: "Column Options",

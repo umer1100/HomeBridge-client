@@ -54,7 +54,7 @@
             <input v-model="userData.phone" :disabled="!isCurrentUserProfile" class="form-control" type="text" placeholder="(123)456-7895" @input="numberFormatHandler"/>
           </div>
         </div>
-        <div class="col-12">
+        <!-- <div class="col-12">
           <label class="form-label">What is your primary goal?</label>
           <select
               id="choices-primary-goal"
@@ -95,7 +95,7 @@
             v-model="userData.dreamHomeDescription"
             :disabled="!isCurrentUserProfile"
             class="form-control"  rows="3"></textarea>
-        </div>
+        </div> -->
         <div v-if="isCurrentUserProfile">
           <soft-button
             class="float-end mt-4 mb-0"
@@ -185,10 +185,10 @@
         state: null,
         zipcode: null,
         phone: null,
-        primaryGoal: null,
-        goalAmount: null,
-        goalTimeline: null,
-        dreamHomeDescription: null
+        // primaryGoal: null,
+        // goalAmount: null,
+        // goalTimeline: null,
+        // dreamHomeDescription: null
       })
 
       const currentPassword = ref("")
@@ -211,10 +211,10 @@
           userData.value.state = STATES[userStore?.data?.state] || ""
           userData.value.zipcode = userStore?.data?.zipcode || ""
           userData.value.phone = formatPhoneNumber(userStore?.data?.phone || "")
-          userData.value.primaryGoal = userStore?.data?.primaryGoal || ""
-          userData.value.goalTimeline = userStore?.data?.goalTimeline || ""
-          userData.value.goalAmount = userStore?.data?.goalAmount || ""
-          userData.value.dreamHomeDescription = userStore?.data?.dreamHomeDescription || ""
+          // userData.value.primaryGoal = userStore?.data?.primaryGoal || ""
+          // userData.value.goalTimeline = userStore?.data?.goalTimeline || ""
+          // userData.value.goalAmount = userStore?.data?.goalAmount || ""
+          // userData.value.dreamHomeDescription = userStore?.data?.dreamHomeDescription || ""
         } else {
           showSnackBar("Something went wrong", "Error occurred while reading user")
         }
@@ -235,10 +235,10 @@
             zipcode: userData.value.zipcode,
             state: Object.keys(STATES).find(key => STATES[key] === userData.value.state),
             phone: userData.value.phone,
-            primaryGoal: userData.value.primaryGoal,
-            goalTimeline: userData.value.goalTimeline,
-            goalAmount: userData.value.goalAmount,
-            dreamHomeDescription: userData.value.dreamHomeDescription
+            // primaryGoal: userData.value.primaryGoal,
+            // goalTimeline: userData.value.goalTimeline,
+            // goalAmount: userData.value.goalAmount,
+            // dreamHomeDescription: userData.value.dreamHomeDescription
           })
 
           if (res && res?.success) {
@@ -290,9 +290,9 @@
       })
 
       onUpdated(()=> {
-        initializeSelectOptions("choices-primary-goal", false)
-        initializeSelectOptions("choices-goal-amount", false)
-        initializeSelectOptions("choices-goal-timeline", false)
+        // initializeSelectOptions("choices-primary-goal", false)
+        // initializeSelectOptions("choices-goal-amount", false)
+        // initializeSelectOptions("choices-goal-timeline", false)
         initializeSelectOptions("choices-state", true)
       })
 

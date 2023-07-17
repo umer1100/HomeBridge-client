@@ -25,51 +25,53 @@
             <div class="row">
               <div class="col-12 col-lg-8 mx-auto my-5">
                 <div class="multisteps-form__progress">
-                  <button
+                  <!-- <button
                     class="multisteps-form__progress-btn js-active"
                     title="User Info"
                     :class="activeStep >= 0 ? activeClass : ''"
                   >
                     <span> About </span>
-                  </button>
+                  </button> -->
                   <button
                     class="multisteps-form__progress-btn"
                     title="Connect"
-                    :class="activeStep >= 1 ? activeClass : ''"
+                    :class="activeClass"
                   >
                     <span> Connect </span>
                   </button>
-                  <button
+                  <!-- <button
                     class="multisteps-form__progress-btn"
                     title="Socials"
                     :class="activeStep >= 2 ? activeClass : ''"
                   >
                     <span> Verify </span>
-                  </button>
+                  </button> -->
                 </div>
               </div>
             </div>
             <!--form panels-->
-            <div class="row">
+            <div class="row" >
               <div class="col-12 col-lg-8 m-auto">
                 <form class="multisteps-form__form mb-5">
                   <!--single form panel-->
-                  <user-info  :class="activeStep === 0 ? activeClass : ''" 
+                  <!-- <user-info  :class="activeStep === 0 ? activeClass : ''" 
                               :step ="activeStep"
                               :userInfo = "userInfo"
                               @user-info-update = "userInfo.userInfoUpdate"
-                              @next-step="nextStep"/>
+                              @next-step="nextStep"/> -->
                   <!--single form panel-->
-                  <Connect  :class = "activeStep === 1 ? activeClass : ''" 
+                  <!-- <Connect  :class = "activeStep === 1 ? activeClass : ''" 
                             :step = "activeStep"
                             @next-step = "nextStep"
-                            @prev-step = "prevStep"/>
+                            @prev-step = "prevStep"/> -->
                   <!--single form panel-->
-                  <user-info  :class="activeStep === 2 ? activeClass : ''" 
+                  <!-- <user-info  :class="activeStep === 2 ? activeClass : ''" 
                               :step ="activeStep"
                               :userInfo = "userInfo"
                               @prev-step="prevStep"
-                              @next-step="nextStep"/>
+                              @next-step="nextStep"/> -->
+                  <Connect  :class = "activeClass" 
+                            @next-step = "finishOnboarding"/>
                 </form>
               </div>
             </div>
@@ -81,13 +83,13 @@
 </template>
 
 <script>
-import { defineComponent, onBeforeMount, onBeforeUnmount, ref } from "vue"
+import { defineComponent, onBeforeMount, onBeforeUnmount } from "vue"
 import { useRouter } from "vue-router"
 import { useStore } from "vuex"
-import UserInfo from "./components/UserInfo.vue"
+// import UserInfo from "./components/UserInfo.vue"
 import Connect from "./components/Connect.vue"
 import { useUserStore } from "../../store/user"
-import { useOrganizationStore } from "../../store/organization"
+// import { useOrganizationStore } from "../../store/organization"
 import { updateUser } from "../../api/user/update"
 import { USER_STATUSES } from "../../constant"
 import { showSnackBar } from "../../utils/helper"
@@ -95,46 +97,46 @@ import { showSnackBar } from "../../utils/helper"
 export default defineComponent({
   name: "Onboarding",
   components: {
-    UserInfo,
+    // UserInfo,
     Connect,
   },
   setup() {
     const globalStore = useStore()
     const userStore = useUserStore()
-    const organizationStore = useOrganizationStore()
+    // const organizationStore = useOrganizationStore()
     const router = useRouter()
 
-    let activeStep = ref(0)
-    let formSteps = ref(2)
-    let firstName = ref(userStore?.data?.firstName)
-    let lastName = ref(userStore?.data?.lastName)
-    const userEmail = ref(userStore?.data?.email)
-    const organizationName = ref(organizationStore?.data?.name)
+    // let activeStep = ref(0)
+    // let formSteps = ref(2)
+    // let firstName = ref(userStore?.data?.firstName)
+    // let lastName = ref(userStore?.data?.lastName)
+    // const userEmail = ref(userStore?.data?.email)
+    // const organizationName = ref(organizationStore?.data?.name)
 
-    const nextStep = async () => {
-      if (activeStep.value == formSteps.value) {
-        await finishOnboarding()
-      } else if(activeStep.value < formSteps.value) {
-        activeStep.value += 1
-      }
-    }
+    // const nextStep = async () => {
+    //   if (activeStep.value == formSteps.value) {
+    //     await finishOnboarding()
+    //   } else if(activeStep.value < formSteps.value) {
+    //     activeStep.value += 1
+    //   }
+    // }
 
-    const prevStep = () => {
-      if (activeStep.value > 0) {
-        activeStep.value -= 1
-      }
-    }
+    // const prevStep = () => {
+    //   if (activeStep.value > 0) {
+    //     activeStep.value -= 1
+    //   }
+    // }
     
-    const userInfoUpdate = (updatedData) => {
-      firstName.value = updatedData?.firstName
-      lastName.value = updatedData?.lastName
-    }
+    // const userInfoUpdate = (updatedData) => {
+    //   firstName.value = updatedData?.firstName
+    //   lastName.value = updatedData?.lastName
+    // }
     
     const finishOnboarding = async () => {
       const res = await updateUser({
         status: USER_STATUSES.ACTIVE,
-        firstName: firstName.value,
-        lastName: lastName.value,
+        // firstName: firstName.value,
+        // lastName: lastName.value,
       })
       if (res && res.success) {
         userStore.data = res?.data
@@ -144,15 +146,16 @@ export default defineComponent({
       router.push("/")
     }
 
-    const userInfo = ref({
-      firstName,
-      lastName,
-      userEmail,
-      organizationName,
-      userInfoUpdate
-    })
+    // const userInfo = ref({
+    //   firstName,
+    //   lastName,
+    //   userEmail,
+    //   organizationName,
+    //   userInfoUpdate
+    // })
 
     onBeforeMount(()=> {
+      if(userStore.data.roleType === 'EMPLOYEE') router.push("/")
       globalStore.commit("hideEveryDisplay")
       globalStore.state.hideConfigButton = true
     })
@@ -166,10 +169,11 @@ export default defineComponent({
     return{
       showMenu: false,
       activeClass: "js-active position-relative",
-      activeStep,
-      userInfo,
-      nextStep,
-      prevStep
+      finishOnboarding,
+      // activeStep,
+      // userInfo,
+      // nextStep,
+      // prevStep
     }
   },
 })

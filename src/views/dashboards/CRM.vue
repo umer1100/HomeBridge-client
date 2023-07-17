@@ -15,12 +15,12 @@
               <place-holder-card :title="{ variant: 'h6', text: 'New tab' }" />
             </div> -->
 
-            <div  v-if="roleType === 'EMPLOYER'" class="mt-4 col-sm-4 mt-sm-0">
+            <!-- <div  v-if="roleType === 'EMPLOYER'" class="mt-4 col-sm-4 mt-sm-0">
               <mini-gradient-line-chart
                 title="Average Home Price"
                 :description='avgHomePrice'
               />
-            </div>
+            </div> -->
 
             <div  v-if="roleType === 'EMPLOYER'" class="mt-4 col-sm-4 mt-sm-0">
               <mini-gradient-line-chart
@@ -56,8 +56,8 @@
             <div class="col-lg-12">
               <background-blog-card
                 :image="backgroundImage"
-                title="Your Unique Ownerific Benefit"
-                description="Your employees qualify for a 2% discount on any home purchased through the Ownerific Brokerage Program. That amount is broken into monthly credit installments deposited into their Ownerific Wallets, based on the length of their Home Savings Timeline."
+                :title="sideCardTitle"
+                :description="sideCardDescription"
                 :action="{
                   route: 'https://www.ownerific.com/',
                   label: 'Learn more',
@@ -117,7 +117,7 @@
   import { useUserStore } from "../../store/user"
   import {
     readUsers,
-    averageHomePrice,
+    // averageHomePrice,
     totalOwnerificCredit,
   } from "../../api/organization/request"
   import { fetchCreditWalletBalance } from "../../api/creditWallet/read"
@@ -140,7 +140,10 @@
 
       const roleType = userStore?.data?.roleType
       const employeesCount = ref(0)
-      const avgHomePrice = ref()
+      const organizationName = ref(organizationStore.data.name)
+      const sideCardTitle = ref("")
+      const sideCardDescription = ref("")
+      // const avgHomePrice = ref()
       const totalCredits = ref()
       const userCredits = ref()
 
@@ -152,13 +155,13 @@
         else showSnackBar("Something went wrong.", response?.message)
       }
 
-      const averageHomePriceData = async () => {
-        const response = await averageHomePrice()
+      // const averageHomePriceData = async () => {
+      //   const response = await averageHomePrice()
 
-        // eslint-disable-next-line require-atomic-updates
-        if (response && response?.success) organizationStore.averageHomePrice = response.data
-        else showSnackBar("Something went wrong.", response?.message)
-      }
+      //   // eslint-disable-next-line require-atomic-updates
+      //   if (response && response?.success) organizationStore.averageHomePrice = response.data
+      //   else showSnackBar("Something went wrong.", response?.message)
+      // }
 
       const totalOwnerificCreditsData = async () => {
         const response = await totalOwnerificCredit()
@@ -175,20 +178,31 @@
         else showSnackBar("Something went wrong.", response?.message)
       }
 
+      const setSideCardValues = () => {
+        sideCardTitle.value = roleType == "EMPLOYEE"
+        ? "Your Unique Ownerific Benefit"
+        : `The ${organizationName.value} + Ownerific Benefit`
+
+        sideCardDescription.value = roleType == "EMPLOYEE"
+        ? `Congratulations! Your Ownerific membership, along with the support of ${organizationName.value}, earns you $100 of value every month. This benefit brings you one step closer each month to realizing your homeownership goals and dreams.`
+        : `Congratulations! Your organization's Ownerific membership creates $100 of value every month, for every member of your team. That's $${100*employeesCount.value} per month! This benefit brings members of your team one step close each month to realizing their homeownership goals and dreams.`
+      }
+
       onBeforeMount( async () => {
         if (roleType === 'EMPLOYER') await readUsersData()
-        if (roleType === 'EMPLOYER') await averageHomePriceData()
+        // if (roleType === 'EMPLOYER') await averageHomePriceData()
         if (roleType === 'EMPLOYER') await totalOwnerificCreditsData()
         if (roleType === 'EMPLOYEE') await fetchCreditWallet()
 
         employeesCount.value = organizationStore?.users?.filter(user => user.roleType === USER_ROLE_TYPES.EMPLOYEE).length || 0
-        avgHomePrice.value = `$${Number(organizationStore?.averageHomePrice).toLocaleString()}`
+        // avgHomePrice.value = `$${Number(organizationStore?.averageHomePrice).toLocaleString()}`
         totalCredits.value = `$${Number(organizationStore?.totalOwnerificCredits).toLocaleString()}`
+        setSideCardValues()
       })
 
       return {
         employeesCount,
-        avgHomePrice,
+        // avgHomePrice,
         totalCredits,
         image,
         faRocket,
@@ -196,7 +210,9 @@
         faCube,
         backgroundImage,
         roleType,
-        userCredits
+        userCredits,
+        sideCardTitle,
+        sideCardDescription,
       }
     },
   })
