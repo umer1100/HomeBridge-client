@@ -38,16 +38,9 @@
 
           <div class="mt-4">
             <default-doughnut-chart
-              title="Employee Status"
-              :chart="{
-                labels: ['Pending', 'New', 'Active', 'Onboarding', 'Paused'],
-                datasets: [{ label: 'Employees', data: [25, 3, 12, 7, 10] }]
-              }"
-              :actions="{
-                route: '/people',
-                label: 'See all employees',
-                color: 'secondary'
-              }"
+              :title="pieChartTitle"
+              :chart="pieChartValue"
+              :actions="pieChartActions"
             />
           </div>
         </div>
@@ -122,6 +115,7 @@
   } from "../../api/organization/request"
   import { fetchCreditWalletBalance } from "../../api/creditWallet/read"
   import { USER_ROLE_TYPES } from "../../constant"
+  import { BROKERAGE_AGENTS, LENDER_AGENTS } from "../../constant/agents"
   import { showSnackBar } from "../../utils/helper"
 
   export default defineComponent({
@@ -143,16 +137,39 @@
       const organizationName = ref(organizationStore.data.name)
       const sideCardTitle = ref("")
       const sideCardDescription = ref("")
+      const pieChartTitle = ref("")
+      const pieChartValue = ref({
+        labels: [],
+        datasets: [{}]
+      })
+      const pieChartActions = ref({
+        route: "",
+        label: "",
+        color: "secondary"
+      })
       // const avgHomePrice = ref()
       const totalCredits = ref()
       const userCredits = ref()
+      const employeesStatusCount = ref({
+        PENDING: 0,
+        NEW: 0,
+        ACTIVE: 0,
+        PAUSE: 0
+      })
 
       const readUsersData = async () => {
         const response = await readUsers()
 
         // eslint-disable-next-line require-atomic-updates
-        if (response && response?.success) organizationStore.users = response.data
-        else showSnackBar("Something went wrong.", response?.message)
+        if (response?.success) {
+          organizationStore.users = response.data
+          employeesStatusCount.value = response.data.reduce((count, item) => {
+            if (item.status !== "ONBOARDING") count[item.status] = (count[item.status] || 0) + 1
+            return count
+          }, {})
+        } else {
+          showSnackBar("Something went wrong.", response?.message)
+        }
       }
 
       // const averageHomePriceData = async () => {
@@ -188,6 +205,22 @@
         : `Congratulations! Your organization's Ownerific membership creates $100 of value every month, for every member of your team. That's $${100*employeesCount.value} per month! This benefit brings members of your team one step close each month to realizing their homeownership goals and dreams.`
       }
 
+      const setPieChartValues = () => {
+        if (roleType == "EMPLOYEE") {
+          pieChartTitle.value = "Homeownership Experts on Your Side"
+          pieChartValue.value.labels = ["Buying and selling pros", "Financing and lending pros"]
+          pieChartValue.value.datasets = [{ label: 'Buy and Finance', data: [BROKERAGE_AGENTS.length, LENDER_AGENTS.length] }]
+          pieChartActions.value.route = "/lender"
+          pieChartActions.value.label = "See all Financing Professionals"
+        } else if (roleType == "EMPLOYER") {
+          pieChartTitle.value = "Employee Status"
+          pieChartValue.value.labels = Object.keys(employeesStatusCount.value)
+          pieChartValue.value.datasets = [{ label: 'Employees', data: Object.values(employeesStatusCount.value) }]
+          pieChartActions.value.route = "/people"
+          pieChartActions.value.label = "See all employees"
+        }
+      }
+
       onBeforeMount( async () => {
         if (roleType === 'EMPLOYER') await readUsersData()
         // if (roleType === 'EMPLOYER') await averageHomePriceData()
@@ -198,6 +231,7 @@
         // avgHomePrice.value = `$${Number(organizationStore?.averageHomePrice).toLocaleString()}`
         totalCredits.value = `$${Number(organizationStore?.totalOwnerificCredits).toLocaleString()}`
         setSideCardValues()
+        setPieChartValues()
       })
 
       return {
@@ -213,6 +247,9 @@
         userCredits,
         sideCardTitle,
         sideCardDescription,
+        pieChartTitle,
+        pieChartValue,
+        pieChartActions,
       }
     },
   })

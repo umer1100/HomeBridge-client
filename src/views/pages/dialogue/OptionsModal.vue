@@ -13,7 +13,7 @@
           <div class="form-check form-switch custom-modal-body px-1">
             <div v-for="option in modalOptions" :key="option.label">
               <div class="mb-1 d-flex">
-                <p class="form-check-label">{{ option.label }}</p>
+                <p>{{ option.label }}</p>
                 <div class="form-check form-switch ms-auto">
                   <input  class="form-check-input"
                           type="checkbox"
