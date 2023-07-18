@@ -48,28 +48,17 @@
       </div>
     </section>
   </main>
-  <div class="position-fixed top-9 end-1 z-index-2">
-    <soft-snackbar
-      v-if="snackbar"
-      :title="snackbarTitle"
-      :description="snackbarDescription"
-      color="white"
-      :close-handler="() => snackbar = null"
-    />
-  </div>
-  <soft-spinner v-if="showSpinner"/>
   <app-footer />
 </template>
 
 <script>
 import { defineComponent, onBeforeMount, onBeforeUnmount, ref } from "vue"
 import { useStore } from "vuex"
-import Navbar from "@/examples/PageLayout/Navbar.vue"
-import AppFooter from "@/examples/PageLayout/Footer.vue"
+import Navbar from "@/PageLayout/Navbar.vue"
+import AppFooter from "@/PageLayout/Footer.vue"
 import { EMAIL_REGEX, EMAIL_REGEX_MISMATCH_NOTICE } from "../../../constant/index"
 import { sendResetPasswordToken } from "../../../api/user/sendResetPasswordToken"
-import SoftSnackbar from "@/components/SoftSnackbar.vue"
-import SoftSpinner from "@/components/SoftSpinner.vue"
+import { handleSpinner, showSnackBar } from "../../../utils/helper"
 const body = document.getElementsByTagName("body")[0]
 
 export default defineComponent({
@@ -77,46 +66,35 @@ export default defineComponent({
   components: {
     Navbar,
     AppFooter,
-    SoftSnackbar,
-    SoftSpinner,
   },
   setup() {
     const globalStore = useStore()
 
     const emailAddress = ref("")
-    const snackbar = ref(false)
-    const snackbarTitle = ref("")
-    const snackbarDescription = ref("")
-    const showSpinner = ref(false)
-
-    onBeforeMount(()=> {
-      globalStore.commit("hideEveryDisplay")
-      body.classList.add("bg-gray-200")
-    })
 
     const handleSubmit = async (event) => {
       event.preventDefault()
-      showSpinner.value = true
+      handleSpinner(true)
       if (!EMAIL_REGEX.test(emailAddress.value)) {
-        snackbar.value = true
-        snackbarTitle.value = 'Something went Wrong'
-        snackbarDescription.value = EMAIL_REGEX_MISMATCH_NOTICE
+        showSnackBar("Something went Wrong", EMAIL_REGEX_MISMATCH_NOTICE)
       } else {
         const res = await sendResetPasswordToken(emailAddress.value)
         if (res && res?.success) {
           // eslint-disable-next-line require-atomic-updates
           emailAddress.value = ''
-          snackbarTitle.value = 'Success'
+          showSnackBar("Success", res.message)
         } else {
-          snackbarTitle.value = 'Something went Wrong'
+          showSnackBar("Something went Wrong", res.message)
         }
-
-        snackbar.value = true
-        snackbarDescription.value = res.message
       }
 
-      showSpinner.value = false
+      handleSpinner(false)
     }
+
+    onBeforeMount(()=> {
+      globalStore.commit("hideEveryDisplay")
+      body.classList.add("bg-gray-200")
+    })
 
     onBeforeUnmount(()=> {
       globalStore.commit("showEveryDisplay")
@@ -124,10 +102,6 @@ export default defineComponent({
     })
 
     return {
-      showSpinner,
-      snackbar,
-      snackbarDescription,
-      snackbarTitle,
       emailAddress,
       handleSubmit
     }

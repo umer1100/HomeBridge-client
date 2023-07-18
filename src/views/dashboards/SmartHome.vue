@@ -346,10 +346,10 @@
 </template>
 
 <script>
-import ReportsDoughnutChart from "@/examples/Charts/ReportsDoughnutChart.vue";
-import ThinBarChart from "@/examples/Charts/ThinBarChart.vue";
-import DefaultCounterCard from "@/examples/Cards/DefaultCounterCard.vue";
-import SwitchCard from "@/examples/Cards/SwitchCard.vue";
+import ReportsDoughnutChart from "@/Charts/ReportsDoughnutChart.vue";
+import ThinBarChart from "@/Charts/ThinBarChart.vue";
+import DefaultCounterCard from "@/Cards/DefaultCounterCard.vue";
+import SwitchCard from "@/Cards/SwitchCard.vue";
 
 import setNavPills from "@/assets/js/nav-pills.js";
 import setTooltip from "@/assets/js/tooltip.js";

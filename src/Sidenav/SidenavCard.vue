@@ -38,7 +38,7 @@
   </div>
 </template>
 <script>
-import imgWhiteCurved from "../../assets/img/curved-images/white-curved.jpeg";
+import imgWhiteCurved from "../assets/img/curved-images/white-curved.jpeg";
 import { mapState } from "vuex";
 export default {
   name: "SidenavCard",

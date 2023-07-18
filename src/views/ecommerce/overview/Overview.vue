@@ -163,7 +163,7 @@
 import ChannelsChartCard from "./components/ChannelsChartCard.vue";
 import RevenueChartCard from "./components/RevenueChartCard.vue";
 import HorizontalBarChart from "./components/HorizontalBarChart.vue";
-import OrdersListCard from "../../../examples/Cards/OrdersListCard.vue";
+import OrdersListCard from "../../../Cards/OrdersListCard.vue";
 // images
 import US from "@/assets/img/icons/flags/US.png";
 import DE from "@/assets/img/icons/flags/DE.png";

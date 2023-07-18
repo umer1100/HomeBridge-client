@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import PieChart from "@/examples/Charts/PieChart.vue";
+import PieChart from "@/Charts/PieChart.vue";
 export default {
   name: "ChannelsChartCard",
   components: {

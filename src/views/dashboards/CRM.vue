@@ -1,185 +1,66 @@
 <template>
-  <main
-    class="main-content position-relative max-height-vh-100 h-100 border-radius-lg"
-  >
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
     <div class="py-4 container-fluid">
       <div class="row">
         <div class="col-xl-8 col-lg-7">
           <div class="row">
-            <div class="col-sm-4">
+            <div  v-if="roleType === 'EMPLOYER'" class="col-sm-4">
               <mini-gradient-line-chart
                 id="second-chart"
-                title="Enrolled Employeess"
-                description='5,927<span class="text-sm text-success font-weight-bolder">+55%</span>'
-                :chart="{
-                  labels: [
-                    'Apr',
-                    'May',
-                    'Jun',
-                    'Jul',
-                    'Aug',
-                    'Sep',
-                    'Oct',
-                    'Nov',
-                    'Dec',
-                  ],
-                  datasets: [
-                    {
-                      data: [50, 45, 60, 60, 80, 65, 90, 80, 100],
-                      label: 'Visitors',
-                    },
-                  ],
-                }"
-              />
-            </div>
-            <div class="mt-4 col-sm-4 mt-sm-0">
-              <mini-gradient-line-chart
-                title="Employer Contributions"
-                description='$130,832 <span class="text-sm text-success font-weight-bolder">+90%</span>'
-                :chart="{
-                  labels: [
-                    'Apr',
-                    'May',
-                    'Jun',
-                    'Jul',
-                    'Aug',
-                    'Sep',
-                    'Oct',
-                    'Nov',
-                    'Dec',
-                  ],
-                  datasets: [
-                    {
-                      data: [60, 80, 75, 90, 67, 100, 90, 110, 120],
-                      label: 'Income',
-                    },
-                  ],
-                }"
+                title="Enrolled Employees"
+                :description='employeesCount'
               />
             </div>
             <!-- <div class="mt-4 col-sm-4 mt-sm-0">
               <place-holder-card :title="{ variant: 'h6', text: 'New tab' }" />
             </div> -->
 
-            <div class="mt-4 col-sm-4 mt-sm-0">
+            <!-- <div  v-if="roleType === 'EMPLOYER'" class="mt-4 col-sm-4 mt-sm-0">
               <mini-gradient-line-chart
-                title="Employer Contributions"
-                description='$130,832 <span class="text-sm text-success font-weight-bolder">+90%</span>'
-                :chart="{
-                  labels: [
-                    'Apr',
-                    'May',
-                    'Jun',
-                    'Jul',
-                    'Aug',
-                    'Sep',
-                    'Oct',
-                    'Nov',
-                    'Dec',
-                  ],
-                  datasets: [
-                    {
-                      data: [60, 80, 75, 90, 67, 100, 90, 110, 120],
-                      label: 'Income',
-                    },
-                  ],
-                }"
+                title="Average Home Price"
+                :description='avgHomePrice'
+              />
+            </div> -->
+
+            <div  v-if="roleType === 'EMPLOYER'" class="mt-4 col-sm-4 mt-sm-0">
+              <mini-gradient-line-chart
+                title="Ownerific Value Earned"
+                :description='totalCredits'
               />
             </div>
-
-
-
-
+            <div  v-if="roleType === 'EMPLOYEE'" class="mt-4 col-sm-4 mt-sm-0">
+              <mini-gradient-line-chart
+                title="Ownerific Wallet"
+                :description='userCredits'
+              />
+            </div>
           </div>
-          <div class="pt-4 mt-4 col-lg-12 col-sm-6 mt-sm-0">
-            <revenue-chart-card />
-          </div>
+
           <div class="mt-4">
             <default-doughnut-chart
-          title="Employee Status"
-          :chart="{
-            labels: ['Pending', 'New', 'Active', 'Onboarding', 'Paused'],
-            datasets: [{ label: 'Employees', data: [25, 3, 12, 7, 10] }]
-          }"
-          :actions="{
-            route: 'https://www.ownerific.com',
-            label: 'See all employees',
-            color: 'secondary'
-          }"
-        />
+              :title="pieChartTitle"
+              :chart="pieChartValue"
+              :actions="pieChartActions"
+            />
           </div>
         </div>
         <div class="mt-4 col-xl-4 col-lg-5 mt-lg-0">
-          <div class="mb-4 col-lg-12 col-sm-6"> 
-                <announcement-card
-                  title="Hey Marcus! Did you know..."
-                  description="Our research has shown that, by increasing your Employer Contribution amount, you will retain and attract more employees."
-                  :by="{
-                    image: image,
-                    name: 'OwlAI | Your Personal Advisor',
-                    date: '2h ago',
-                  }"
-                  :badge="{ color: 'success', label: 'Recommendation' }"
-                  :value="{ currency: '$', amount: '1,000', method: 'month' }"
-                  :action="{ route: 'javascript:;', label: 'Modify' }"
-                />
-              </div>
-          
-          
           <div class="row">
             <div class="col-lg-12">
               <background-blog-card
                 :image="backgroundImage"
-                title="Your Unique Ownerific Benefit"
-                description="Your employees qualify for a 2% discount on any home purchased through the Ownerific Brokerage Program. That amount is broken into monthly credit installments deposited into their Ownerific Wallets, based on the length of their Home Savings Timeline."
+                :title="sideCardTitle"
+                :description="sideCardDescription"
                 :action="{
-                  route: '/',
+                  route: 'https://www.ownerific.com/',
                   label: 'Learn more',
-                }"
-              />
-            </div>
-              
-
-            
-            <div class="col-lg-12 col-sm-6">
-              <categories-list
-                :items="[
-                  {
-                    icon: { component: faRocket, background: 'dark' },
-                    title: 'Homes Purchased | Year-to-Date',
-                    description: '<strong>13 Homes</strong> | $550,000 worth of <strong>free money</strong>!',
-                  },
-                  {
-                    icon: {
-                      component: faScrewdriverWrench,
-                      background: 'dark',
-                    },
-                    title: 'Homes Purchased | Projected | Next 12 Months',
-                    description: '<strong>31 Homes</strong> | $1,550,000 worth of <strong>free money</strong>!',
-                  },
-                  {
-                    icon: { component: faCube, background: 'dark' },
-                    title: 'Goals Achieved',
-                    description: '$93,000 contributed from <strong>Ownerific</strong>',
-                  },
-                ]"
-              />
-            </div>
-            <div class="col-lg-12 col-sm-6">
-              <message-card
-                message="Wish Erika Jones a happy birthday."
-                :image="{ url: image, alt: 'Kal' }"
-                :action="{
-                  route: '/',
-                  label: 'Send me a message',
-                  color: 'dark',
                 }"
               />
             </div>
           </div>
         </div>
       </div>
-      <div class="mt-4 row">
+      <!-- <div class="mt-4 row">
         <div class="col-sm-6">
           <ranking-list-card
             :card="{ title: 'Newly Enrolled Employees', date: 'All Time' }"
@@ -205,90 +86,171 @@
             ]"
           />
         </div>
-        <div class="mt-4 col-sm-6 mt-sm-0">
-          <ranking-list-card
-            :card="{ title: 'Employer Contributions', date: 'All Time' }"
-            :item="[
-              {
-                title: 'May 2023',
-                date: '158 Eligible Employees',
-                amount: '+ $ 4,740.00',
-                icon: 'fa-arrow-up',
-                color: 'success',
-              },
-              {
-                title: 'April 2023',
-                date: '143 Eligible Employees',
-                amount: '+ $ 4,290.00',
-                icon: 'fa-arrow-up',
-                color: 'success',
-              },
-              {
-                title: 'March 2023',
-                date: '131 Eligible Employees',
-                amount: '+ $ 3,930.00',
-                icon: 'fa-arrow-up',
-                color: 'success',
-              },
-            ]"
-          />
-        </div>
-      </div>
-      <app-footer />
+      </div> -->
     </div>
   </main>
 </template>
 
 <script>
-import MiniGradientLineChart from "@/views/dashboards/components/MiniGradientLineChart.vue";
-// import PlaceHolderCard from "@/examples/Cards/PlaceHolderCard.vue";
-import BackgroundBlogCard from "./components/BackgroundBlogCard.vue";
-import CategoriesList from "./components/CategoriesList.vue";
-import MessageCard from "./components/MessageCard.vue";
-import RankingListCard from "../../examples/Cards/RankingListCard.vue";
-// import Calendar from "../../examples/Calendar.vue";
-import AppFooter from "../../examples/Footer.vue";
-import DefaultDoughnutChart from "@/views/applications/analytics/components/DefaultDoughnutChart.vue";
-import RevenueChartCard from "@/views/ecommerce/overview/components/RevenueChartCard.vue";
-import AnnouncementCard from "@/views/pages/projects/components/AnnouncementCard.vue";
+  import { defineComponent, onBeforeMount, ref } from "vue"
+  import MiniGradientLineChart from "@/views/dashboards/components/MiniGradientLineChart.vue"
+  import DefaultDoughnutChart from "@/views/applications/analytics/components/DefaultDoughnutChart.vue"
+  import image from "@/assets/img/kal-visuals-square.jpg"
+  import backgroundImage from "@/assets/img/ivancik.jpg"
+  import {
+    faRocket,
+    faScrewdriverWrench,
+    faCube,
+  } from "@fortawesome/free-solid-svg-icons"
+  // import PlaceHolderCard from "@/Cards/PlaceHolderCard.vue"
+  import BackgroundBlogCard from "./components/BackgroundBlogCard.vue"
+  // import RankingListCard from "../../Cards/RankingListCard.vue"
+  // import Calendar from "../../Calendar.vue"
+  import { useOrganizationStore } from "../../store/organization"
+  import { useUserStore } from "../../store/user"
+  import {
+    readUsers,
+    // averageHomePrice,
+    totalOwnerificCredit,
+  } from "../../api/organization/request"
+  import { fetchCreditWalletBalance } from "../../api/creditWallet/read"
+  import { USER_ROLE_TYPES } from "../../constant"
+  import { BROKERAGE_AGENTS, LENDER_AGENTS } from "../../constant/agents"
+  import { showSnackBar } from "../../utils/helper"
 
+  export default defineComponent({
+    name: "Crm",
+    components: {
+      MiniGradientLineChart,
+      // PlaceHolderCard,
+      BackgroundBlogCard,
+      // Calendar,
+      // RankingListCard,
+      DefaultDoughnutChart
+    },
+    setup() {
+      const organizationStore = useOrganizationStore()
+      const userStore = useUserStore()
 
-import image from "@/assets/img/kal-visuals-square.jpg";
-import backgroundImage from "@/assets/img/ivancik.jpg";
-import {
-  faRocket,
-  faScrewdriverWrench,
-  faCube,
-} from "@fortawesome/free-solid-svg-icons";
-export default {
-  name: "Crm",
-  components: {
-    MiniGradientLineChart,
-    // PlaceHolderCard,
-    BackgroundBlogCard,
-    CategoriesList,
-    MessageCard,
-    AnnouncementCard,
-    // Calendar,
-    RankingListCard,
-    AppFooter,
-    DefaultDoughnutChart,
-    RevenueChartCard
-  },
-  data() {
-    return {
-      image,
-      faRocket,
-      faScrewdriverWrench,
-      faCube,
-      backgroundImage,
-    };
-  },
-  beforeMount() {
-    this.$store.state.showFooter = false;
-  },
-  beforeUnmount() {
-    this.$store.state.showFooter = true;
-  },
-};
+      const roleType = userStore?.data?.roleType
+      const employeesCount = ref(0)
+      const organizationName = ref(organizationStore.data.name)
+      const sideCardTitle = ref("")
+      const sideCardDescription = ref("")
+      const pieChartTitle = ref("")
+      const pieChartValue = ref({
+        labels: [],
+        datasets: [{}]
+      })
+      const pieChartActions = ref({
+        route: "",
+        label: "",
+        color: "secondary"
+      })
+      // const avgHomePrice = ref()
+      const totalCredits = ref()
+      const userCredits = ref()
+      const employeesStatusCount = ref({
+        PENDING: 0,
+        NEW: 0,
+        ACTIVE: 0,
+        PAUSE: 0
+      })
+
+      const readUsersData = async () => {
+        const response = await readUsers()
+
+        // eslint-disable-next-line require-atomic-updates
+        if (response?.success) {
+          organizationStore.users = response.data
+          employeesStatusCount.value = response.data.reduce((count, item) => {
+            if (item.status !== "ONBOARDING") count[item.status] = (count[item.status] || 0) + 1
+            return count
+          }, {})
+        } else {
+          showSnackBar("Something went wrong.", response?.message)
+        }
+      }
+
+      // const averageHomePriceData = async () => {
+      //   const response = await averageHomePrice()
+
+      //   // eslint-disable-next-line require-atomic-updates
+      //   if (response && response?.success) organizationStore.averageHomePrice = response.data
+      //   else showSnackBar("Something went wrong.", response?.message)
+      // }
+
+      const totalOwnerificCreditsData = async () => {
+        const response = await totalOwnerificCredit()
+
+        // eslint-disable-next-line require-atomic-updates
+        if (response && response?.success) organizationStore.totalOwnerificCredits = response.data
+        else showSnackBar("Something went wrong.", response?.message)
+      }
+
+      const fetchCreditWallet = async () => {
+        const response = await fetchCreditWalletBalance()
+
+        if (response && response?.success) userCredits.value = `$${response.data.filter( item => (item.walletType == "PLATFORM"))[0].dollars}`
+        else showSnackBar("Something went wrong.", response?.message)
+      }
+
+      const setSideCardValues = () => {
+        sideCardTitle.value = roleType == "EMPLOYEE"
+        ? "Your Unique Ownerific Benefit"
+        : `The ${organizationName.value} + Ownerific Benefit`
+
+        sideCardDescription.value = roleType == "EMPLOYEE"
+        ? `Congratulations! Your Ownerific membership, along with the support of ${organizationName.value}, earns you $100 of value every month. This benefit brings you one step closer each month to realizing your homeownership goals and dreams.`
+        : `Congratulations! Your organization's Ownerific membership creates $100 of value every month, for every member of your team. That's $${100*employeesCount.value} per month! This benefit brings members of your team one step close each month to realizing their homeownership goals and dreams.`
+      }
+
+      const setPieChartValues = () => {
+        if (roleType == "EMPLOYEE") {
+          pieChartTitle.value = "Homeownership Experts on Your Side"
+          pieChartValue.value.labels = ["Buying and selling pros", "Financing and lending pros"]
+          pieChartValue.value.datasets = [{ label: 'Buy and Finance', data: [BROKERAGE_AGENTS.length, LENDER_AGENTS.length] }]
+          pieChartActions.value.route = "/lender"
+          pieChartActions.value.label = "See all Financing Professionals"
+        } else if (roleType == "EMPLOYER") {
+          pieChartTitle.value = "Employee Status"
+          pieChartValue.value.labels = Object.keys(employeesStatusCount.value)
+          pieChartValue.value.datasets = [{ label: 'Employees', data: Object.values(employeesStatusCount.value) }]
+          pieChartActions.value.route = "/people"
+          pieChartActions.value.label = "See all employees"
+        }
+      }
+
+      onBeforeMount( async () => {
+        if (roleType === 'EMPLOYER') await readUsersData()
+        // if (roleType === 'EMPLOYER') await averageHomePriceData()
+        if (roleType === 'EMPLOYER') await totalOwnerificCreditsData()
+        if (roleType === 'EMPLOYEE') await fetchCreditWallet()
+
+        employeesCount.value = organizationStore?.users?.filter(user => user.roleType === USER_ROLE_TYPES.EMPLOYEE).length || 0
+        // avgHomePrice.value = `$${Number(organizationStore?.averageHomePrice).toLocaleString()}`
+        totalCredits.value = `$${Number(organizationStore?.totalOwnerificCredits).toLocaleString()}`
+        setSideCardValues()
+        setPieChartValues()
+      })
+
+      return {
+        employeesCount,
+        // avgHomePrice,
+        totalCredits,
+        image,
+        faRocket,
+        faScrewdriverWrench,
+        faCube,
+        backgroundImage,
+        roleType,
+        userCredits,
+        sideCardTitle,
+        sideCardDescription,
+        pieChartTitle,
+        pieChartValue,
+        pieChartActions,
+      }
+    },
+  })
 </script>

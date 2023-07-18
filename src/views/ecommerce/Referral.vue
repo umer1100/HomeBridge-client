@@ -171,7 +171,7 @@
 </template>
 
 <script>
-import OrdersListCard from "../../examples/Cards/OrdersListCard.vue";
+import OrdersListCard from "../../Cards/OrdersListCard.vue";
 import ComplexBackgroundCard from "./components/ComplexBackgroundCard.vue";
 import TransparentInfoCard from "./components/TransparentInfoCard.vue";
 import OutlinedCounterCard from "./components/OutlinedCounterCard.vue";

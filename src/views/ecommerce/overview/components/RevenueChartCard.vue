@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import DefaultLineChart from "../../../../examples/Charts/DefaultLineChart.vue";
+import DefaultLineChart from "../../../../Charts/DefaultLineChart.vue";
 export default {
   name: "RevenueChartCard",
   components: {

@@ -45,8 +45,8 @@
   <app-footer />
 </template>
 <script>
-import Navbar from "@/examples/PageLayout/Navbar.vue";
-import AppFooter from "@/examples/PageLayout/Footer.vue";
+import Navbar from "@/PageLayout/Navbar.vue";
+import AppFooter from "@/PageLayout/Footer.vue";
 import SoftButton from "@/components/SoftButton.vue";
 
 import { mapMutations } from "vuex";

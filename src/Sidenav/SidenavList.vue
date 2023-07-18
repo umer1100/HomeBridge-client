@@ -6,10 +6,10 @@
     <ul class="navbar-nav">
       <li class="nav-item">
         <sidenav-collapse
-          collapse-ref="Dashboard"
           nav-text="Dashboard"
           :collapse="false"
-          :class="getRoute() === 'dashboards' ? 'active' : ''"
+          :class="getRoute() === 'dashboard' ? 'active' : ''"
+          @click="navigateToPath('/dashboard')"
         >
           <template #icon>
             <Shop />
@@ -20,7 +20,7 @@
       <li class="mt-3 nav-item">
       </li>
 
-      <li class="nav-item">
+      <li v-if="getUserRole() === 'EMPLOYER'" class="nav-item">
         <hr class="mt-0 horizontal dark" />
         <h6
           class="text-xs ps-4 ms-2 text-uppercase font-weight-bolder opacity-6"
@@ -29,10 +29,10 @@
           Manage
         </h6>
         <sidenav-collapse
-          collapse-ref="People"
           nav-text="People"
           :collapse="false"
-          :class="getRoute() === 'pages' ? 'active' : ''"
+          :class="getRoute() === 'people' ? 'active' : ''"
+          @click="navigateToPath('/people')"
         >
           <template #icon>
             <Office />
@@ -52,25 +52,25 @@
         </sidenav-collapse>
       </li> -->
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <sidenav-collapse
-          collapse-ref="Program"
+          collapse-ref="program"
           nav-text="Program"
           :collapse="false"
-          :class="getRoute() === 'applications' ? 'active' : ''"
+          :class="getRoute() === 'program' ? 'active' : ''"
         >
           <template #icon>
             <Settings />
           </template>
         </sidenav-collapse>
-      </li>
+      </li> -->
 
       <li class="nav-item">
         <sidenav-collapse
-          collapse-ref="Brokerage"
-          nav-text="Brokerage"
+          nav-text="Buy"
           :collapse="false"
-          :class="getRoute() === 'ecommerce' ? 'active' : ''"
+          :class="getRoute() === 'brokerage' ? 'active' : ''"
+          @click="navigateToPath('/brokerage')"
         >
           <template #icon>
             <Basket />
@@ -78,12 +78,25 @@
         </sidenav-collapse>
       </li>
 
-      <li class="nav-item">
+      <li v-if="getUserRole() === 'EMPLOYEE'" class="nav-item">
         <sidenav-collapse
-          collapse-ref="Integrations"
+          nav-text="Finance"
+          :collapse="false"
+          :class="getRoute() === 'lender' ? 'active' : ''"
+          @click="navigateToPath('/lender')"
+        >
+          <template #icon>
+            <Basket />
+          </template>
+        </sidenav-collapse>
+      </li>
+
+      <li v-if="getUserRole() === 'EMPLOYER'" class="nav-item">
+        <sidenav-collapse
           nav-text="Integrations"
           :collapse="false"
-          :class="getRoute() === 'authentication' ? 'active' : ''"
+          :class="getRoute() === 'integrations' ? 'active' : ''"
+          @click="navigateToPath('/integrations')"
         >
           <template #icon>
             <Document />
@@ -457,31 +470,30 @@
   </div>
 </template>
 <script>
-import SidenavCollapse from "./SidenavCollapse.vue";
-import SidenavCard from "./SidenavCard.vue";
-import Settings from "../../components/Icon/Settings.vue";
-import Basket from "../../components/Icon/Basket.vue";
-// import Box3d from "../../components/Icon/Box3d.vue";
-import Shop from "../../components/Icon/Shop.vue";
-import Office from "../../components/Icon/Office.vue";
-import Document from "../../components/Icon/Document.vue";
-// import Spaceship from "../../components/Icon/Spaceship.vue";
-// import CreditCard from "../../components/Icon/CreditCard.vue";
+import { computed, defineComponent } from "vue"
+import { useRoute, useRouter } from "vue-router"
+import { mapState } from "vuex"
+import SidenavCollapse from "./SidenavCollapse.vue"
+import SidenavCard from "./SidenavCard.vue"
+// import Settings from "../components/Icon/Settings.vue"
+import Basket from "../components/Icon/Basket.vue"
+// import Box3d from "../components/Icon/Box3d.vue"
+import Shop from "../components/Icon/Shop.vue"
+import Office from "../components/Icon/Office.vue"
+import Document from "../components/Icon/Document.vue"
+// import Spaceship from "../components/Icon/Spaceship.vue"
+// import CreditCard from "../components/Icon/CreditCard.vue"
+import { useUserStore } from "../store/user"
 
-import { mapState } from "vuex";
-export default {
+export default defineComponent({
   name: "SidenavList",
   components: {
     SidenavCollapse,
     SidenavCard,
-    Settings,
     Basket,
-    // Box3d,
     Shop,
     Office,
     Document,
-    // Spaceship,
-    // CreditCard,
   },
   props: {
     cardBg: {
@@ -489,14 +501,33 @@ export default {
       default: "",
     },
   },
-    computed: {
-      ...mapState(["isRTL"]),
-    },
-  methods: {
-    getRoute() {
-      const routeArr = this.$route.path.split("/");
-      return routeArr[1];
-    },
+  setup() {
+    const route = useRoute()
+    const router = useRouter()
+    const userStore = useUserStore()
+
+    const getRoute = () => {
+      const routeArr = route.path.split("/")
+      return routeArr[1]
+    }
+
+    const getUserRole = () => {
+      const roleType = userStore?.data?.roleType
+      return roleType
+    }
+
+    const isRTL = computed(() => mapState(["isRTL"]).isRTL)
+
+    const navigateToPath = (path) => {
+      router.push(path)
+    }
+
+    return {
+      getRoute,
+      getUserRole,
+      navigateToPath,
+      isRTL,
+    }
   },
-};
+})
 </script>

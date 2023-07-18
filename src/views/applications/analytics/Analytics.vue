@@ -255,8 +255,8 @@
 </template>
 
 <script>
-import MiniStatisticsCard from "@/examples/Cards/MiniStatisticsCard.vue";
-import DefaultLineChart from "../../../examples/Charts/DefaultLineChart.vue";
+import MiniStatisticsCard from "@/Cards/MiniStatisticsCard.vue";
+import DefaultLineChart from "../../../Charts/DefaultLineChart.vue";
 import DefaultDoughnutChart from "./components/DefaultDoughnutChart.vue";
 import SocialCard from "./components/SocialCard.vue";
 import PagesCard from "./components/PagesCard.vue";

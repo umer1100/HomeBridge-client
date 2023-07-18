@@ -270,19 +270,19 @@
   </div>
 </template>
 <script>
-import MiniStatisticsCard from "@/examples/Cards/MiniStatisticsCard.vue";
+import MiniStatisticsCard from "@/Cards/MiniStatisticsCard.vue";
 import ProgressLineChart from "./projects/components/ProgressLineChart.vue";
-import DefaultInfoCard from "@/examples/Cards/DefaultInfoCard.vue";
-import MasterCard from "@/examples/Cards/MasterCard.vue";
+import DefaultInfoCard from "@/Cards/DefaultInfoCard.vue";
+import MasterCard from "@/Cards/MasterCard.vue";
 import LineChart from "./components/LineChart.vue";
 import DefaultItem from "./components/DefaultItem.vue";
 import InfoCard from "./components/InfoCard.vue";
 import ControllerCard from "./components/ControllerCard.vue";
 import MiniInfoCard from "./components/MiniInfoCard.vue";
 import StepsCard from "./components/StepsCard.vue";
-import Calendar from "@/examples/Calendar.vue";
+import Calendar from "@/Calendar.vue";
 import CategoriesList from "../dashboards/components/CategoriesList.vue";
-import MiniPlayerCard from "@/examples/Cards/MiniPlayerCard.vue";
+import MiniPlayerCard from "@/Cards/MiniPlayerCard.vue";
 import TimelineList from "./projects/components/TimelineList.vue";
 import TimelineItem from "./projects/components/TimelineItem.vue";
 

@@ -147,7 +147,7 @@
 </template>
 
 <script>
-import Navbar from "@/examples/PageLayout/Navbar.vue";
+import Navbar from "@/PageLayout/Navbar.vue";
 import SoftButton from "@/components/SoftButton.vue";
 import { mapMutations } from "vuex";
 

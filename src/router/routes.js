@@ -15,6 +15,9 @@ import Overview from "../views/pages/profile/Overview.vue"
 // import Charts from "../views/pages/Charts.vue";
 // import SweetAlerts from "../views/pages/SweetAlerts.vue";
 // import Notifications from "../views/pages/Notifications.vue";
+import Integrations from "../views/pages/Integrations.vue";
+import Brokerage from "../views/pages/Brokerage.vue";
+import Lender from "../views/pages/Lender.vue";
 // import Kanban from "../views/applications/Kanban.vue";
 // import Wizard from "../views/applications/wizard/Wizard.vue";
 // import DataTables from "../views/applications/DataTables.vue";
@@ -50,18 +53,22 @@ import NewPassword from "../views/auth/newPassword/Basic.vue"
 // import SignupIllustration from "../views/auth/signup/Illustration.vue";
 import Error404 from "../views/auth/error/Error404.vue"
 import Error500 from "../views/auth/error/Error500.vue"
+import Paused from "../views/auth/error/Paused.vue"
 // import lockBasic from "../views/auth/lock/Basic.vue";
 // import lockCover from "../views/auth/lock/Cover.vue";
 // import lockIllustration from "../views/auth/lock/Illustration.vue";
+import ConfirmEmail from "../views/onboarding/ConfirmEmail.vue"
+import Onboarding from "../views/onboarding/Onboarding.vue"
+import People from "../views/pages/People.vue"
 
 const routes = [
   {
     path: "/",
     name: "/",
-    redirect: "/Dashboard",
+    redirect: "/dashboard",
   },
   {
-    path: "/Dashboard",
+    path: "/dashboard",
     name: "Default",
     component: CRM,
   },
@@ -91,9 +98,39 @@ const routes = [
   //   component: CRM,
   // },
   {
-    path: "/pages/profile/overview",
-    name: "Profile Overview",
+    path: "/profile/:id",
+    name: "Profile",
     component: Overview,
+  },
+  {
+    path: "/brokerage",
+    name: "Brokerage",
+    component: Brokerage
+  },
+  {
+    path: "/lender",
+    name: "Lender",
+    component: Lender
+  },
+  {
+    path: "/integrations",
+    name: "Integrations",
+    component: Integrations
+  },
+  {
+    path: "/people",
+    name: "People",
+    component: People
+  },
+  {
+    path: "/onboarding",
+    name: "Onboarding",
+    component: Onboarding
+  },
+  {
+    path: "/ConfirmEmail",
+    name: "ConfirmEmail",
+    component: ConfirmEmail
   },
   // {
   //   path: "/pages/profile/teams",
@@ -196,7 +233,7 @@ const routes = [
   //   component: ProductPage,
   // },
   // {
-  //   path: "/ecommerce/products/products-list",
+  //   path: "/products",
   //   name: "Products List",
   //   component: ProductsList,
   // },
@@ -325,6 +362,11 @@ const routes = [
   //   name: "Signup Illustration",
   //   component: SignupIllustration,
   // },
+  {
+    path: "/authentication/temporary-block",
+    name: "User Paused",
+    component: Paused,
+  },
   {
     path: "/authentication/error/error404",
     name: "Error Error404",

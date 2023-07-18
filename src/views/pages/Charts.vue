@@ -372,14 +372,14 @@
 </template>
 
 <script>
-import DefaultLineChart from "../../examples/Charts/DefaultLineChart.vue";
-import GradientLineChart from "../../examples/Charts/GradientLineChart.vue";
+import DefaultLineChart from "../../Charts/DefaultLineChart.vue";
+import GradientLineChart from "../../Charts/GradientLineChart.vue";
 import BarChart from "./components/BarChart.vue";
 import BarChartHorizontal from "./components/BarChartHorizontal.vue";
 import MixedChart from "./components/MixedChart.vue";
 import BubbleChart from "./components/BubbleChart.vue";
 import DoughnutChart from "./components/DoughnutChart.vue";
-import PieChart from "@/examples/Charts/PieChart.vue";
+import PieChart from "@/Charts/PieChart.vue";
 import RadarChart from "./components/RadarChart.vue";
 import PolarChart from "./components/PolarChart.vue";
 

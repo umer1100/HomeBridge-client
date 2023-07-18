@@ -20,10 +20,10 @@
         </div>
         <!-- End Toggle Button -->
       </div>
-      <div class="d-flex pt-0 card-body pb-sm-0 button-block">
+      <div class="d-flex pt-0 card-body pb-0 button-block">
         <router-link
         id="btn-transparent"
-        to="/pages/profile/overview"
+        :to="`/profile/${userId}`"
         class="px-3 mb-2 btn w-100 h-auto"
       >
         My Profile
@@ -36,16 +36,17 @@
         Sign Out
       </button>
         </div>
-      <hr class="my-1 horizontal dark" />
+      <!-- <hr class="my-1 horizontal dark" /> -->
 
-      <div class="pt-3 pb-0 bg-transparent card-header">
+      <!-- <div class="pt-3 pb-0 bg-transparent card-header">
         <div class="float-start">
           <h5 class="mt-3 mb-0">App Settings</h5>
           <p>Make your account your own.</p>
         </div>
 
-        <!-- End Toggle Button -->
-      </div>
+      </div> -->
+      <!-- End Toggle Button -->
+
       <hr class="my-1 horizontal dark" />
       <div class="pt-0 card-body pt-sm-3">
         <!-- Sidebar Backgrounds -->
@@ -90,7 +91,7 @@
           </div>
         </a> -->
         <!-- Sidenav Type -->
-        <div class="mt-3">
+        <!-- <div class="mt-3">
           <h6 class="mb-0">Left-Side Navigation Menu</h6>
           <p class="text-sm">Select a side navigation type.</p>
         </div>
@@ -114,9 +115,9 @@
         </div>
         <p class="mt-2 text-sm d-xl-none d-block">
           You can change the sidenav type just on desktop view.
-        </p>
+        </p> -->
         <!-- Navbar Fixed -->
-        <div class="mt-2">
+        <!-- <div class="mt-2">
           <h6 class="mb-0">Side Navigation Menu | Compact</h6>
         </div>
         <div class="form-check form-switch ps-0">
@@ -142,25 +143,25 @@
             :checked="isNavFixed"
             @click="setNavbarFixed"
           />
-        </div>
-        <hr class="horizontal dark my-sm-4" />
-        <a
-          class="btn bg-gradient-info w-100"
-          href="https://www.creative-tim.com/product/vue-soft-ui-dashboard-pro"
-          >Help Center</a
-        >
-        <a
-          class="btn bg-gradient-dark w-100"
-          href="https://demos.creative-tim.com/vue-soft-ui-dashboard/"
-          >Report an Issue</a
-        >
-        <a
-          class="btn btn-outline-dark w-100"
-          href="https://www.creative-tim.com/learning-lab/vue/overview/soft-ui-dashboard/"
-          >Request a Feature</a
-        >
-        <div class="text-center w-100">
-          <!-- <a
+        </div> -->
+        <!-- <hr class="horizontal dark my-sm-4" /> -->
+        <a class="btn bg-gradient-info w-100"
+          href="https://www.ownerific.com/help/"
+          target="_blank">
+          Help Center
+        </a>
+        <a class="btn bg-gradient-dark w-100"
+          href="https://forms.monday.com/forms/3e2a8d7916bcee4c1afce30843f71f2f?r=use1"
+          target="_blank">
+          Report an Issue
+        </a>
+        <a class="btn btn-outline-dark w-100"
+          href="https://forms.monday.com/forms/357d6938b19e24e02b732e6c7baab0fc?r=use1"
+          target="_blank">
+          Request a Feature
+        </a>
+        <!-- <div class="text-center w-100">
+          <a
             class="github-button"
             href="https://github.com/creativetimofficial/ct-vue-soft-ui-dashboard-pro"
             data-icon="octicon-star"
@@ -168,7 +169,7 @@
             data-show-count="true"
             aria-label="Star creativetimofficial/soft-ui-dashboard on GitHub"
             >Star</a
-          > -->
+          >
           <h6 class="mt-3">Leave us a review!</h6>
           <a
             href="https://trustpilot.com/"
@@ -184,7 +185,7 @@
           >
             <i class="fab fa-google me-1" aria-hidden="true"></i> Google
           </a>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -193,10 +194,12 @@
 <script>
 import { defineComponent, onMounted, ref, watch } from "vue"
 import { useStore } from "vuex"
-import { logout } from "../utils/logout"
-import router from "../router/index"
-import { useUserStore } from "../store/user"
-import { useOrganizationStore } from "../store/organization"
+import { logout } from "./utils/logout"
+import router from "./router/index"
+import { useUserStore } from "./store/user"
+import { useOrganizationStore } from "./store/organization"
+import { titleCase } from "./utils/helper"
+
 export default defineComponent({
   name: "Configurator",
   props: {
@@ -218,7 +221,8 @@ export default defineComponent({
     let color = ref(globalStore.state?.color)
     let firstName = ref(userStore.data?.firstName)
     let lastName = ref(userStore.data?.lastName)
-    let roleType = ref(userStore.data?.roleType)
+    let roleType = ref(titleCase(userStore.data?.roleType))
+    let userId = ref(userStore.data?.id)
     let organizationName = ref(organizationStore?.data?.name)
 
     const onClickLogout = () => {
@@ -257,27 +261,29 @@ export default defineComponent({
       }
       else {
         transparent.classList.remove("disabled")
-        white.classList.remove("disabled")
+        //white.classList.remove("disabled")
       }
     }
 
     watch(() => userStore.data?.firstName, () => {
       firstName.value = userStore.data?.firstName
       lastName.value = userStore.data?.lastName
-      roleType.value = userStore.data?.roleType
+      roleType.value = titleCase(userStore.data?.roleType)
+      userId.value = userStore.data?.id
       organizationName.value = organizationStore?.data?.name
     })
-    
+
     onMounted(() => {
       isTransparent.value = "bg-transparent"
       window.addEventListener("resize", sidenavTypeOnResize)
       window.addEventListener("load", sidenavTypeOnResize)
     })
-    
+
     return {
       firstName,
       lastName,
       roleType,
+      userId,
       organizationName,
       isTransparent,
       isNavFixed,

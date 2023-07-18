@@ -49,17 +49,6 @@
         </div>
       </div>
     </section>
-    <div class="position-fixed top-1 end-1 z-index-2">
-      <soft-snackbar
-        v-if="snackbar"
-        :isRawHtml="snackbarisRawHtml"
-        :title="snackbarTitle"
-        :description="snackbarDescription"
-        color="white"
-        :close-handler="() => snackbar = null"
-      />
-    </div>
-    <soft-spinner v-if="showSpinner"/>
   </main>
   <app-footer />
 </template>
@@ -68,45 +57,34 @@
 import { ref, onBeforeMount } from "vue"
 import { useRouter } from "vue-router"
 import { useStore } from "vuex"
-import AppFooter from "@/examples/PageLayout/Footer.vue"
-import SoftSnackbar from "@/components/SoftSnackbar.vue"
+import AppFooter from "@/PageLayout/Footer.vue"
 import {
   PASSWORD_REGEX,
   PASSWORD_REGEX_MISMATCH_NOTICE
 } from "../../../constant"
-import SoftSpinner from "@/components/SoftSpinner.vue"
 import { resetPassword } from "../../../api/user/resetPassword"
+import { handleSpinner, showSnackBar } from "../../../utils/helper"
 
 export default {
   name: "NewPassword",
   components: {
     AppFooter,
-    SoftSnackbar,
-    SoftSpinner,
   },
   setup() {
     const globalStore = useStore()
     const router = useRouter()
-    
+
     const newPassword = ref("")
     const confirmPassword = ref("")
-    const snackbar = ref(false)
-    const snackbarTitle = ref("")
-    const snackbarDescription = ref("")
-    const snackbarisRawHtml = ref(false)
     let showSpinner = ref(false)
 
     const updatePasswordHandler = async (event) => {
       event.preventDefault()
 
       if (!PASSWORD_REGEX.test(newPassword.value)) {
-        snackbar.value = true
-        snackbarisRawHtml.value = true
-        snackbarTitle.value = "Invalid Password Format"
-        snackbarDescription.value = PASSWORD_REGEX_MISMATCH_NOTICE
-        snackbarisRawHtml.value = true
+        showSnackBar("Invalid Password Format", PASSWORD_REGEX_MISMATCH_NOTICE, true)
       } else {
-        showSpinner.value = true
+        handleSpinner(true)
         const passwordResetToken = router?.currentRoute?.value?.query?.passwordResetToken
         const res = await resetPassword({
           password1: newPassword.value,
@@ -116,26 +94,21 @@ export default {
 
         if (res && res?.success) {
           router.push('/authentication/signin')
+          showSnackBar("Congratulations", "Your password is updated")
         } else {
-          snackbar.value = true
-          snackbarTitle.value = "Something went Wrong"
-          snackbarDescription.value = res.message || "Password is not reset"
+          showSnackBar("Something went Wrong", res.message || "Password is not reset")
         }
-        showSpinner.value = false
+        handleSpinner(false)
       }
     }
 
     onBeforeMount(() => {
       globalStore.commit("hideEveryDisplay")
     })
-    
+
     return {
       newPassword,
       confirmPassword,
-      snackbar,
-      snackbarTitle,
-      snackbarDescription,
-      snackbarisRawHtml,
       showSpinner,
       updatePasswordHandler,
     }
