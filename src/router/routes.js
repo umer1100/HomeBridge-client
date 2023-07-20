@@ -18,10 +18,7 @@ import Overview from "../views/pages/profile/Overview.vue"
 import Integrations from "../views/pages/Integrations.vue";
 import Brokerage from "../views/pages/Brokerage.vue";
 import Lender from "../views/pages/Lender.vue";
-<<<<<<< HEAD
 import Resources from "../views/pages/Resources.vue";
-=======
->>>>>>> 0d62aaa5d416b727c65687fa7005df14a7f6fad5
 // import Kanban from "../views/applications/Kanban.vue";
 // import Wizard from "../views/applications/wizard/Wizard.vue";
 // import DataTables from "../views/applications/DataTables.vue";
