@@ -32,17 +32,17 @@ export const BROKERAGE_AGENTS = [
     review: 'https://www.zillow.com/profile/yasemin%20hocaoglu',
     image: 'https://ownerific-static-images.s3.amazonaws.com/Yasemin+Hocaoglu+Headshot.png'
   },
-  {
-    name: 'Jon Lahey',
-    description: 'The Fine Living Group, eXp Realty',
-    location: 'District of Columbia',
-    phone: '(301) 651-4900',
-    email: 'jonlahey@thefinelivinggroup.com',
-    licenseId: 'District of Columbia, Maryland, Virginia',
-    profile: 'https://www.thefinelivinggroup.com/agents/jon-lahey/',
-    review: 'https://www.zillow.com/profile/laheygroup',
-    image: 'https://ownerific-static-images.s3.amazonaws.com/Jon+Lahey+Headshot.png'
-  },
+  // {
+  //   name: 'Jon Lahey',
+  //   description: 'The Fine Living Group, eXp Realty',
+  //   location: 'District of Columbia',
+  //   phone: '(301) 651-4900',
+  //   email: 'jonlahey@thefinelivinggroup.com',
+  //   licenseId: 'District of Columbia, Maryland, Virginia',
+  //   profile: 'https://www.thefinelivinggroup.com/agents/jon-lahey/',
+  //   review: 'https://www.zillow.com/profile/laheygroup',
+  //   image: 'https://ownerific-static-images.s3.amazonaws.com/Jon+Lahey+Headshot.png'
+  // },
   {
     name: 'Dina Shaminova',
     description: 'Artifact Homes',
