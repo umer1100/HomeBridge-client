@@ -4,13 +4,13 @@
       <div class="row">
         <div class="col-xl-8 col-lg-7">
           <div class="row">
-            <div  v-if="roleType === 'EMPLOYER'" class="col-sm-4">
+            <!-- <div  v-if="roleType === 'EMPLOYER'" class="col-sm-4">
               <mini-gradient-line-chart
                 id="second-chart"
                 title="Enrolled Employees"
                 :description='employeesCount'
               />
-            </div>
+            </div> -->
             <!-- <div class="mt-4 col-sm-4 mt-sm-0">
               <place-holder-card :title="{ variant: 'h6', text: 'New tab' }" />
             </div> -->
@@ -163,7 +163,7 @@
         // eslint-disable-next-line require-atomic-updates
         if (response?.success) {
           organizationStore.users = response.data
-          employeesStatusCount.value = response.data.reduce((count, item) => {
+          employeesStatusCount.value = response.data.filter(item => item.roleType == "EMPLOYEE").reduce((count, item) => {
             if (item.status !== "ONBOARDING") count[item.status] = (count[item.status] || 0) + 1
             return count
           }, {})
@@ -210,8 +210,6 @@
           pieChartTitle.value = "Homeownership Experts on Your Side"
           pieChartValue.value.labels = ["Buying and selling pros", "Financing and lending pros"]
           pieChartValue.value.datasets = [{ label: 'Buy and Finance', data: [BROKERAGE_AGENTS.length, LENDER_AGENTS.length] }]
-          pieChartActions.value.route = "/lender"
-          pieChartActions.value.label = "See all Financing Professionals"
         } else if (roleType == "EMPLOYER") {
           pieChartTitle.value = "Employee Status"
           pieChartValue.value.labels = Object.keys(employeesStatusCount.value)
@@ -235,7 +233,7 @@
       })
 
       return {
-        employeesCount,
+        // employeesCount,
         // avgHomePrice,
         totalCredits,
         image,

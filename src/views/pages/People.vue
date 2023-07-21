@@ -168,7 +168,7 @@
     "Gender": { field: "sex", sortable: true, isAscending: true },
     "State": { field: "state", sortable: true, isAscending: true },
     "Title": { field: "title", sortable: true, isAscending: true },
-    "Departmet": { field: "department", sortable: true, isAscending: true },
+    "Department": { field: "department", sortable: true, isAscending: true },
     "Employment Type": { field: "employmentType", sortable: true, isAscending: true },
     "Date of Birth": { field: "formattedDateOfBirth", sortable: true, isAscending: true },
     "Last Seen": { field: "formattedLastSeen", sortable: true, isAscending: true },

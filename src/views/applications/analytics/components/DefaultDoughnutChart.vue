@@ -17,12 +17,12 @@
     <div class="p-3 card-body">
       <div class="row">
         <div class="text-center col-lg-5 col-12">
-          <div class="mt-5 chart">
+          <div class="my-3 chart">
             <canvas :id="id" class="chart-canvas" :height="height"></canvas>
           </div>
-          <a
+          <a v-if="actions.label && actions.route"
             class="mt-4 btn btn-sm"
-            :href="actions.route"
+            @click="navigateToPath(actions.route)"
             :class="`bg-gradient-${actions.color}`"
           >
             {{ actions.label }}
@@ -63,6 +63,7 @@
 <script>
   import Chart from "chart.js/auto"
   import { defineComponent, onUpdated } from "vue"
+  import { useRouter } from "vue-router";
 
   export default defineComponent({
     name: "DefaultDoughnutChart",
@@ -102,83 +103,93 @@
     },
 
     setup(props) {
-      onUpdated(() => {
-      var chart = document.getElementById(props.id).getContext("2d")
+      const router = useRouter()
 
-      var gradientStroke2 = chart.createLinearGradient(0, 230, 0, 50)
-
-      gradientStroke2.addColorStop(1, "rgba(20,23,39,0.2)")
-      gradientStroke2.addColorStop(0.2, "rgba(72,72,176,0.0)")
-      gradientStroke2.addColorStop(0, "rgba(20,23,39,0)") //purple colors
-
-      let chartStatus = Chart.getChart(props.id)
-      if (chartStatus != undefined) {
-        chartStatus.destroy()
+      const navigateToPath = (path) => {
+        router.push(path)
       }
 
-      new Chart(chart, {
-        type: "doughnut",
-        data: {
-          labels: props.chart.labels,
-          datasets: [
-            {
-              label: props.chart.datasets[0].label,
-              weight: 9,
-              cutout: 60,
-              tension: 0.9,
-              pointRadius: 2,
-              borderWidth: 2,
-              backgroundColor: [
-                "#2152ff",
-                "#3A416F",
-                "#f53939",
-                "#a8b8d8",
-                "#cb0c9f",
-              ],
-              data: props.chart.datasets[0].data,
-              fill: false,
+      onUpdated(() => {
+        var chart = document.getElementById(props.id).getContext("2d")
+
+        var gradientStroke2 = chart.createLinearGradient(0, 230, 0, 50)
+
+        gradientStroke2.addColorStop(1, "rgba(20,23,39,0.2)")
+        gradientStroke2.addColorStop(0.2, "rgba(72,72,176,0.0)")
+        gradientStroke2.addColorStop(0, "rgba(20,23,39,0)") //purple colors
+
+        let chartStatus = Chart.getChart(props.id)
+        if (chartStatus != undefined) {
+          chartStatus.destroy()
+        }
+
+        new Chart(chart, {
+          type: "doughnut",
+          data: {
+            labels: props.chart.labels,
+            datasets: [
+              {
+                label: props.chart.datasets[0].label,
+                weight: 9,
+                cutout: 60,
+                tension: 0.9,
+                pointRadius: 2,
+                borderWidth: 2,
+                backgroundColor: [
+                  "#2152ff",
+                  "#3A416F",
+                  "#f53939",
+                  "#a8b8d8",
+                  "#cb0c9f",
+                ],
+                data: props.chart.datasets[0].data,
+                fill: false,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false,
+              },
             },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: false,
+            interaction: {
+              intersect: false,
+              mode: "index",
+            },
+            scales: {
+              y: {
+                grid: {
+                  drawBorder: false,
+                  display: false,
+                  drawOnChartArea: false,
+                  drawTicks: false,
+                },
+                ticks: {
+                  display: false,
+                },
+              },
+              x: {
+                grid: {
+                  drawBorder: false,
+                  display: false,
+                  drawOnChartArea: false,
+                  drawTicks: false,
+                },
+                ticks: {
+                  display: false,
+                },
+              },
             },
           },
-          interaction: {
-            intersect: false,
-            mode: "index",
-          },
-          scales: {
-            y: {
-              grid: {
-                drawBorder: false,
-                display: false,
-                drawOnChartArea: false,
-                drawTicks: false,
-              },
-              ticks: {
-                display: false,
-              },
-            },
-            x: {
-              grid: {
-                drawBorder: false,
-                display: false,
-                drawOnChartArea: false,
-                drawTicks: false,
-              },
-              ticks: {
-                display: false,
-              },
-            },
-          },
-        },
+        })
       })
-    })
+      
+      return {
+        navigateToPath
+      }
     }
   })
 </script>
