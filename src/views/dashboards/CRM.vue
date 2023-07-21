@@ -163,7 +163,7 @@
         // eslint-disable-next-line require-atomic-updates
         if (response?.success) {
           organizationStore.users = response.data
-          employeesStatusCount.value = response.data.reduce((count, item) => {
+          employeesStatusCount.value = response.data.filter(item => item.roleType == "EMPLOYEE").reduce((count, item) => {
             if (item.status !== "ONBOARDING") count[item.status] = (count[item.status] || 0) + 1
             return count
           }, {})
@@ -210,8 +210,6 @@
           pieChartTitle.value = "Homeownership Experts on Your Side"
           pieChartValue.value.labels = ["Buying and selling pros", "Financing and lending pros"]
           pieChartValue.value.datasets = [{ label: 'Buy and Finance', data: [BROKERAGE_AGENTS.length, LENDER_AGENTS.length] }]
-          pieChartActions.value.route = "/lender"
-          pieChartActions.value.label = "See all Financing Professionals"
         } else if (roleType == "EMPLOYER") {
           pieChartTitle.value = "Employee Status"
           pieChartValue.value.labels = Object.keys(employeesStatusCount.value)

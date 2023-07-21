@@ -122,7 +122,7 @@
         } else if (status == "PENDING") {
           return "warning"
         } else if (status == "INACTIVE") {
-          return "negative"
+          return "secondary"
         } else if (status == "NEW") {
           return "info"
         } else if(status == "PAUSE"){
