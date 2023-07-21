@@ -11,6 +11,7 @@ export const ROUTES = {
   PARTNERS: '/brokerage',
   LENDERS: '/lender',
   BLOCKED: '/authentication/temporary-block',
+  RESOURCES: '/resources'
 }
 
 export const PUBLIC_ROUTES = [
@@ -25,7 +26,8 @@ const COMMON_ROUTES = [
   ROUTES.PROFILE,
   ROUTES.ONBOARDING,
   ROUTES.PARTNERS,
-  ROUTES.BLOCKED
+  ROUTES.BLOCKED,
+  ROUTES.RESOURCES,
 ]
 
 //Routes which EMPLOYEE can access

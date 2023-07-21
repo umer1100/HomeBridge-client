@@ -78,12 +78,26 @@
         </sidenav-collapse>
       </li>
 
+
       <li v-if="getUserRole() === 'EMPLOYEE'" class="nav-item">
         <sidenav-collapse
           nav-text="Finance"
           :collapse="false"
           :class="getRoute() === 'lender' ? 'active' : ''"
           @click="navigateToPath('/lender')"
+        >
+          <template #icon>
+            <Basket />
+          </template>
+        </sidenav-collapse>
+      </li>
+
+      <li class="nav-item">
+        <sidenav-collapse
+          nav-text="Resources"
+          :collapse="false"
+          :class="getRoute() === 'resources' ? 'active' : ''"
+          @click="navigateToPath('/resources')"
         >
           <template #icon>
             <Basket />
