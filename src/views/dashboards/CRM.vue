@@ -4,13 +4,13 @@
       <div class="row">
         <div class="col-xl-8 col-lg-7">
           <div class="row">
-            <div  v-if="roleType === 'EMPLOYER'" class="col-sm-4">
+            <!-- <div  v-if="roleType === 'EMPLOYER'" class="col-sm-4">
               <mini-gradient-line-chart
                 id="second-chart"
                 title="Enrolled Employees"
                 :description='employeesCount'
               />
-            </div>
+            </div> -->
             <!-- <div class="mt-4 col-sm-4 mt-sm-0">
               <place-holder-card :title="{ variant: 'h6', text: 'New tab' }" />
             </div> -->
@@ -233,7 +233,7 @@
       })
 
       return {
-        employeesCount,
+        // employeesCount,
         // avgHomePrice,
         totalCredits,
         image,
