@@ -88,6 +88,7 @@
             :columns="columns"
             :rows="peopleDataToDisplay"
             :availableColumnsOption="availableColumnOptions"
+            :selectedTeamMember="selectedTeamMember"
             @selected-user-changed="handleSelectedTeamMember"
           />
         </div>
@@ -156,6 +157,7 @@
     showSnackBar,
     downloadCSV,
     parseCSV,
+    toggleSelectedOptions,
   } from "../../utils/helper"
 
   let availableColumnOptions = {
@@ -175,6 +177,7 @@
     "Hired Date": { field: "formattedStartDate", sortable: true, isAscending: true },
     "End Date": { field: "formattedEndDate", sortable: true, isAscending: true },
     "Enrolled": { field: "formattedCreatedAt", sortable: true, isAscending: true },
+    "Ownerific Dollars": {field: "ownerificDollars", sortable: true, isAscending: true},
     // "Primary Goal": { field: "primaryGoal", sortable: true, isAscending: true },
     // "Goal Timeline": { field: "goalTimeline", sortable: true, isAscending: true },
     // "Goal Amount": { field: "goalAmount", sortable: true, isAscending: true },
@@ -213,7 +216,7 @@
       const initializePeopleTab = async () => {
         if (organizationStore?.users) {
           data.value = organizationStore?.users?.filter(user => user.roleType !== USER_ROLE_TYPES.EMPLOYER).map(user => {
-            let { firstName, lastName, addressLine1, addressLine2, city, state, zipcode, lastLogin, createdAt, endDate, startDate, dateOfBirth, department, source, sex, roleType, title, employmentType } = user
+            let { firstName, lastName, addressLine1, addressLine2, city, state, zipcode, lastLogin, createdAt, endDate, startDate, dateOfBirth, department, source, sex, roleType, title, employmentType, creditWallets } = user
             allDepartments.value.push(department)
             return {
               ...user,
@@ -231,6 +234,7 @@
               formattedDateOfBirth: dateOfBirth ? moment(dateOfBirth).utc().format("MM/DD/YYYY") : "-",
               title: title || "-",
               department: department || "-",
+              ownerificDollars: creditWallets.find((wallet) => wallet?.type === 'PLATFORM')?.value || "0.00"
               // primaryGoal: primaryGoal || "-",
               // goalTimeline: goalTimeline || "-",
               // goalAmount: goalAmount || "-",
@@ -266,11 +270,7 @@
         availableToggleOption.value = availableToggleOption.value.map(item => ({ name: item, options: serializeModalOptions(item) }))
       }
 
-      const handleSelectedTeamMember = (item) => handleSelectedOptions(selectedTeamMember, item)
-      const handleSelectedOptions = (array, item) => {
-        const index = array.value.indexOf(item)
-        index !== -1 ? array.value.splice(index, 1) : array.value.push(item)
-      }
+      const handleSelectedTeamMember = (item) => toggleSelectedOptions(selectedTeamMember.value, item)
 
       const readOrganizationUsersData = async () => {
         let response = await readUsers()
@@ -387,56 +387,56 @@
           title: "Filter by Status",
           selectedOptions: selectedStatusFilters,
           showSearch: false,
-          selectedOptionsChanged: (item) => handleSelectedOptions(selectedStatusFilters, item)
+          selectedOptionsChanged: (item) => toggleSelectedOptions(selectedStatusFilters.value, item)
         },
         {
           name: "Gender",
           title: "Filter by Gender",
           selectedOptions: selectedGenderFilters,
           showSearch: false,
-          selectedOptionsChanged: (item) => handleSelectedOptions(selectedGenderFilters, item)
+          selectedOptionsChanged: (item) => toggleSelectedOptions(selectedGenderFilters.value, item)
         },
         {
           name: "State",
           title: "Filter by State",
           selectedOptions: selectedStatesFilters,
           showSearch: true,
-          selectedOptionsChanged: (item) => handleSelectedOptions(selectedStatesFilters, item)
+          selectedOptionsChanged: (item) => toggleSelectedOptions(selectedStatesFilters.value, item)
         },
         {
           name: "Department",
           title: "Filter by Department",
           selectedOptions: selectedDepartmentFilters,
           showSearch: false,
-          selectedOptionsChanged: (item) => handleSelectedOptions(selectedDepartmentFilters, item)
+          selectedOptionsChanged: (item) => toggleSelectedOptions(selectedDepartmentFilters.value, item)
         },
         // {
         //   name: "Primary-Goal",
         //   title: "Filter by Primary Goal",
         //   selectedOptions: selectedPrimaryGoalFilters,
         //   showSearch: false,
-        //   selectedOptionsChanged: (item) => handleSelectedOptions(selectedPrimaryGoalFilters, item)
+        //   selectedOptionsChanged: (item) => toggleSelectedOptions(selectedPrimaryGoalFilters, item)
         // },
         // {
         //   name: "Goal-Timeline",
         //   title: "Filter by Goal Timeline",
         //   selectedOptions: selectedGoalTimelineFilters,
         //   showSearch: false,
-        //   selectedOptionsChanged: (item) => handleSelectedOptions(selectedGoalTimelineFilters, item)
+        //   selectedOptionsChanged: (item) => toggleSelectedOptions(selectedGoalTimelineFilters, item)
         // },
         // {
         //   name: "Goal-Amount",
         //   title: "Filter by Goal Amount",
         //   selectedOptions: selectedGoalAmountFilters,
         //   showSearch: false,
-        //   selectedOptionsChanged: (item) => handleSelectedOptions(selectedGoalAmountFilters, item)
+        //   selectedOptionsChanged: (item) => toggleSelectedOptions(selectedGoalAmountFilters, item)
         // },
         {
           name: "Options",
           title: "Column Options",
           selectedOptions: selectedColumns,
           showSearch: false,
-          selectedOptionsChanged: (item) => handleSelectedOptions(selectedColumns, item)
+          selectedOptionsChanged: (item) => toggleSelectedOptions(selectedColumns.value, item)
         }
       ])
 

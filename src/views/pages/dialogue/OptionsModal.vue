@@ -63,7 +63,7 @@
       }, { deep: true })
 
       watch(search, () => {
-        modalOptions.value = props.modalOptions.filter((item) => {
+        modalOptions.value = props.modalOption.filter((item) => {
           return item.label.toLowerCase().includes(search.value.toLowerCase())
         })
       })
