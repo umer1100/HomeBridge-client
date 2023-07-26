@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">    
+  <div class="container-fluid">
     <div class="row">
       <div class="col-12">
         <div class="d-lg-flex">
@@ -62,16 +62,16 @@
 
       const filterResources = ref(RESOURCES)
       const uniqueStates = ref([])
-      const selectedStateFilter = ref('none')
+      const selectedStateFilter = ref('All')
 
       const handleSelectedState = (state) => selectedStateFilter.value = state
-      
+
       const changeUrl = (link) => {
         window.open(link, '_blank')
       }
 
       watch(selectedStateFilter, () => {
-        if (selectedStateFilter.value == 'none') {
+        if (selectedStateFilter.value == 'All') {
           filterResources.value = RESOURCES
         } else {
           filterResources.value = RESOURCES.filter(resource => resource.state === selectedStateFilter.value);
@@ -81,7 +81,7 @@
       onMounted(() => {
         globalStore.state.showNavs = true
         uniqueStates.value = [...new Set(RESOURCES.map(resource => resource.state))];
-        uniqueStates.value.unshift('none')
+        uniqueStates.value.unshift('All')
       })
 
       return {
