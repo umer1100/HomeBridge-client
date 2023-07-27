@@ -25,13 +25,31 @@
             <div  v-if="roleType === 'EMPLOYER'" class="mt-4 col-sm-4 mt-sm-0">
               <mini-gradient-line-chart
                 title="Ownerific Value Earned"
-                :description='totalCredits'
+                :description='totalPlatformCredits'
               />
             </div>
             <div  v-if="roleType === 'EMPLOYEE'" class="mt-4 col-sm-4 mt-sm-0">
               <mini-gradient-line-chart
                 title="Ownerific Wallet"
-                :description='userCredits'
+                :description='employeePlatformCredits'
+              />
+            </div>
+            <div  v-if="roleType === 'EMPLOYER'" class="mt-4 col-sm-4 mt-sm-0">
+              <mini-gradient-line-chart
+                title="Yearly Projected Savings"
+                :description='organizationProjectedSavingsByPlatform'
+              />
+            </div>
+            <div  v-if="roleType === 'EMPLOYEE'" class="mt-4 col-sm-4 mt-sm-0">
+              <mini-gradient-line-chart
+                title="Yearly Projected Savings"
+                :description='employeeProjectedSavingsByPlatform'
+              />
+            </div>
+            <div class="mt-4 col-sm-4 mt-sm-0">
+              <mini-gradient-line-chart
+                :title="`${organizationName} Average Savings`"
+                :description="`$${averagePlatformCredits}`"
               />
             </div>
           </div>
@@ -110,11 +128,10 @@
   import { useUserStore } from "../../store/user"
   import {
     readUsers,
-    // averageHomePrice,
-    totalOwnerificCredit,
+    averageOwnerificCredit,
   } from "../../api/organization/request"
   import { fetchCreditWalletBalance } from "../../api/creditWallet/read"
-  import { USER_ROLE_TYPES } from "../../constant"
+  import { USER_ROLE_TYPES, MONTHLY_CREDIT_BY_PLATFORM, YEARLY_CREDIT_BONUS_BY_PLATFORM } from "../../constant"
   import { BROKERAGE_AGENTS, LENDER_AGENTS } from "../../constant/agents"
   import { showSnackBar } from "../../utils/helper"
 
@@ -148,8 +165,11 @@
         color: "secondary"
       })
       // const avgHomePrice = ref()
-      const totalCredits = ref()
-      const userCredits = ref()
+      const totalPlatformCredits = ref()
+      const employeePlatformCredits = ref()
+      const employeeProjectedSavingsByPlatform = ref()
+      const organizationProjectedSavingsByPlatform = ref()
+      const averagePlatformCredits = ref()
       const employeesStatusCount = ref({
         PENDING: 0,
         NEW: 0,
@@ -180,18 +200,32 @@
       //   else showSnackBar("Something went wrong.", response?.message)
       // }
 
-      const totalOwnerificCreditsData = async () => {
-        const response = await totalOwnerificCredit()
+      const calculateTotalPlatformCredits = () => {
+        organizationStore.totalOwnerificCredits = organizationStore.users.reduce((acc, user) => {
+          if (user.roleType == 'EMPLOYEE') {
+            return acc + Number(user.creditWallets.find(wallet => wallet.type === 'PLATFORM').value)
+          } else {
+            return acc;
+          }
+        }, 0);
+      }
 
-        // eslint-disable-next-line require-atomic-updates
-        if (response && response?.success) organizationStore.totalOwnerificCredits = response.data
-        else showSnackBar("Something went wrong.", response?.message)
+      const calculateAveragePlatformCredits = async () => {
+        if (roleType == 'EMPLOYEE') {
+          const response = await averageOwnerificCredit()
+
+          // eslint-disable-next-line require-atomic-updates
+          if (response && response?.success) averagePlatformCredits.value = response.data
+          else showSnackBar("Something went wrong.", response?.message)
+        } else if (roleType == 'EMPLOYER') {
+          averagePlatformCredits.value = (organizationStore.totalOwnerificCredits / employeesCount.value).toFixed(2)
+        }
       }
 
       const fetchCreditWallet = async () => {
         const response = await fetchCreditWalletBalance()
 
-        if (response && response?.success) userCredits.value = `$${response.data.filter( item => (item.walletType == "PLATFORM"))[0].dollars}`
+        if (response && response?.success) employeePlatformCredits.value = `$${response.data.filter( item => (item.walletType == "PLATFORM"))[0].dollars}`
         else showSnackBar("Something went wrong.", response?.message)
       }
 
@@ -221,13 +255,17 @@
 
       onBeforeMount( async () => {
         if (roleType === 'EMPLOYER') await readUsersData()
-        // if (roleType === 'EMPLOYER') await averageHomePriceData()
-        if (roleType === 'EMPLOYER') await totalOwnerificCreditsData()
-        if (roleType === 'EMPLOYEE') await fetchCreditWallet()
-
         employeesCount.value = organizationStore?.users?.filter(user => user.roleType === USER_ROLE_TYPES.EMPLOYEE).length || 0
+
+        // if (roleType === 'EMPLOYER') await averageHomePriceData()
+        if (roleType === 'EMPLOYER') calculateTotalPlatformCredits()
+        if (roleType === 'EMPLOYEE') await fetchCreditWallet()
+        await calculateAveragePlatformCredits()
+
         // avgHomePrice.value = `$${Number(organizationStore?.averageHomePrice).toLocaleString()}`
-        totalCredits.value = `$${Number(organizationStore?.totalOwnerificCredits).toLocaleString()}`
+        totalPlatformCredits.value = `$${Number(organizationStore?.totalOwnerificCredits).toLocaleString()}`
+        employeeProjectedSavingsByPlatform.value = `$${MONTHLY_CREDIT_BY_PLATFORM * 12 + YEARLY_CREDIT_BONUS_BY_PLATFORM}`
+        organizationProjectedSavingsByPlatform.value = `$${employeesCount.value * MONTHLY_CREDIT_BY_PLATFORM * 12 + employeesCount.value * YEARLY_CREDIT_BONUS_BY_PLATFORM}`
         setSideCardValues()
         setPieChartValues()
       })
@@ -235,14 +273,18 @@
       return {
         // employeesCount,
         // avgHomePrice,
-        totalCredits,
+        totalPlatformCredits,
         image,
         faRocket,
         faScrewdriverWrench,
         faCube,
         backgroundImage,
         roleType,
-        userCredits,
+        employeePlatformCredits,
+        employeeProjectedSavingsByPlatform,
+        organizationName,
+        averagePlatformCredits,
+        organizationProjectedSavingsByPlatform,
         sideCardTitle,
         sideCardDescription,
         pieChartTitle,

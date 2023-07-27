@@ -47,3 +47,6 @@ export const GOAL_AMOUNT_OPTIONS = [
   '$40,000-$49,999',
   '$50,000 or more'
 ]
+
+export const MONTHLY_CREDIT_BY_PLATFORM = 75
+export const YEARLY_CREDIT_BONUS_BY_PLATFORM = 100
