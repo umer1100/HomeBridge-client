@@ -174,7 +174,7 @@
         PENDING: 0,
         NEW: 0,
         ACTIVE: 0,
-        PAUSE: 0
+        PAUSED: 0
       })
 
       const readUsersData = async () => {
@@ -184,7 +184,8 @@
         if (response?.success) {
           organizationStore.users = response.data
           employeesStatusCount.value = response.data.filter(item => item.roleType == "EMPLOYEE").reduce((count, item) => {
-            if (item.status !== "ONBOARDING") count[item.status] = (count[item.status] || 0) + 1
+            const status = item.status === "PAUSE" ? "PAUSED" : item.status
+            if (item.status !== "ONBOARDING") count[status] = (count[status] || 0) + 1
             return count
           }, {})
         } else {

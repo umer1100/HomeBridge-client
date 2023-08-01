@@ -234,7 +234,7 @@
               formattedDateOfBirth: dateOfBirth ? moment(dateOfBirth).utc().format("MM/DD/YYYY") : "-",
               title: title || "-",
               department: department || "-",
-              ownerificDollars: creditWallets.find((wallet) => wallet?.type === 'PLATFORM')?.value || "0.00"
+              ownerificDollars: `$${creditWallets.find((wallet) => wallet?.type === 'PLATFORM')?.value}` || "$0.00"
               // primaryGoal: primaryGoal || "-",
               // goalTimeline: goalTimeline || "-",
               // goalAmount: goalAmount || "-",
@@ -282,7 +282,8 @@
       const handleShowColumns = () => columns.value = Array.from(selectedColumns.value)
 
       const exportTable = () => {
-        const filteredData = peopleDataToDisplay.value.map((item) => {
+        if (selectedTeamMember.value.length == 0) return
+        const filteredData = filterUserData(data.value, selectedTeamMember.value).map((item) => {
           const filteredItem = {}
           columns.value.forEach((columnName) => {
             filteredItem[columnName] = item[availableColumnOptions[columnName].field]
