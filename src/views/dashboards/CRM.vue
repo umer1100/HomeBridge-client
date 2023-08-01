@@ -263,7 +263,7 @@
         await calculateAveragePlatformCredits()
 
         // avgHomePrice.value = `$${Number(organizationStore?.averageHomePrice).toLocaleString()}`
-        totalPlatformCredits.value = `$${Number(organizationStore?.totalOwnerificCredits).toLocaleString()}`
+        totalPlatformCredits.value = `$${Number(organizationStore?.totalOwnerificCredits).toFixed(2).toLocaleString()}`
         employeeProjectedSavingsByPlatform.value = `$${(MONTHLY_CREDIT_BY_PLATFORM * 12 + YEARLY_CREDIT_BONUS_BY_PLATFORM).toFixed(2)}`
         organizationProjectedSavingsByPlatform.value = `$${(employeesCount.value * MONTHLY_CREDIT_BY_PLATFORM * 12 + employeesCount.value * YEARLY_CREDIT_BONUS_BY_PLATFORM).toFixed(2)}`
         setSideCardValues()
