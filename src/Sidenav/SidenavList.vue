@@ -105,6 +105,19 @@
         </sidenav-collapse>
       </li>
 
+      <li class="nav-item">
+        <sidenav-collapse
+          nav-text="Close"
+          :collapse="false"
+          :class="getRoute() === 'close' ? 'active' : ''"
+          @click="navigateToPath('/close')"
+        >
+          <template #icon>
+            <Basket />
+          </template>
+        </sidenav-collapse>
+      </li>
+
       <li v-if="getUserRole() === 'EMPLOYER'" class="nav-item">
         <sidenav-collapse
           nav-text="Integrations"
