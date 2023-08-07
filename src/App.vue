@@ -38,15 +38,18 @@
 </template>
 <script>
 import { defineComponent, onMounted, ref, toRefs, watch } from "vue"
-import Sidenav from "./Sidenav"
+import { useStore } from "vuex"
+import SoftSpinner from "@/components/SoftSpinner.vue"
+import SoftSnackbar from "@/components/SoftSnackbar.vue"
 import Configurator from "@/Configurator.vue"
 import Navbar from "@/Navbars/Navbar.vue"
 import AppFooter from "@/Footer.vue"
-import { useStore } from "vuex"
 import { useUserStore } from "./store/user"
-import SoftSpinner from "@/components/SoftSpinner.vue"
-import SoftSnackbar from "@/components/SoftSnackbar.vue"
 import { retrieveAuthenticationDetailsFromLocalStorage } from "./utils/localStorage"
+import { ACTIVITY_TIMEOUT_REDIRECT_URL, ACTIVITY_TIMEOUT_TIME} from "./constant"
+import { inactivityTimeout } from "./utils/helper"
+import Sidenav from "./Sidenav"
+
 export default defineComponent({
   name: "App",
   components: {
@@ -103,6 +106,7 @@ export default defineComponent({
       userStore.userJWT = userJWT
       userJWT ? isAuthenticated.value = true : null
       globalStore.dispatch("toggleSidebarColor", "bg-white")
+      inactivityTimeout(ACTIVITY_TIMEOUT_TIME, ACTIVITY_TIMEOUT_REDIRECT_URL)
     })
 
     return{

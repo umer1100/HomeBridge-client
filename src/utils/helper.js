@@ -1,5 +1,8 @@
+import { useRouter } from "vue-router"
+import { logout } from "./logout"
 import store from "../store"
 import { USER_ROLE_TYPES, USER_STATUSES } from "../constant"
+import { useUserStore } from "../store/user"
 
 export const htmlErrorString = (errorMessage) => {
   let htmlString = null
@@ -136,4 +139,24 @@ export const parseCSV = (tableData) => {
 export const toggleSelectedOptions = (array, item) => {
   const index = array.indexOf(item)
   index !== -1 ? array.splice(index, 1) : array.push(item)
+}
+
+export const inactivityTimeout = (timeoutTime = 1, routeToRedirect = "/") => {
+  const router = useRouter()
+  const userStore = useUserStore()
+
+  let timeout
+  const resetTimer = async () => {
+    if (userStore.userJWT) {
+      clearTimeout(timeout)
+      timeout = setTimeout( async () => {
+        await logout()
+        router.push(routeToRedirect)
+      }, timeoutTime * 60 * 1000)
+    }
+  }
+  window.addEventListener('mousemove', resetTimer)
+  window.addEventListener('touchstart', resetTimer)
+
+  resetTimer()
 }

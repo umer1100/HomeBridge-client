@@ -188,6 +188,7 @@
             if (item.status !== "ONBOARDING") count[status] = (count[status] || 0) + 1
             return count
           }, {})
+          calculateTotalPlatformCredits()
         } else {
           showSnackBar("Something went wrong.", response?.message)
         }
@@ -259,7 +260,6 @@
         employeesCount.value = organizationStore?.users?.filter(user => user.roleType === USER_ROLE_TYPES.EMPLOYEE).length || 0
 
         // if (roleType === 'EMPLOYER') await averageHomePriceData()
-        if (roleType === 'EMPLOYER') calculateTotalPlatformCredits()
         if (roleType === 'EMPLOYEE') await fetchCreditWallet()
         await calculateAveragePlatformCredits()
 

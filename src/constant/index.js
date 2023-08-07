@@ -50,3 +50,5 @@ export const GOAL_AMOUNT_OPTIONS = [
 
 export const MONTHLY_CREDIT_BY_PLATFORM = 75
 export const YEARLY_CREDIT_BONUS_BY_PLATFORM = 100
+export const ACTIVITY_TIMEOUT_TIME = 30
+export const ACTIVITY_TIMEOUT_REDIRECT_URL = "/authentication/signin"
