@@ -29,7 +29,7 @@
                     <i
                       :class="getIcon(column)"
                       class="px-3 pointer"
-                      @click="availableColumnOptions[column]?.sortable && sortTableData(column)"
+                      @click="availableColumnOptions[column]?.sortable && sortTableData(column, availableColumnOptions[column]?.sortingType)"
                     ></i>
                   </div>
                 </div>
@@ -39,7 +39,7 @@
                 <i
                   :class="getIcon(column)"
                   class="px-3 pointer"
-                  @click="availableColumnOptions[column]?.sortable && sortTableData(column)"
+                  @click="availableColumnOptions[column]?.sortable && sortTableData(column, availableColumnOptions[column]?.sortingType)"
                 >
                 </i>
               </div>
@@ -69,6 +69,9 @@
               </div>
               <span v-else-if="item === 'Status'" :class="`badge badge-sm badge-${getBadgeColor(userData[availableColumnOptions[item].field])}`">
                 {{ userData[availableColumnOptions[item].field] }}
+              </span>
+              <span v-else-if="item === 'Ownerific Dollars'">
+                ${{ userData[availableColumnOptions[item].field] }}
               </span>
               <div v-else>
                 {{ userData[availableColumnOptions[item].field] }}
@@ -118,7 +121,7 @@
 
 <script>
   import { defineComponent, ref, watch } from 'vue'
-  import { isDate, sortDate } from "../../../utils/helper"
+  import { sortDate } from "../../../utils/helper"
 
   export default defineComponent({
     name: "UserTable",
@@ -214,7 +217,7 @@
         totalPages.value = Math.ceil(tableRows.value.length / rowsPerPage.value)
       }
 
-      const sortTableData = (currentColumn) => {
+      const sortTableData = (currentColumn, sortingType) => {
         columnToSort.value = currentColumn
         const isAscending = availableColumnOptions.value[currentColumn].isAscending
         const sortOrder = isAscending ? 1 : -1
@@ -222,8 +225,8 @@
         tableRows.value = [...tableRows.value].sort((a, b) => {
           const field = availableColumnOptions.value[currentColumn].field
 
-          const valueA = a[field] || ''
-          const valueB = b[field] || ''
+          let valueA = a[field] || ''
+          let valueB = b[field] || ''
 
           if ((valueA?.trim() === '' && valueB?.trim() === '') || (valueA === '-' && valueB === '-')) {
             return 0
@@ -231,8 +234,14 @@
             return -1
           } else if ((valueA === '-') || (valueA?.trim() === '')) {
             return 1
-          } else if (isDate(valueA) && isDate(valueB)) {
+          } else if (sortingType == "date") {
             return sortDate(valueA, valueB) * sortOrder
+          } else if(sortingType == "number") {
+            valueA = parseFloat(valueA)
+            valueB = parseFloat(valueB)
+            if (valueA < valueB) return -1 * sortOrder
+            if (valueA > valueB) return 1 * sortOrder
+            return 0
           } else {
             if (valueA < valueB) return -1 * sortOrder
             if (valueA > valueB) return 1 * sortOrder
