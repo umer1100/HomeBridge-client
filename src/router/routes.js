@@ -60,7 +60,8 @@ import Paused from "../views/auth/error/Paused.vue"
 // import lockCover from "../views/auth/lock/Cover.vue";
 // import lockIllustration from "../views/auth/lock/Illustration.vue";
 import ConfirmEmail from "../views/onboarding/ConfirmEmail.vue"
-import Onboarding from "../views/onboarding/Onboarding.vue"
+import EmployeeOnboarding from "../views/onboarding/Employee.vue"
+import EmployerOnboarding from "../views/onboarding/Employer.vue"
 import People from "../views/pages/People.vue"
 
 const routes = [
@@ -135,9 +136,14 @@ const routes = [
     component: People
   },
   {
-    path: "/onboarding",
-    name: "Onboarding",
-    component: Onboarding
+    path: "/onboarding/employee",
+    name: "Employee Onboarding",
+    component: EmployeeOnboarding
+  },
+  {
+    path: "/onboarding/employer",
+    name: "Employer Onboarding",
+    component: EmployerOnboarding
   },
   {
     path: "/ConfirmEmail",
