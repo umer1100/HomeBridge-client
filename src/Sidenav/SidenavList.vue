@@ -79,7 +79,7 @@
       </li>
 
 
-      <li v-if="getUserRole() === 'EMPLOYEE'" class="nav-item">
+      <li class="nav-item">
         <sidenav-collapse
           nav-text="Finance"
           :collapse="false"
