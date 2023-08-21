@@ -19,7 +19,10 @@ import Integrations from "../views/pages/Integrations.vue";
 import Brokerage from "../views/pages/Brokerage.vue";
 import Lender from "../views/pages/Lender.vue";
 import Resources from "../views/pages/Resources.vue";
+<<<<<<< HEAD
 import Close from "../views/pages/Close.vue"
+=======
+>>>>>>> 1984edd531b50ffe988c34fb25869ba4ebfdbae4
 // import Kanban from "../views/applications/Kanban.vue";
 // import Wizard from "../views/applications/wizard/Wizard.vue";
 // import DataTables from "../views/applications/DataTables.vue";
@@ -121,11 +124,14 @@ const routes = [
     component: Resources
   },
   {
+<<<<<<< HEAD
     path: "/close",
     name: "Close",
     component: Close
   },
   {
+=======
+>>>>>>> 1984edd531b50ffe988c34fb25869ba4ebfdbae4
     path: "/integrations",
     name: "Integrations",
     component: Integrations
