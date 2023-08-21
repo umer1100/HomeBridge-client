@@ -121,14 +121,11 @@ const routes = [
     component: Resources
   },
   {
-<<<<<<< HEAD
     path: "/close",
     name: "Close",
     component: Close
   },
   {
-=======
->>>>>>> 1984edd531b50ffe988c34fb25869ba4ebfdbae4
     path: "/integrations",
     name: "Integrations",
     component: Integrations
