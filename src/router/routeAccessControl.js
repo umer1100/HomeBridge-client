@@ -29,11 +29,8 @@ const COMMON_ROUTES = [
   ROUTES.PARTNERS,
   ROUTES.BLOCKED,
   ROUTES.RESOURCES,
-<<<<<<< HEAD
   ROUTES.CLOSE,
   ROUTES.LENDERS
-=======
->>>>>>> 1984edd531b50ffe988c34fb25869ba4ebfdbae4
 ]
 
 //Routes which EMPLOYEE can access
