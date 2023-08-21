@@ -23,4 +23,4 @@ const request = async (endpoint) => {
 
 export const readUsers = async () => await request("/v1/organizations/users")
 export const averageHomePrice = async () => await request("/v1/organizations/get-average-home-price")
-export const totalOwnerificCredit = async () => await request("/v1/organizations/get-total-ownerific-credit")
+export const averageOwnerificCredit = async () => await request("/v1/organizations/get-average-ownerific-credit")

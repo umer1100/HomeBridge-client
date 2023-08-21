@@ -225,9 +225,9 @@ export default defineComponent({
     let userId = ref(userStore.data?.id)
     let organizationName = ref(organizationStore?.data?.name)
 
-    const onClickLogout = () => {
-      logout()
-      router.push("/authentication/signin")
+    const onClickLogout = async () => {
+      const response = await logout()
+      if (response.success) router.push("/authentication/signin")
     }
     const navbarMinimize = () => {
       globalStore.commit("navbarMinimize")

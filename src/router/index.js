@@ -31,11 +31,12 @@ router.beforeEach(async (to, from, next) => {
 
   const allowedRoutes = ROLE_BASE_PROTECTED_ROUTE[userStore?.data?.roleType] || []
   const isAllowedRoute = to.path.includes('profile/') || allowedRoutes.includes(to.path);
-  const shouldNotRedirect = PUBLIC_ROUTES.includes(to.path) || (!onboardingUser && to.path === ROUTES.ONBOARDING) || (!pausedUser && to.path === ROUTES.BLOCKED) || !isAllowedRoute
+  const shouldNotRedirect = PUBLIC_ROUTES.includes(to.path) || (!onboardingUser && to.path.includes('onboarding')) || (!pausedUser && to.path === ROUTES.BLOCKED) || !isAllowedRoute
 
   if (userJWT.value) {
-    if (to.path !== ROUTES.ONBOARDING && onboardingUser) {
-      next({ path: ROUTES.ONBOARDING })
+    if ((!to.path.includes('onboarding')) && onboardingUser) {
+      let onboardingRoute = userStore.data.roleType == "EMPLOYEE" ? ROUTES.EMPLOYEE_ONBOARDING : ROUTES.EMPLOYER_ONBOARDING
+      next({ path: onboardingRoute })
     } else if (to.path !== ROUTES.BLOCKED && pausedUser) {
       next({ path: ROUTES.BLOCKED })
     } else if (shouldNotRedirect) {

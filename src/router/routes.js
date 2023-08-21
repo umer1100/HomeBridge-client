@@ -19,6 +19,7 @@ import Integrations from "../views/pages/Integrations.vue";
 import Brokerage from "../views/pages/Brokerage.vue";
 import Lender from "../views/pages/Lender.vue";
 import Resources from "../views/pages/Resources.vue";
+import Close from "../views/pages/Close.vue"
 // import Kanban from "../views/applications/Kanban.vue";
 // import Wizard from "../views/applications/wizard/Wizard.vue";
 // import DataTables from "../views/applications/DataTables.vue";
@@ -59,7 +60,8 @@ import Paused from "../views/auth/error/Paused.vue"
 // import lockCover from "../views/auth/lock/Cover.vue";
 // import lockIllustration from "../views/auth/lock/Illustration.vue";
 import ConfirmEmail from "../views/onboarding/ConfirmEmail.vue"
-import Onboarding from "../views/onboarding/Onboarding.vue"
+import EmployeeOnboarding from "../views/onboarding/Employee.vue"
+import EmployerOnboarding from "../views/onboarding/Employer.vue"
 import People from "../views/pages/People.vue"
 
 const routes = [
@@ -119,6 +121,11 @@ const routes = [
     component: Resources
   },
   {
+    path: "/close",
+    name: "Close",
+    component: Close
+  },
+  {
     path: "/integrations",
     name: "Integrations",
     component: Integrations
@@ -129,9 +136,14 @@ const routes = [
     component: People
   },
   {
-    path: "/onboarding",
-    name: "Onboarding",
-    component: Onboarding
+    path: "/onboarding/employee",
+    name: "Employee Onboarding",
+    component: EmployeeOnboarding
+  },
+  {
+    path: "/onboarding/employer",
+    name: "Employer Onboarding",
+    component: EmployerOnboarding
   },
   {
     path: "/ConfirmEmail",

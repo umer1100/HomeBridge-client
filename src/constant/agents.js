@@ -1,3 +1,8 @@
+import BenSoto from "../assets/img/agents/BenSoto.png"
+import DavidMaged from "../assets/img/agents/DavidMaged.png"
+import EvelynMiller from "../assets/img/agents/EvelynMiller.png"
+import LataneMeade from "../assets/img/agents/LataneMeade.png"
+
 export const BROKERAGE_AGENTS = [
   {
     name: 'Keith James',
@@ -320,4 +325,51 @@ export const RESOURCES = [
     image: 'https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/epye3s0act5hoquxkmac',
     state: 'National',
   },
+]
+
+export const CLOSE_AGENTS = [
+  {
+    name: "David Maged",
+    company: "Pinnacle Title and Escrow",
+    image: DavidMaged,
+    location: "Rockville, MD",
+    phone: "(301) 279-4213",
+    email: "dmaged@pinnacletitle.com",
+    licensedIn: "District of Columbia, Maryland, Virginia",
+    review: "https://www.redfin.com/openbook/title-company/washington-dc-pinnacle-title-and-escrow-sp138589",
+    apply: "https://pinnacletitle.com/about-us/"
+  },
+  {
+    name: "Ben Soto",
+    company: "Premium Title & Escrow",
+    image: BenSoto,
+    location: "District of Columbia",
+    phone: "(202) 345-2945",
+    email: "bsoto@premiumtitlellc.com",
+    licensedIn: "District of Columbia, Maryland, Virginia",
+    review: "https://www.redfin.com/buy-a-home/openbook/title-company/washington-dc-premium-title-and-escrow-llc-sp34067",
+    apply: "https://www.premiumtitlellc.com/about-us"
+  },
+  {
+    name: "Evelyn Miller",
+    company: "Smart Settlements",
+    image: EvelynMiller,
+    location: "District of Columbia",
+    phone: "(202) 753-7400",
+    email: "evelyn@smartsettlements.com",
+    licensedIn: "District of Columbia, Maryland, Virginia",
+    review: "https://www.redfin.com/openbook/title-company/washington-dc-smart-settlements-sp135455",
+    apply: "https://www.smartsettlements.com/who-we-are"
+  },
+  {
+    name: "Latane Meade",
+    company: "Allied Title",
+    image: LataneMeade,
+    location: "Arlington, VA",
+    phone: "(858) 220-8131",
+    email: "latane@alliedtitleandescrow.com",
+    licensedIn: "District of Columbia, Maryland, Virginia",
+    review: "https://www.redfin.com/buy-a-home/openbook/title-company/washington-dc-allied-title-and-escrow-llc-sp1673091",
+    apply: "https://www.alliedtitleandescrow.com/meet-the-allied-team"
+  }
 ]

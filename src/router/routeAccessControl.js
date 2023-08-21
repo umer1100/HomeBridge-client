@@ -5,11 +5,13 @@ export const ROUTES = {
   NEW_PASSWORD: '/ResetPassword',
   RESET_PASSWORD: '/authentication/reset',
   INTEGRATIONS: '/integrations',
-  ONBOARDING: '/Onboarding',
+  EMPLOYEE_ONBOARDING: '/onboarding/employee',
+  EMPLOYER_ONBOARDING: '/onboarding/employer',
   CONFIRM_EMAIL: '/ConfirmEmail',
   PEOPLE: '/people',
   PARTNERS: '/brokerage',
   LENDERS: '/lender',
+  CLOSE: '/close',
   BLOCKED: '/authentication/temporary-block',
   RESOURCES: '/resources'
 }
@@ -24,16 +26,17 @@ export const PUBLIC_ROUTES = [
 const COMMON_ROUTES = [
   ROUTES.DASHBOARD,
   ROUTES.PROFILE,
-  ROUTES.ONBOARDING,
   ROUTES.PARTNERS,
   ROUTES.BLOCKED,
   ROUTES.RESOURCES,
+  ROUTES.CLOSE,
+  ROUTES.LENDERS
 ]
 
 //Routes which EMPLOYEE can access
-const EMPLOYEE_ROUTES = [...COMMON_ROUTES, ROUTES.LENDERS]
+const EMPLOYEE_ROUTES = [...COMMON_ROUTES, ROUTES.EMPLOYEE_ONBOARDING,]
 //Routes which EMPLOYER can access
-const EMPLOYER_ROUTES = [...COMMON_ROUTES, ROUTES.PEOPLE, ROUTES.INTEGRATIONS]
+const EMPLOYER_ROUTES = [...COMMON_ROUTES, ROUTES.PEOPLE, ROUTES.INTEGRATIONS, ROUTES.EMPLOYER_ONBOARDING,]
 
 export const ROLE_BASE_PROTECTED_ROUTE = {
   EMPLOYEE: [...EMPLOYEE_ROUTES],

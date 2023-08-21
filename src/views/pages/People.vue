@@ -88,6 +88,7 @@
             :columns="columns"
             :rows="peopleDataToDisplay"
             :availableColumnsOption="availableColumnOptions"
+            :selectedTeamMember="selectedTeamMember"
             @selected-user-changed="handleSelectedTeamMember"
           />
         </div>
@@ -156,25 +157,27 @@
     showSnackBar,
     downloadCSV,
     parseCSV,
+    toggleSelectedOptions,
   } from "../../utils/helper"
 
   let availableColumnOptions = {
-    "Name": { field: "fullName", sortable: true, isAscending: true },
-    "Email": { field: "email", sortable: true, isAscending: true },
-    "Role": { field: "roleType", sortable: true, isAscending: true },
-    "Status": { field: "status", sortable: true, isAscending: true },
-    "Source": { field: "source", sortable: true, isAscending: true },
-    "Address": { field: "address", sortable: true, isAscending: true },
-    "Gender": { field: "sex", sortable: true, isAscending: true },
-    "State": { field: "state", sortable: true, isAscending: true },
-    "Title": { field: "title", sortable: true, isAscending: true },
-    "Department": { field: "department", sortable: true, isAscending: true },
-    "Employment Type": { field: "employmentType", sortable: true, isAscending: true },
-    "Date of Birth": { field: "formattedDateOfBirth", sortable: true, isAscending: true },
-    "Last Seen": { field: "formattedLastSeen", sortable: true, isAscending: true },
-    "Hired Date": { field: "formattedStartDate", sortable: true, isAscending: true },
-    "End Date": { field: "formattedEndDate", sortable: true, isAscending: true },
-    "Enrolled": { field: "formattedCreatedAt", sortable: true, isAscending: true },
+    "Name": { field: "fullName", sortable: true, isAscending: true, sortingType: "string" },
+    "Email": { field: "email", sortable: true, isAscending: true, sortingType: "string" },
+    "Role": { field: "roleType", sortable: true, isAscending: true, sortingType: "string" },
+    "Status": { field: "status", sortable: true, isAscending: true, sortingType: "string" },
+    "Source": { field: "source", sortable: true, isAscending: true, sortingType: "string" },
+    "Address": { field: "address", sortable: true, isAscending: true, sortingType: "string" },
+    "Gender": { field: "sex", sortable: true, isAscending: true, sortingType: "string" },
+    "State": { field: "state", sortable: true, isAscending: true, sortingType: "string" },
+    "Title": { field: "title", sortable: true, isAscending: true, sortingType: "string" },
+    "Department": { field: "department", sortable: true, isAscending: true, sortingType: "string" },
+    "Employment Type": { field: "employmentType", sortable: true, isAscending: true, sortingType: "string" },
+    "Date of Birth": { field: "formattedDateOfBirth", sortable: true, isAscending: true, sortingType: "date" },
+    "Last Seen": { field: "formattedLastSeen", sortable: true, isAscending: true, sortingType: "date" },
+    "Hired Date": { field: "formattedStartDate", sortable: true, isAscending: true, sortingType: "date" },
+    "End Date": { field: "formattedEndDate", sortable: true, isAscending: true, sortingType: "date" },
+    "Enrolled": { field: "formattedCreatedAt", sortable: true, isAscending: true, sortingType: "date" },
+    "Ownerific Dollars": {field: "ownerificDollars", sortable: true, isAscending: true, sortingType: "number"},
     // "Primary Goal": { field: "primaryGoal", sortable: true, isAscending: true },
     // "Goal Timeline": { field: "goalTimeline", sortable: true, isAscending: true },
     // "Goal Amount": { field: "goalAmount", sortable: true, isAscending: true },
@@ -213,7 +216,7 @@
       const initializePeopleTab = async () => {
         if (organizationStore?.users) {
           data.value = organizationStore?.users?.filter(user => user.roleType !== USER_ROLE_TYPES.EMPLOYER).map(user => {
-            let { firstName, lastName, addressLine1, addressLine2, city, state, zipcode, lastLogin, createdAt, endDate, startDate, dateOfBirth, department, source, sex, roleType, title, employmentType } = user
+            let { firstName, lastName, addressLine1, addressLine2, city, state, zipcode, lastLogin, createdAt, endDate, startDate, dateOfBirth, department, source, sex, roleType, title, employmentType, creditWallets } = user
             allDepartments.value.push(department)
             return {
               ...user,
@@ -231,6 +234,7 @@
               formattedDateOfBirth: dateOfBirth ? moment(dateOfBirth).utc().format("MM/DD/YYYY") : "-",
               title: title || "-",
               department: department || "-",
+              ownerificDollars: creditWallets.find((wallet) => wallet?.type === 'PLATFORM')?.value || 0.00
               // primaryGoal: primaryGoal || "-",
               // goalTimeline: goalTimeline || "-",
               // goalAmount: goalAmount || "-",
@@ -266,11 +270,7 @@
         availableToggleOption.value = availableToggleOption.value.map(item => ({ name: item, options: serializeModalOptions(item) }))
       }
 
-      const handleSelectedTeamMember = (item) => handleSelectedOptions(selectedTeamMember, item)
-      const handleSelectedOptions = (array, item) => {
-        const index = array.value.indexOf(item)
-        index !== -1 ? array.value.splice(index, 1) : array.value.push(item)
-      }
+      const handleSelectedTeamMember = (item) => toggleSelectedOptions(selectedTeamMember.value, item)
 
       const readOrganizationUsersData = async () => {
         let response = await readUsers()
@@ -282,7 +282,8 @@
       const handleShowColumns = () => columns.value = Array.from(selectedColumns.value)
 
       const exportTable = () => {
-        const filteredData = peopleDataToDisplay.value.map((item) => {
+        if (selectedTeamMember.value.length == 0) return
+        const filteredData = filterUserData(data.value, selectedTeamMember.value).map((item) => {
           const filteredItem = {}
           columns.value.forEach((columnName) => {
             filteredItem[columnName] = item[availableColumnOptions[columnName].field]
@@ -387,56 +388,56 @@
           title: "Filter by Status",
           selectedOptions: selectedStatusFilters,
           showSearch: false,
-          selectedOptionsChanged: (item) => handleSelectedOptions(selectedStatusFilters, item)
+          selectedOptionsChanged: (item) => toggleSelectedOptions(selectedStatusFilters.value, item)
         },
         {
           name: "Gender",
           title: "Filter by Gender",
           selectedOptions: selectedGenderFilters,
           showSearch: false,
-          selectedOptionsChanged: (item) => handleSelectedOptions(selectedGenderFilters, item)
+          selectedOptionsChanged: (item) => toggleSelectedOptions(selectedGenderFilters.value, item)
         },
         {
           name: "State",
           title: "Filter by State",
           selectedOptions: selectedStatesFilters,
           showSearch: true,
-          selectedOptionsChanged: (item) => handleSelectedOptions(selectedStatesFilters, item)
+          selectedOptionsChanged: (item) => toggleSelectedOptions(selectedStatesFilters.value, item)
         },
         {
           name: "Department",
           title: "Filter by Department",
           selectedOptions: selectedDepartmentFilters,
           showSearch: false,
-          selectedOptionsChanged: (item) => handleSelectedOptions(selectedDepartmentFilters, item)
+          selectedOptionsChanged: (item) => toggleSelectedOptions(selectedDepartmentFilters.value, item)
         },
         // {
         //   name: "Primary-Goal",
         //   title: "Filter by Primary Goal",
         //   selectedOptions: selectedPrimaryGoalFilters,
         //   showSearch: false,
-        //   selectedOptionsChanged: (item) => handleSelectedOptions(selectedPrimaryGoalFilters, item)
+        //   selectedOptionsChanged: (item) => toggleSelectedOptions(selectedPrimaryGoalFilters, item)
         // },
         // {
         //   name: "Goal-Timeline",
         //   title: "Filter by Goal Timeline",
         //   selectedOptions: selectedGoalTimelineFilters,
         //   showSearch: false,
-        //   selectedOptionsChanged: (item) => handleSelectedOptions(selectedGoalTimelineFilters, item)
+        //   selectedOptionsChanged: (item) => toggleSelectedOptions(selectedGoalTimelineFilters, item)
         // },
         // {
         //   name: "Goal-Amount",
         //   title: "Filter by Goal Amount",
         //   selectedOptions: selectedGoalAmountFilters,
         //   showSearch: false,
-        //   selectedOptionsChanged: (item) => handleSelectedOptions(selectedGoalAmountFilters, item)
+        //   selectedOptionsChanged: (item) => toggleSelectedOptions(selectedGoalAmountFilters, item)
         // },
         {
           name: "Options",
           title: "Column Options",
           selectedOptions: selectedColumns,
           showSearch: false,
-          selectedOptionsChanged: (item) => handleSelectedOptions(selectedColumns, item)
+          selectedOptionsChanged: (item) => toggleSelectedOptions(selectedColumns.value, item)
         }
       ])
 

@@ -12,15 +12,37 @@
         <thead class="thead-light">
           <tr>
             <th v-for="column in tableColumns"
-                :key="column"
-                :class="column === 'Name' ? 'padding-left-50' : ''">
-                {{ column }}
+              :key="column"
+              class="px-2">
+              <div v-if="column == 'Name'">
+                <div class="d-flex align-items-center">
+                  <div class="my-auto form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      :checked="selectAllTeamMembers"
+                      @click="handleSelectAllMembers()"
+                    />
+                  </div>
+                  <div class="ms-3">
+                    {{ column }}
+                    <i
+                      :class="getIcon(column)"
+                      class="px-3 pointer"
+                      @click="availableColumnOptions[column]?.sortable && sortTableData(column, availableColumnOptions[column]?.sortingType)"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+              <div v-else>
+                  {{ column }}
                 <i
                   :class="getIcon(column)"
                   class="px-3 pointer"
-                  @click="availableColumnOptions[column]?.sortable && sortTableData(column)"
+                  @click="availableColumnOptions[column]?.sortable && sortTableData(column, availableColumnOptions[column]?.sortingType)"
                 >
                 </i>
+              </div>
             </th>
           </tr>
         </thead>
@@ -39,7 +61,7 @@
                     :id="userData.name"
                     class="form-check-input"
                     type="checkbox"
-                    :checked="userData.checked"
+                    :checked="selectedTeamMembers.includes(userData.id)"
                     @click="onSelectTeamMember(userData.id)"
                   />
                 </div>
@@ -47,6 +69,9 @@
               </div>
               <span v-else-if="item === 'Status'" :class="`badge badge-sm badge-${getBadgeColor(userData[availableColumnOptions[item].field])}`">
                 {{ userData[availableColumnOptions[item].field] }}
+              </span>
+              <span v-else-if="item === 'Ownerific Dollars'">
+                ${{ userData[availableColumnOptions[item].field] }}
               </span>
               <div v-else>
                 {{ userData[availableColumnOptions[item].field] }}
@@ -96,17 +121,19 @@
 
 <script>
   import { defineComponent, ref, watch } from 'vue'
-  import { isDate, sortDate } from "../../../utils/helper"
+  import { sortDate } from "../../../utils/helper"
 
   export default defineComponent({
     name: "UserTable",
-    props: ["columns", "rows", "availableColumnsOption"],
+    props: ["columns", "rows", "availableColumnsOption", "selectedTeamMember"],
 
     setup(props, {emit}) {
       let tableData = null
       const tableColumns = ref(props.columns)
       const tableRows = ref(props.rows)
       const availableColumnOptions = ref(props.availableColumnsOption)
+      const selectedTeamMembers = ref([props.selectedTeamMember])
+      const selectAllTeamMembers = ref(false)
       const columnToSort = ref("")
       const pageUserData = ref(props.rows.slice(0,10))
       const currentPage = ref(1)
@@ -133,6 +160,26 @@
       }
 
       const onSelectTeamMember = (userId) => emit("selected-user-changed", userId)
+
+      const handleSelectAllMembers = () => {
+        if (search.value == "") {
+          if (selectedTeamMembers.value.length == 0 || selectedTeamMembers.value.length == tableRows.value.length) {
+            tableRows.value.forEach(item => emit("selected-user-changed", item.id))
+          } else {
+            tableRows.value.forEach(item => {
+              if (!selectedTeamMembers.value.includes(item.id))  emit("selected-user-changed", item.id)
+            })
+          }
+        } else {
+          if (selectAllTeamMembers.value) {
+            tableRows.value.forEach(item => onSelectTeamMember(item.id))
+          } else {
+            tableRows.value.forEach(item => {
+              if (!(selectedTeamMembers.value.includes(item.id)))  emit("selected-user-changed", item.id)
+            })
+          }
+        }
+      }
 
       const setPaginatedData = () => {
         pageUserData.value = tableRows.value.slice((currentPage.value - 1) * rowsPerPage.value, currentPage.value * rowsPerPage.value)
@@ -170,16 +217,16 @@
         totalPages.value = Math.ceil(tableRows.value.length / rowsPerPage.value)
       }
 
-      const sortTableData = (currentColumn) => {
+      const sortTableData = (currentColumn, sortingType) => {
         columnToSort.value = currentColumn
         const isAscending = availableColumnOptions.value[currentColumn].isAscending
         const sortOrder = isAscending ? 1 : -1
 
         tableRows.value = [...tableRows.value].sort((a, b) => {
           const field = availableColumnOptions.value[currentColumn].field
-          
-          const valueA = a[field] || ''
-          const valueB = b[field] || ''
+
+          let valueA = a[field] || ''
+          let valueB = b[field] || ''
 
           if ((valueA?.trim() === '' && valueB?.trim() === '') || (valueA === '-' && valueB === '-')) {
             return 0
@@ -187,8 +234,14 @@
             return -1
           } else if ((valueA === '-') || (valueA?.trim() === '')) {
             return 1
-          } else if (isDate(valueA) && isDate(valueB)) {
+          } else if (sortingType == "date") {
             return sortDate(valueA, valueB) * sortOrder
+          } else if(sortingType == "number") {
+            valueA = parseFloat(valueA)
+            valueB = parseFloat(valueB)
+            if (valueA < valueB) return -1 * sortOrder
+            if (valueA > valueB) return 1 * sortOrder
+            return 0
           } else {
             if (valueA < valueB) return -1 * sortOrder
             if (valueA > valueB) return 1 * sortOrder
@@ -227,7 +280,20 @@
       }, { deep: true })
 
       watch(()=> props.columns, (valueNew) => tableColumns.value = valueNew)
-      watch(search, () => searchPeople())
+
+      watch(() => props.selectedTeamMember, (updatedValue) => {
+        selectedTeamMembers.value = updatedValue
+        if (search.value == "") {
+          selectAllTeamMembers.value = updatedValue.length >= Object.keys(tableRows.value).length
+        } else {
+          selectAllTeamMembers.value = Object.values(tableRows.value).every((item) => selectedTeamMembers.value.includes(item.id))
+        }
+      }, { deep: true })
+
+      watch(search, () => {
+        searchPeople()
+        selectAllTeamMembers.value = Object.values(tableRows.value).every((item) => selectedTeamMembers.value.includes(item.id))
+      })
 
       return {
       tableData,
@@ -239,6 +305,8 @@
       currentPage,
       totalPages,
       rowsPerPage,
+      selectAllTeamMembers,
+      selectedTeamMembers,
       availableColumnOptions,
       getIcon,
       previousPage,
@@ -246,7 +314,8 @@
       sortTableData,
       getBadgeColor,
       onSelectTeamMember,
-      setCurrentPage
+      setCurrentPage,
+      handleSelectAllMembers,
     }
     }
   })

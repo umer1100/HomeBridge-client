@@ -29,3 +29,7 @@ export const updateUser = async (args) => {
 export const updatePassword = async (args) => {
   return request('/v1/users/update-password', args, true)
 }
+
+export const createQuestionnaire = async (args) => {
+  return request('/v1/questionaire/create', args)
+}
