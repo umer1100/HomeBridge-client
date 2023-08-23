@@ -1,16 +1,17 @@
-import { createRouter, createWebHistory } from "vue-router"
-import { storeToRefs } from "pinia"
-import routes from "./routes"
-import { ROLE_BASE_PROTECTED_ROUTE, PUBLIC_ROUTES, ROUTES } from "./routeAccessControl"
-import { useUserStore } from "../store/user"
-import { useOrganizationStore } from "../store/organization"
-import { read } from "../api/user/read"
-import { isStatusOnboarding, isStatusPause } from "../utils/helper"
+import { createRouter, createWebHistory } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { USER_ROLE_TYPES } from 'src/constant'
+import routes from './routes'
+import { ROLE_BASE_PROTECTED_ROUTE, PUBLIC_ROUTES, ROUTES } from './routeAccessControl'
+import { useUserStore } from '../store/user'
+import { useOrganizationStore } from '../store/organization'
+import { read } from '../api/user/read'
+import { isStatusOnboarding, isStatusPause } from '../utils/helper'
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-  linkActiveClass: "active",
+  linkActiveClass: 'active'
 })
 
 router.beforeEach(async (to, from, next) => {
@@ -35,7 +36,7 @@ router.beforeEach(async (to, from, next) => {
 
   if (userJWT.value) {
     if ((!to.path.includes('onboarding')) && onboardingUser) {
-      let onboardingRoute = userStore.data.roleType == "EMPLOYEE" ? ROUTES.EMPLOYEE_ONBOARDING : ROUTES.EMPLOYER_ONBOARDING
+      let onboardingRoute = userStore.data.roleType == USER_ROLE_TYPES.EMPLOYEE ? ROUTES.EMPLOYEE_ONBOARDING : ROUTES.EMPLOYER_ONBOARDING
       next({ path: onboardingRoute })
     } else if (to.path !== ROUTES.BLOCKED && pausedUser) {
       next({ path: ROUTES.BLOCKED })

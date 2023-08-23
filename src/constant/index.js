@@ -7,6 +7,8 @@ export const EMAIL_REGEX_MISMATCH_NOTICE = 'You have entered an invalid email ad
 export const ZIP_CODE_REGEX = /^\d{5}$/
 export const PHONE_NUMBER_REGEX = /^\(\d{3}\) \d{3}-\d{4}$/
 
+export const ERROR_SNACK_BAR_MESSAGE = 'Something went Wrong'
+
 export const USER_STATUSES = {
   ACTIVE: 'ACTIVE',
   INACTIVE: 'INACTIVE',
@@ -51,4 +53,5 @@ export const GOAL_AMOUNT_OPTIONS = [
 export const MONTHLY_CREDIT_BY_PLATFORM = 75
 export const YEARLY_CREDIT_BONUS_BY_PLATFORM = 100
 export const ACTIVITY_TIMEOUT_TIME = 30
-export const ACTIVITY_TIMEOUT_REDIRECT_URL = "/authentication/signin"
+export const ACTIVITY_TIMEOUT_REDIRECT_URL = '/authentication/signin'
+
