@@ -27,7 +27,7 @@
         <partner-card
           :image = resource.imageURL
           :title = resource.name
-          :sub-heading = 'resource.addresses.map(item => STATES[item.state]).join(", ")'
+          :sub-heading = 'resource.isNational ? "National" : resource.addresses.map(item => STATES[item.state]).join(", ")'
           :description = resource.description
           :left-button-url = resource.infoURL
           :show-left-button = true
@@ -67,7 +67,7 @@
         if (selectedStateFilter.value == 'All') {
           filterResources.value = resources.value
         } else {
-          filterResources.value = resources.value.filter(resource => resource.addresses?.map(address => STATES[address.state]).includes(selectedStateFilter.value));
+          filterResources.value = resources.value.filter((resource => (resource.isNational ? 'National' : resource.addresses.map(item => STATES[item.state])).includes(selectedStateFilter.value)))
         }
       })
 
@@ -78,9 +78,9 @@
         if (res && res?.success) resources.value = filterResources.value = res.resources
         else showSnackBar(ERROR_SNACK_BAR_MESSAGE, res?.message)
 
-        const resourceStatesCollection = resources.value.reduce((accumulator, resource) => accumulator.concat(resource.addresses?.map(address => STATES[address.state])), [])
+        const resourceStatesCollection = resources.value.reduce((accumulator, resource) => accumulator.concat(resource.isNational ? [] : resource.addresses?.map(address => STATES[address.state])), [])
         uniqueStates.value = [...new Set(resourceStatesCollection)];
-        uniqueStates.value.unshift('All')
+        uniqueStates.value.unshift('All', 'National')
       })
 
       return {
