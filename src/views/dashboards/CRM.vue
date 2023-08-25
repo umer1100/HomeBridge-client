@@ -49,7 +49,7 @@
             <div class="mt-4 col-sm-4 mt-sm-0">
               <mini-gradient-line-chart
                 :title="`${organizationName} Average Savings`"
-                :description="`$${averagePlatformCredits}`"
+                :description="`${averagePlatformCredits}`"
               />
             </div>
           </div>
@@ -133,7 +133,7 @@
   import { fetchCreditWalletBalance } from "../../api/creditWallet/read"
   import { USER_ROLE_TYPES, MONTHLY_CREDIT_BY_PLATFORM, YEARLY_CREDIT_BONUS_BY_PLATFORM } from "../../constant"
   import { BROKERAGE_AGENTS, LENDER_AGENTS } from "../../constant/agents"
-  import { showSnackBar } from "../../utils/helper"
+  import { showSnackBar, USDollar } from "../../utils/helper"
 
   export default defineComponent({
     name: "Crm",
@@ -217,17 +217,19 @@
           const response = await averageOwnerificCredit()
 
           // eslint-disable-next-line require-atomic-updates
-          if (response && response?.success) averagePlatformCredits.value = response.data
+          if (response && response?.success) averagePlatformCredits.value = USDollar.format(response.data)
           else showSnackBar("Something went wrong.", response?.message)
         } else if (roleType == 'EMPLOYER') {
-          averagePlatformCredits.value = (organizationStore.totalOwnerificCredits / employeesCount.value).toFixed(2)
+          averagePlatformCredits.value = USDollar.format((organizationStore.totalOwnerificCredits / employeesCount.value).toFixed(2))
         }
       }
+
+
 
       const fetchCreditWallet = async () => {
         const response = await fetchCreditWalletBalance()
 
-        if (response && response?.success) employeePlatformCredits.value = `$${response.data.filter( item => (item.walletType == "PLATFORM"))[0].dollars}`
+        if (response && response?.success) employeePlatformCredits.value = `${USDollar.format(response.data.filter( item => (item.walletType == "PLATFORM"))[0].dollars)}`
         else showSnackBar("Something went wrong.", response?.message)
       }
 
@@ -238,7 +240,7 @@
 
         sideCardDescription.value = roleType == "EMPLOYEE"
         ? `Congratulations! Your Ownerific membership, along with the support of ${organizationName.value}, earns you $100 of value every month. This benefit brings you one step closer each month to realizing your homeownership goals and dreams.`
-        : `Congratulations! Your organization's Ownerific membership creates $100 of value every month, for every member of your team. That's $${100*employeesCount.value} per month! This benefit brings members of your team one step close each month to realizing their homeownership goals and dreams.`
+        : `Congratulations! Your organization's Ownerific membership creates $100 of value every month, for every member of your team. That's ${USDollar.format(100*employeesCount.value)} per month! This benefit brings members of your team one step close each month to realizing their homeownership goals and dreams.`
       }
 
       const setPieChartValues = () => {
@@ -265,8 +267,8 @@
 
         // avgHomePrice.value = `$${Number(organizationStore?.averageHomePrice).toLocaleString()}`
         totalPlatformCredits.value = `$${Number(organizationStore?.totalOwnerificCredits).toFixed(2).toLocaleString()}`
-        employeeProjectedSavingsByPlatform.value = `$${(MONTHLY_CREDIT_BY_PLATFORM * 12 + YEARLY_CREDIT_BONUS_BY_PLATFORM).toFixed(2)}`
-        organizationProjectedSavingsByPlatform.value = `$${(employeesCount.value * MONTHLY_CREDIT_BY_PLATFORM * 12 + employeesCount.value * YEARLY_CREDIT_BONUS_BY_PLATFORM).toFixed(2)}`
+        employeeProjectedSavingsByPlatform.value = `${USDollar.format((MONTHLY_CREDIT_BY_PLATFORM * 12 + YEARLY_CREDIT_BONUS_BY_PLATFORM).toFixed(2))}`
+        organizationProjectedSavingsByPlatform.value = `${USDollar.format((employeesCount.value * MONTHLY_CREDIT_BY_PLATFORM * 12 + employeesCount.value * YEARLY_CREDIT_BONUS_BY_PLATFORM).toFixed(2))}`
         setSideCardValues()
         setPieChartValues()
       })
