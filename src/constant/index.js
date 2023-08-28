@@ -7,6 +7,8 @@ export const EMAIL_REGEX_MISMATCH_NOTICE = 'You have entered an invalid email ad
 export const ZIP_CODE_REGEX = /^\d{5}$/
 export const PHONE_NUMBER_REGEX = /^\(\d{3}\) \d{3}-\d{4}$/
 
+export const ERROR_SNACK_BAR_MESSAGE = 'Something went Wrong'
+
 export const USER_STATUSES = {
   ACTIVE: 'ACTIVE',
   INACTIVE: 'INACTIVE',
