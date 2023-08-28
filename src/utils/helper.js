@@ -161,7 +161,6 @@ export const inactivityTimeout = (timeoutTime = 1, routeToRedirect = "/") => {
   resetTimer()
 }
 
-
 export const USDollar = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',

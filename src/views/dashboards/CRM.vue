@@ -224,8 +224,6 @@
         }
       }
 
-
-
       const fetchCreditWallet = async () => {
         const response = await fetchCreditWalletBalance()
 
