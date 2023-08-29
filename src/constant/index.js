@@ -26,6 +26,11 @@ export const USER_ROLE_TYPES = {
   GUEST: 'GUEST'
 }
 
+export const WALLET_TYPE = {
+  EMPLOYER: 'EMPLOYER',
+  PLATFORM: 'PLATFORM'
+}
+
 export const PEOPLE_TAB_IMPORT_TEMPLATE = 'First Name,Last Name,Email'
 
 export const PRIMARY_GOAL_OPTIONS = [
@@ -54,3 +59,4 @@ export const MONTHLY_CREDIT_BY_PLATFORM = 100
 export const YEARLY_CREDIT_BONUS_BY_PLATFORM = 100
 export const ACTIVITY_TIMEOUT_TIME = 30
 export const ACTIVITY_TIMEOUT_REDIRECT_URL = "/authentication/signin"
+export const OWNERIFIC_ROUTE = 'https://www.ownerific.com/'

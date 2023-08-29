@@ -3,7 +3,7 @@
 // import SmartHome from "../views/dashboards/SmartHome.vue";
 // import VRDefault from "../views/dashboards/vr/VRDefault.vue";
 // import VRInfo from "../views/dashboards/vr/VRInfo.vue";
-import CRM from "../views/dashboards/CRM.vue"
+import Dashboard from "../views/dashboards/Dashboard.vue"
 import Overview from "../views/pages/profile/Overview.vue"
 // import Teams from "../views/pages/profile/Teams.vue";
 // import Projects from "../views/pages/profile/Projects.vue";
@@ -73,7 +73,7 @@ const routes = [
   {
     path: "/dashboard",
     name: "Default",
-    component: CRM,
+    component: Dashboard,
   },
   // {
   //   path: "/dashboards/automotive",
