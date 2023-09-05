@@ -8,14 +8,15 @@ export const ZIP_CODE_REGEX = /^\d{5}$/
 export const PHONE_NUMBER_REGEX = /^\(\d{3}\) \d{3}-\d{4}$/
 
 export const ERROR_SNACK_BAR_MESSAGE = 'Something went Wrong'
+export const CONGRATULATIONS_MESSAGE = 'Congratulations!'
 
 export const USER_STATUSES = {
-  ACTIVE: 'ACTIVE',
-  INACTIVE: 'INACTIVE',
+  NEW: 'NEW',
   PENDING: 'PENDING',
   ONBOARDING: 'ONBOARDING',
-  PAUSE: 'PAUSE',
-  NEW: 'NEW'
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  PAUSE: 'PAUSE'
 }
 
 export const USER_ROLE_TYPES = {
@@ -29,6 +30,12 @@ export const USER_ROLE_TYPES = {
 export const WALLET_TYPE = {
   EMPLOYER: 'EMPLOYER',
   PLATFORM: 'PLATFORM'
+}
+
+export const GENDER = {
+  MALE: 'Male',
+  FEMALE: 'Female',
+  OTHER: 'Other'
 }
 
 export const PEOPLE_TAB_IMPORT_TEMPLATE = 'First Name,Last Name,Email'
