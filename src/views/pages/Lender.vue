@@ -1,6 +1,6 @@
 <template>
   <div class='container-fluid'>
-    <div class='row'>
+    <div v-if="!isEmptyArray(lenderAgents)" class='row'>
       <div v-for='lender in lenderAgents' :key='lender.id' class='mt-4 card col-12 col-lg-4 mx-1 card-width'>
         <partner-card
           :image = lender.imageURL
@@ -18,6 +18,19 @@
         />
       </div>
     </div>
+    <div v-else class='row'>
+      <div class='mt-4 card col-12 col-lg-4 mx-1 card-width'>
+        <partner-card
+          :show-image = false 
+          title = 'Support & Success Team'
+          sub-heading = 'Ownerific'
+          description = "If you are looking for homeownership experts outside of your region, please contact us below and let us know where you'd like to see us next."
+          :show-left-button = true
+          left-button-title = 'Email'
+          left-button-url = 'mailto:support@ownerific.com'
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -29,6 +42,7 @@
   import { requestQuery } from 'src/api/partners/query'
   import { showSnackBar } from 'src/utils/helper'
   import { ERROR_SNACK_BAR_MESSAGE } from 'src/constant'
+  import { isEmptyArray } from 'src/utils/helper'
 
   export default defineComponent({
     name: 'Lender',
@@ -42,6 +56,7 @@
       const roleType = ref(userStore?.data?.roleType)
       const lenderAgents = ref([])
 
+
       onMounted(async ()=> {
         globalStore.state.showNavs = true
 
@@ -52,7 +67,8 @@
 
       return {
         roleType,
-        lenderAgents
+        lenderAgents,
+        isEmptyArray
       }
     }
   })
