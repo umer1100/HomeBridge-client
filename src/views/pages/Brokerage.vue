@@ -3,17 +3,19 @@
     <div class='row'>
       <div v-for='agent in brokerageAgents' :key='agent.email' class='mt-4 card col-12 col-lg-4 mx-1 card-width'>
         <partner-card
+          :show-image = !agent.outOfStateCard
           :image = agent.imageURL
           :title = '`${agent.firstName} ${agent.lastName}`'
           :sub-heading = agent.officeName
           :phone = agent.phone
           :email = agent.email
-          :licensed-in = 'agent.addresses.map(item => STATES[item.state]).join(", ")'
-          :left-button-url = agent.reviewsURL
-          :show-left-button = 'roleType == USER_ROLE_TYPES.EMPLOYEE'
+          :licensed-in = 'agent.addresses?.map(item => STATES[item.state]).join(", ")'
+          :description = agent.description
+          :left-button-url = 'agent.outOfStateCard ? agent.leftButtonURL : agent.reviewsURL'
+          :show-left-button = 'true'
           :right-button-url = agent.applicationURL
-          :show-right-button = 'roleType == USER_ROLE_TYPES.EMPLOYEE'
-          left-button-title = 'Review'
+          :show-right-button = !agent.outOfStateCard
+          :left-button-title = 'agent.outOfStateCard ? "Email" : "Review"'
           right-button-title = 'Apply'
         />
       </div>
@@ -24,10 +26,10 @@
 <script>
   import { defineComponent, onMounted, ref } from 'vue'
   import { useStore } from 'vuex'
-  import { ERROR_SNACK_BAR_MESSAGE, USER_ROLE_TYPES } from 'src/constant'
+  import { ERROR_SNACK_BAR_MESSAGE, USER_ROLE_TYPES, OUT_OF_STATE_CARD } from 'src/constant'
   import { useUserStore } from 'src/store/user'
   import { requestQuery } from 'src/api/partners/query'
-  import { showSnackBar } from 'src/utils/helper'
+  import { showSnackBar, isEmptyArray } from 'src/utils/helper'
   import { STATES } from 'src/constant/states'
   import PartnerCard from 'src/Cards/PartnerCard'
 
@@ -47,7 +49,7 @@
         globalStore.state.showNavs = true
 
         const res = await requestQuery('/v1/agents/query')
-        if (res && res?.success) brokerageAgents.value = res.agents
+        if (res && res?.success) brokerageAgents.value = isEmptyArray(res.agents) ? OUT_OF_STATE_CARD : res.agents
         else showSnackBar(ERROR_SNACK_BAR_MESSAGE, res?.message)
       })
 

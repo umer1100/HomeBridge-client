@@ -10,6 +10,16 @@ export const PHONE_NUMBER_REGEX = /^\(\d{3}\) \d{3}-\d{4}$/
 export const ERROR_SNACK_BAR_MESSAGE = 'Something went Wrong'
 export const CONGRATULATIONS_MESSAGE = 'Congratulations!'
 
+export const OUT_OF_STATE_CARD = [{
+  outOfStateCard: true,
+  firstName:'Support & Success',
+  lastName: 'Team',
+  officeName: 'Ownerific',
+  description: "If you are looking for homeownership experts outside of your region, please contact us below and let us know where you'd like to see us next.",
+  leftButtonTitle: 'Email',
+  leftButtonURL: 'mailto:support@ownerific.com'
+}]
+
 export const USER_STATUSES = {
   NEW: 'NEW',
   PENDING: 'PENDING',

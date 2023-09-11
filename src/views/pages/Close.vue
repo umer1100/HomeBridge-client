@@ -3,18 +3,21 @@
     <div class='row'>
       <div v-for='agent in closerAgents' :key='agent.email' class='mt-4 card col-12 col-lg-4 mx-1 card-width'>
         <partner-card
+          :show-image = !agent.outOfStateCard
           :image = agent.imageURL
           :title = '`${agent.firstName} ${agent.lastName}`'
           :sub-heading = agent.officeName
           :phone = agent.phone
           :email = agent.email
-          :licensed-in = 'agent.addresses.map(item => STATES[item?.state]).join(", ")'
-          :left-button-url = agent.reviewsURL
+          :licensed-in = 'agent.addresses?.map(item => STATES[item?.state]).join(", ")'
+          :description = agent.description
+          :left-button-url = 'agent.outOfStateCard ? agent.leftButtonURL : agent.reviewsURL'
           :right-button-url = agent.applicationURL
           :show-left-button = true
-          :show-right-button = true
-          left-button-title = 'Review'
-          right-button-title = 'Apply' />
+          :show-right-button = !agent.outOfStateCard
+          :left-button-title = 'agent.outOfStateCard ? "Email" : "Review"'
+          right-button-title = 'Apply'
+        />
       </div>
     </div>
   </div>
@@ -25,8 +28,8 @@
   import { useStore } from 'vuex'
   import PartnerCard from 'src/Cards/PartnerCard'
   import { requestQuery } from 'src/api/partners/query'
-  import { showSnackBar } from 'src/utils/helper'
-  import { ERROR_SNACK_BAR_MESSAGE } from 'src/constant'
+  import { showSnackBar, isEmptyArray } from 'src/utils/helper'
+  import { ERROR_SNACK_BAR_MESSAGE, OUT_OF_STATE_CARD } from 'src/constant'
   import { STATES } from 'src/constant/states'
 
   export default defineComponent({
@@ -43,13 +46,13 @@
         globalStore.state.showNavs = true
 
         const res = await requestQuery('/v1/closers/query')
-        if (res && res?.success) closerAgents.value = res.closers
+        if (res && res?.success) closerAgents.value = isEmptyArray(res.closers) ? OUT_OF_STATE_CARD : res.closers
         else showSnackBar(ERROR_SNACK_BAR_MESSAGE, res?.message)
       })
 
       return {
         closerAgents,
-        STATES,
+        STATES
       }
     }
   })
