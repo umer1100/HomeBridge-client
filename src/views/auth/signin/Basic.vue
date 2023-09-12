@@ -1,11 +1,7 @@
 <template>
   <navbar btn-background="bg-gradient-success" />
   <div
-    class="pt-5 m-3 page-header align-items-start min-vh-50 pb-11 border-radius-lg"
-    :style="{
-      backgroundImage:
-        'url(' + require('@/assets/img/curved-images/curved9.jpg') + ')',
-    }"
+    class="pt-5 m-3 page-header align-items-start min-vh-50 pb-11 border-radius-lg background-image"
   >
     <span class="mask bg-gradient-dark opacity-6"></span>
     <div class="container">
@@ -13,7 +9,7 @@
         <div class="mx-auto text-center col-lg-5">
           <h1 class="mt-5 mb-2 text-white">Welcome</h1>
           <p class="text-white text-lead">
-            Sign into your Ownerific account below to start achieving your homeownership goals.
+            Sign into your Ownerific account below.
           </p>
         </div>
       </div>
@@ -237,8 +233,13 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
- .underline {
+<style scoped lang="scss">
+@import 'src/assets/scss/constant.scss';
+.underline {
   text-decoration: underline;
- }
+}
+.background-image{
+  background-image: url($LANDING_PAGE_IMAGE);
+  background-position: top;
+}
 </style>
