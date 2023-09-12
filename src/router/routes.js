@@ -20,6 +20,7 @@ import Brokerage from "../views/pages/Brokerage.vue";
 import Lender from "../views/pages/Lender.vue";
 import Resources from "../views/pages/Resources.vue";
 import Close from "../views/pages/Close.vue"
+import Calculator from "../views/pages/Calculator.vue"
 // import Kanban from "../views/applications/Kanban.vue";
 // import Wizard from "../views/applications/wizard/Wizard.vue";
 // import DataTables from "../views/applications/DataTables.vue";
@@ -124,6 +125,11 @@ const routes = [
     path: "/close",
     name: "Close",
     component: Close
+  },
+  {
+    path: "/calculator",
+    name: "Calculator",
+    component: Calculator
   },
   {
     path: "/integrations",

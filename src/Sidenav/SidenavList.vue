@@ -105,6 +105,19 @@
         </sidenav-collapse>
       </li>
 
+      <li v-if="getUserRole() === USER_ROLE_TYPES.EMPLOYEE" class="nav-item">
+        <sidenav-collapse
+          nav-text='Calculator'
+          :collapse=false
+          :class='getRoute() === ROUTES.CALCULATOR ? "active" : ""'
+          @click='navigateToPath(ROUTES.CALCULATOR)'
+        >
+          <template #icon>
+            <Basket />
+          </template>
+        </sidenav-collapse>
+      </li>
+
       <li class="nav-item">
         <sidenav-collapse
           nav-text='Resources'
