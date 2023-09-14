@@ -53,7 +53,7 @@
             <label class='form-label'>Phone Number</label>
             <input v-model=userData.phone :disabled=!isCurrentUserProfile class='form-control' type='text' placeholder='(123)456-7895' @input='numberFormatHandler'/>
           </div>
-        </div> 
+        </div>
         <div v-if=isCurrentUserProfile>
           <soft-button
             class='float-end mt-4 mb-0'
@@ -242,7 +242,7 @@
     HOME_PURCHASE_TIMELINE
   } from 'src/constant/questionaire'
   import SoftButton from '@/components/SoftButton.vue'
-  
+
   export default defineComponent({
     name: 'ProfileOverview',
     components: {
@@ -286,7 +286,7 @@
 
       const readUserData = async (userId) => {
         const res = await readQuestionnaire()
-        isCurrentUserProfile.value = userId == res?.data?.id
+        isCurrentUserProfile.value = userId == res?.data?.userId
         if (isCurrentUserProfile.value) {
           userData.value.firstName = userStore?.data?.firstName || ''
           userData.value.lastName = userStore?.data?.lastName || ''
@@ -382,13 +382,13 @@
 
       onMounted(()=> {
         const userId = router?.currentRoute?.value?.params?.id
-        if (userId != userStore?.data?.id) router.push(`/profile/${userStore?.data?.id}`) 
+        if (userId != userStore?.data?.id) router.push(`/profile/${userStore?.data?.id}`)
         readUserData(userStore?.data?.id)
         stateOptions.value = Object.values(STATES) || []
       })
 
       onUpdated(()=> {
-        
+
       })
 
       onBeforeMount(()=> {
