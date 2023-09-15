@@ -166,8 +166,5 @@ export const USDollar = new Intl.NumberFormat('en-US', {
   currency: 'USD',
 });
 
-export const isEmptyString = (str) => {
-  return str === undefined || str.trim() === ''
-}
-
+export const isEmptyString = (str) => str === undefined || str.trim() === ''
 export const isEmptyArray = (arr) => arr.length === 0

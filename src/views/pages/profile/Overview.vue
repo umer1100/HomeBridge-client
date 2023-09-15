@@ -214,7 +214,7 @@
 </template>
 
 <script>
-  import { defineComponent, onBeforeMount, onMounted, onUpdated, ref } from 'vue'
+  import { defineComponent, onBeforeMount, onMounted, ref } from 'vue'
   import { useRouter } from 'vue-router'
   import { useStore } from 'vuex'
   import { useUserStore } from 'src/store/user'
@@ -284,9 +284,7 @@
       const isCurrentUserProfile = ref(false)
       const stateOptions = ref([])
 
-      const readUserData = async (userId) => {
-        const res = await readQuestionnaire()
-        isCurrentUserProfile.value = userId == res?.data?.userId
+      const readUserData = async () => {
         if (isCurrentUserProfile.value) {
           userData.value.firstName = userStore?.data?.firstName || ''
           userData.value.lastName = userStore?.data?.lastName || ''
@@ -298,15 +296,18 @@
           userData.value.zipcode = userStore?.data?.zipcode || ''
           userData.value.phone = formatPhoneNumber(userStore?.data?.phone || '')
 
-          questionnaireData.value.zipcode = res?.data?.zipcode || ''
-          questionnaireData.value.homePurchaseBudget = res?.data?.homeBudget || ''
-          questionnaireData.value.homePurchaseReason = res?.data?.profile || ''
-          questionnaireData.value.haveAgent = res?.data?.isWorkingWithAgent === true ? 'Yes' : 'No' || ''
-          questionnaireData.value.haveMortgage = res?.data?.preApprovedLoan === true ? 'Yes' : 'No' || ''
-          questionnaireData.value.bedroomsCount = res?.data?.desiredBedrooms || ''
-          questionnaireData.value.timelineToBuyHome = res?.data?.timelineGoal || ''
-        } else {
-          showSnackBar(ERROR_SNACK_BAR_MESSAGE, 'Error occurred while reading user')
+          if (userStore.data.roleType === USER_ROLE_TYPES.EMPLOYEE) {
+            const res = await readQuestionnaire()
+            if(res.success) {
+              questionnaireData.value.zipcode = res?.data?.zipcode || ''
+              questionnaireData.value.homePurchaseBudget = res?.data?.homeBudget || ''
+              questionnaireData.value.homePurchaseReason = res?.data?.profile || ''
+              questionnaireData.value.haveAgent = res?.data?.isWorkingWithAgent === true ? 'Yes' : 'No' || ''
+              questionnaireData.value.haveMortgage = res?.data?.preApprovedLoan === true ? 'Yes' : 'No' || ''
+              questionnaireData.value.bedroomsCount = res?.data?.desiredBedrooms || ''
+              questionnaireData.value.timelineToBuyHome = res?.data?.timelineGoal || ''
+            } else showSnackBar(ERROR_SNACK_BAR_MESSAGE, 'Error occurred while reading user')
+          }
         }
       }
 
@@ -380,15 +381,13 @@
 
       const numberFormatHandler = () => (userData.value.phone = formatPhoneNumber(userData.value.phone))
 
-      onMounted(()=> {
+      onMounted( async () => {
         const userId = router?.currentRoute?.value?.params?.id
         if (userId != userStore?.data?.id) router.push(`/profile/${userStore?.data?.id}`)
-        readUserData(userStore?.data?.id)
+        else isCurrentUserProfile.value = true
+
+        await readUserData()
         stateOptions.value = Object.values(STATES) || []
-      })
-
-      onUpdated(()=> {
-
       })
 
       onBeforeMount(()=> {
