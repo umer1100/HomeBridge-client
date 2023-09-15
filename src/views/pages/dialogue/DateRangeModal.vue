@@ -24,7 +24,7 @@
       <div class='modal-footer'>
         <button type='button' class='btn bg-gradient-info'
         :disabled='isEmptyString(startDate) || isEmptyString(endDate)'
-        :data-bs-dismiss='isEmptyString(startDate) || isEmptyString(endDate) ? "" : "modal"'
+        :data-bs-dismiss='(isEmptyString(startDate) || isEmptyString(endDate) || (startDate >= endDate)) ? "" : "modal"'
         @click='handleClickApply'>
           Apply
         </button>
@@ -48,6 +48,10 @@ export default defineComponent({
     onClickApply: {
       type: Function,
       default: () => {}
+    },
+    dateRange: {
+      type: Object,
+      default: () => ({ start: '', end: ''}) 
     }
   },
   emits: {
@@ -56,14 +60,16 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const startDate = ref('')
-    const endDate = ref('')
+    const startDate = ref(props.dateRange.start)
+    const endDate = ref(props.dateRange.end)
 
     const handleClickApply = () => {
       if(isEmptyString(startDate.value)) {
         showSnackBar(ERROR_SNACK_BAR_MESSAGE, 'Please select start date')
       } else if (isEmptyString(endDate.value)) {
         showSnackBar(ERROR_SNACK_BAR_MESSAGE, 'Please select end date')
+      } else if (startDate.value >= endDate.value) {
+        showSnackBar(ERROR_SNACK_BAR_MESSAGE, 'The start date should precede the end date')
       } else {
         props.onClickApply()
       }
@@ -72,6 +78,11 @@ export default defineComponent({
     watch(startDate, () => emit('selected-start-date', startDate.value))
 
     watch(endDate, () => emit('selected-end-date', endDate.value))
+
+    watch(() => props.dateRange, (newValue) => {
+      startDate.value = newValue.start
+      endDate.value = newValue.end
+    }, { deep: true })
 
     return {
       startDate,

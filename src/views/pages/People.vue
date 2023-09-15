@@ -26,8 +26,32 @@
                       </li>
                     </ul>
                   </div>
+                  <div class='dropdown mx-1'>
+                    <button id='dropdownFilterButton'
+                      class='mt-1 btn btn-outline-info btn-sm export mt-sm-0 dropdown-toggle w-100' type='button'
+                      data-bs-toggle='dropdown' aria-expanded='false'>
+                      Filters
+                    </button>
+                    <ul class='dropdown-menu' aria-labelledby='dropdownFilterButton'>
+                      <li v-for='filter in availableFilters' :key='filter'>
+                        <div v-if='filter !== "Column Options"' class='mb-1 d-flex'>
+                          <a class='dropdown-item' data-bs-toggle='modal'
+                            :data-bs-target='`#modal-filter${hyphenateString(filter)}`'>
+                            {{ filter }}
+                          </a>
+                          <i v-if='availableColumnOptions[filter].isFilterApplied' class='fa fa-check p-2 green-color'></i>
+                        </div>
+                      </li>
+                      <hr class='horizontal dark my-0'/>
+                      <li>
+                        <a class='dropdown-item border-radius-md text-danger' @click=removeFilters>
+                          Remove Filter
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                   <button type='button' class='mx-1 btn btn-outline-info btn-sm' data-bs-toggle='modal'
-                    data-bs-target='#modal-filterOptions'>
+                    data-bs-target='#modal-filterColumn-Options'>
                     Column Options
                   </button>
                   <div v-if='!isEmptyArray(selectedTeamMember)' class='dropdown mx-1'>
@@ -40,21 +64,6 @@
                       <li><a class='dropdown-item' @click='sendBulkEmail'>Send Email Invitation</a></li>
                       <li><a class='dropdown-item' @click='bulkUpdate({ action: "PAUSE" })'>Pause</a></li>
                       <li><a class='dropdown-item' @click='bulkUpdate({ action: "UNPAUSE" })'>UnPause</a></li>
-                    </ul>
-                  </div>
-                  <div class='dropdown'>
-                    <button id='dropdownFilterButton'
-                      class='mt-1 btn btn-outline-info btn-sm export mt-sm-0 dropdown-toggle w-100' type='button'
-                      data-bs-toggle='dropdown' aria-expanded='false'>
-                      Filters
-                    </button>
-                    <ul class='dropdown-menu' aria-labelledby='dropdownFilterButton'>
-                      <li v-for='filter in availableFilters' :key='filter'>
-                        <a v-if='filter !== "Column Options"' class='dropdown-item' data-bs-toggle='modal'
-                          :data-bs-target='`#modal-filter${hyphenateString(filter)}`'>
-                          {{ filter }}
-                        </a>
-                      </li>
                     </ul>
                   </div>
                   <button type='button' class='mx-1 btn btn-outline-info btn-sm' data-bs-toggle='modal'
@@ -110,6 +119,7 @@
     aria-hidden='true'>
     <date-range-modal 
       :title=item.title
+      :date-range=item.dateRanges
       :on-click-apply='applyFilterByAttributes'
       @selected-start-date=item.handleStartDate
       @selected-end-date=item.handleEndDate
@@ -131,7 +141,8 @@ import {
   ERROR_SNACK_BAR_MESSAGE,
   CONGRATULATIONS_MESSAGE,
   GENDER,
-  WALLET_TYPE
+  WALLET_TYPE,
+  AVALIABLE_MODALS
 } from 'src/constant/index'
 import {
   uniqueElements,
@@ -149,20 +160,20 @@ import {
 let availableColumnOptions = {
   'Name': { field: 'fullName', sortable: true, isAscending: true, sortingType: 'string' },
   'Email': { field: 'email', sortable: true, isAscending: true, sortingType: 'string' },
-  'Role': { field: 'roleType', sortable: true, isAscending: true, sortingType: 'string' },
-  'Status': { field: 'status', sortable: true, isAscending: true, sortingType: 'string' },
+  'Role': { field: 'roleType', sortable: true, isAscending: true, sortingType: 'string', isFilterApplied: false },
+  'Status': { field: 'status', sortable: true, isAscending: true, sortingType: 'string', isFilterApplied: false },
   'Source': { field: 'source', sortable: true, isAscending: true, sortingType: 'string' },
   'Address': { field: 'address', sortable: true, isAscending: true, sortingType: 'string' },
-  'Gender': { field: 'sex', sortable: true, isAscending: true, sortingType: 'string' },
-  'State': { field: 'state', sortable: true, isAscending: true, sortingType: 'string' },
+  'Gender': { field: 'sex', sortable: true, isAscending: true, sortingType: 'string', isFilterApplied: false },
+  'State': { field: 'state', sortable: true, isAscending: true, sortingType: 'string', isFilterApplied: false },
   'Title': { field: 'title', sortable: true, isAscending: true, sortingType: 'string' },
-  'Department': { field: 'department', sortable: true, isAscending: true, sortingType: 'string' },
-  'Employment Type': { field: 'employmentType', sortable: true, isAscending: true, sortingType: 'string' },
+  'Department': { field: 'department', sortable: true, isAscending: true, sortingType: 'string', isFilterApplied: false },
+  'Employment Type': { field: 'employmentType', sortable: true, isAscending: true, sortingType: 'string', isFilterApplied: false },
   'Date of Birth': { field: 'formattedDateOfBirth', sortable: true, isAscending: true, sortingType: 'date' },
-  'Last Seen': { field: 'formattedLastSeen', sortable: true, isAscending: true, sortingType: 'date' },
-  'Hired Date': { field: 'formattedStartDate', sortable: true, isAscending: true, sortingType: 'date' },
-  'End Date': { field: 'formattedEndDate', sortable: true, isAscending: true, sortingType: 'date' },
-  'Enrolled Date': { field: 'formattedCreatedAt', sortable: true, isAscending: true, sortingType: 'date' },
+  'Last Seen': { field: 'formattedLastSeen', sortable: true, isAscending: true, sortingType: 'date', isFilterApplied: false },
+  'Hired Date': { field: 'formattedStartDate', sortable: true, isAscending: true, sortingType: 'date', isFilterApplied: false },
+  'End Date': { field: 'formattedEndDate', sortable: true, isAscending: true, sortingType: 'date', isFilterApplied: false },
+  'Enrolled Date': { field: 'formattedCreatedAt', sortable: true, isAscending: true, sortingType: 'date', isFilterApplied: false },
   'Ownerific Dollars': { field: 'ownerificDollars', sortable: true, isAscending: true, sortingType: 'number' }
 }
 
@@ -183,7 +194,19 @@ export default defineComponent({
     const columns = ref([])
     const selectedColumns = ref(['Name', 'Status', 'Email', 'Source', 'Role'])
 
-    const availableFilters = ['Status', 'Gender', 'State', 'Department', 'Role', 'Employment', 'Column Options', 'Last Seen', 'Hired Date', 'End Date', 'Enrolled Date']
+    const availableFilters = [
+      AVALIABLE_MODALS.STATUS,
+      AVALIABLE_MODALS.GENDER,
+      AVALIABLE_MODALS.STATE,
+      AVALIABLE_MODALS.DEPARTMENT,
+      AVALIABLE_MODALS.ROLE,
+      AVALIABLE_MODALS.EMPLOYMENT,
+      AVALIABLE_MODALS.COLUMN_OPTIONS,
+      AVALIABLE_MODALS.LAST_SEEN,
+      AVALIABLE_MODALS.HIRED_DATE,
+      AVALIABLE_MODALS.END_DATE,
+      AVALIABLE_MODALS.ENROLLED_DATE
+    ]
     const filterData = ref([])
     const availableToggleOption = ref([...availableFilters])
 
@@ -301,32 +324,37 @@ export default defineComponent({
 
     const serializeModalOptions = (label) => {
       switch (label) {
-        case 'Status':
+        case AVALIABLE_MODALS.STATUS:
           return Object.values(USER_STATUSES).map(item => ({ label: item === USER_STATUSES.PAUSE ? 'PAUSED' : item }))
-        case 'Gender':
+        case AVALIABLE_MODALS.GENDER:
           return [{ label: GENDER.MALE }, { label: GENDER.FEMALE }, { label: GENDER.OTHER }]
-        case 'State':
+        case AVALIABLE_MODALS.STATE:
           return Object.keys(STATES).map(item => ({ label: STATES[item] }))
-        case 'Department':
+        case AVALIABLE_MODALS.DEPARTMENT:
           return allDepartments.filter(uniqueElements).map(item => ({ label: item }))
-        case 'Column Options':
-          return Object.keys(availableColumnOptions).filter(option => option !== 'Name').map(item => ({ label: item }))
-        case 'Role':
+        case AVALIABLE_MODALS.ROLE:
           return allRoleTypes.filter(uniqueElements).map(item => ({ label: titleCase(item) }))
-        case 'Employment':
+        case AVALIABLE_MODALS.EMPLOYMENT:
           return allEmploymentTypes.filter(uniqueElements).map(item => ({ label: titleCase(item) }))
+        case AVALIABLE_MODALS.COLUMN_OPTIONS:
+          return Object.keys(availableColumnOptions).filter(option => option !== 'Name').map(item => ({ label: item }))
       }
     }
 
     function filterByDateRange(dateKey, startDate, endDate) {
-      if (!isEmptyString(startDate) && !isEmptyString(endDate)) {
-        return filterData.value.filter(person => {
-          const personStartDate = moment(person[dateKey]).format('YYYY-MM-DD')
-          const personEndDate = moment(person[dateKey]).format('YYYY-MM-DD')
-          return personStartDate >= startDate && personEndDate <= endDate
-        })
-      }
-      return filterData.value
+      return filterData.value.filter(person => {
+        const personStartDate = moment(person[dateKey]).format('YYYY-MM-DD')
+        const personEndDate = moment(person[dateKey]).format('YYYY-MM-DD')
+        return personStartDate >= startDate && personEndDate <= endDate
+      })
+    }
+
+    const removeCheckMarks = () => {
+      Object.keys(availableColumnOptions).forEach((key) => {
+        if (availableColumnOptions[key].isFilterApplied) {
+          availableColumnOptions[key].isFilterApplied = false
+        }
+      })
     }
 
     const applyFilterByAttributes = () => {
@@ -340,85 +368,127 @@ export default defineComponent({
         || isEmptyString(enrolledDate.value.start)
       ) {
         filterData.value = data.value
+        removeCheckMarks()
       }
 
       if (!isEmptyArray(selectedStatusFilters.value)) {
+        availableColumnOptions[AVALIABLE_MODALS.STATUS].isFilterApplied = true
         filterData.value = filterData.value.filter(person => selectedStatusFilters.value.includes(person.status === USER_STATUSES.PAUSE ? 'PAUSED' : person.status))
       }
 
       if (!isEmptyArray(selectedGenderFilters.value)) {
+        availableColumnOptions[AVALIABLE_MODALS.GENDER].isFilterApplied = true
         filterData.value = filterData.value.filter(person => selectedGenderFilters.value.includes(person.sex))
       }
 
       if (!isEmptyArray(Object.values(selectedStatesFilters.value))) {
+        availableColumnOptions[AVALIABLE_MODALS.STATE].isFilterApplied = true
         filterData.value = filterData.value.filter(person => Object.values(selectedStatesFilters.value).includes(person.state))
       }
 
       if (!isEmptyArray(selectedDepartmentFilters.value)) {
+        availableColumnOptions[AVALIABLE_MODALS.DEPARTMENT].isFilterApplied = true
         filterData.value = filterData.value.filter(person => selectedDepartmentFilters.value.includes(person.department))
       }
 
       if (!isEmptyArray(selectedRoleTypeFilters.value)) {
+        availableColumnOptions[AVALIABLE_MODALS.ROLE].isFilterApplied = true
         filterData.value = filterData.value.filter(person => selectedRoleTypeFilters.value.includes(person.roleType))
       }
 
       if (!isEmptyArray(selectedEmploymentTypeFilters.value)) {
+        availableColumnOptions[AVALIABLE_MODALS.EMPLOYMENT].isFilterApplied = true
         filterData.value = filterData.value.filter(person => selectedEmploymentTypeFilters.value.includes(person.employmentType))
       }
 
-      filterData.value = filterByDateRange('formattedLastSeen', lastSeenDate.value.start, lastSeenDate.value.end)
-      filterData.value = filterByDateRange('formattedStartDate', hiredDate.value.start, hiredDate.value.end)
-      filterData.value = filterByDateRange('formattedEndDate', endDate.value.start, endDate.value.end)
-      filterData.value = filterByDateRange('formattedCreatedAt', enrolledDate.value.start, enrolledDate.value.end)
+      if (!isEmptyString(lastSeenDate.value.start) && !isEmptyString(lastSeenDate.value.end)) {
+        availableColumnOptions[AVALIABLE_MODALS.LAST_SEEN].isFilterApplied = true
+        filterData.value = filterByDateRange('formattedLastSeen', lastSeenDate.value.start, lastSeenDate.value.end)
+      }
+
+      if (!isEmptyString(hiredDate.value.start) && !isEmptyString(hiredDate.value.end)) {
+        availableColumnOptions[AVALIABLE_MODALS.HIRED_DATE].isFilterApplied = true
+        filterData.value = filterByDateRange('formattedStartDate', hiredDate.value.start, hiredDate.value.end)
+      }
+
+      if (!isEmptyString(endDate.value.start) && !isEmptyString(endDate.value.end)) {
+        availableColumnOptions[AVALIABLE_MODALS.END_DATE].isFilterApplied = true
+        filterData.value = filterByDateRange('formattedEndDate', endDate.value.start, endDate.value.end)
+      }
+
+      if (!isEmptyString(enrolledDate.value.start) && !isEmptyString(enrolledDate.value.end)) {
+        availableColumnOptions[AVALIABLE_MODALS.ENROLLED_DATE].isFilterApplied = true
+        filterData.value = filterByDateRange('formattedCreatedAt', enrolledDate.value.start, enrolledDate.value.end)
+      }
 
       peopleDataToDisplay.value = filterData.value
     }
 
+    const removeFilters = () => {
+      selectedStatesFilters.value = []
+      selectedGenderFilters.value = []
+      selectedStatusFilters.value = []
+      selectedDepartmentFilters.value = []
+      selectedRoleTypeFilters.value = []
+      selectedEmploymentTypeFilters.value = []
+      lastSeenDate.value.start = ''
+      lastSeenDate.value.end = ''
+      hiredDate.value.start = ''
+      hiredDate.value.end = ''
+      endDate.value.start = ''
+      endDate.value.end = ''
+      enrolledDate.value.start = ''
+      enrolledDate.value.end = ''
+      removeCheckMarks()
+
+      peopleDataToDisplay.value = data.value
+    }
+
     const toggleOptionProps = ref([
       {
-        name: 'Status',
-        title: 'Filter by Status',
+        name: AVALIABLE_MODALS.STATUS,
+        title: `Filter by ${AVALIABLE_MODALS.STATUS}`,
         selectedOptions: selectedStatusFilters,
         showSearch: false,
         selectedOptionsChanged: (item) => toggleSelectedOptions(selectedStatusFilters.value, item)
       },
       {
-        name: 'Gender',
-        title: 'Filter by Gender',
+        name: AVALIABLE_MODALS.GENDER,
+        title: `Filter by ${AVALIABLE_MODALS.GENDER}`,
         selectedOptions: selectedGenderFilters,
         showSearch: false,
         selectedOptionsChanged: (item) => toggleSelectedOptions(selectedGenderFilters.value, item)
       },
       {
-        name: 'State',
-        title: 'Filter by State',
+        name: AVALIABLE_MODALS.STATE,
+        title: `Filter by ${AVALIABLE_MODALS.STATE}`,
         selectedOptions: selectedStatesFilters,
         showSearch: true,
         selectedOptionsChanged: (item) => toggleSelectedOptions(selectedStatesFilters.value, item)
       },
       {
-        name: 'Department',
-        title: 'Filter by Department',
+        name: AVALIABLE_MODALS.DEPARTMENT,
+        title: `Filter by ${AVALIABLE_MODALS.DEPARTMENT}`,
         selectedOptions: selectedDepartmentFilters,
         showSearch: false,
         selectedOptionsChanged: (item) => toggleSelectedOptions(selectedDepartmentFilters.value, item)
       },
       {
-        name: 'Role',
-        title: 'Filter by Role Type',
+        name: AVALIABLE_MODALS.ROLE,
+        title: `Filter by ${AVALIABLE_MODALS.ROLE}`,
         selectedOptions: selectedRoleTypeFilters,
         showSearch: false,
         selectedOptionsChanged: (item) => toggleSelectedOptions(selectedRoleTypeFilters.value, item)
       },
       {
-        name: 'Employment',
-        title: 'Filter by Employment Type',
+        name: AVALIABLE_MODALS.EMPLOYMENT,
+        title: `Filter by ${AVALIABLE_MODALS.EMPLOYMENT}`,
         selectedOptions: selectedEmploymentTypeFilters,
         showSearch: false,
         selectedOptionsChanged: (item) => toggleSelectedOptions(selectedEmploymentTypeFilters.value, item)
       },
       {
-        name: 'Options',
+        name: AVALIABLE_MODALS.COLUMN_OPTIONS,
         title: 'Column Options',
         selectedOptions: selectedColumns,
         showSearch: false,
@@ -428,26 +498,30 @@ export default defineComponent({
 
     const toggleRangeProps = ref([
       {
-        name: 'Last Seen',
-        title: 'Last Seen Options',
+        name: AVALIABLE_MODALS.LAST_SEEN,
+        title: `Filter by ${AVALIABLE_MODALS.LAST_SEEN}`,
+        dateRanges: lastSeenDate,
         handleStartDate: (date) => lastSeenDate.value.start = date,
         handleEndDate: (date) => lastSeenDate.value.end = date
       },
       {
-        name: 'Hired Date',
-        title: 'Hired Date Options',
+        name: AVALIABLE_MODALS.HIRED_DATE,
+        title: `Filter by ${AVALIABLE_MODALS.HIRED_DATE}`,
+        dateRanges: hiredDate,
         handleStartDate: (date) => hiredDate.value.start = date,
         handleEndDate: (date) => hiredDate.value.end = date
       },
       {
-        name: 'End Date',
-        title: 'End Date Options',
+        name: AVALIABLE_MODALS.END_DATE,
+        title: `Filter by ${AVALIABLE_MODALS.END_DATE}`,
+        dateRanges: endDate,
         handleStartDate: (date) => endDate.value.start = date,
         handleEndDate: (date) => endDate.value.end = date
       },
       {
-        name: 'Enrolled Date',
-        title: 'Enrolled Date Options',
+        name: AVALIABLE_MODALS.ENROLLED_DATE,
+        title: `Filter by ${AVALIABLE_MODALS.ENROLLED_DATE}`,
+        dateRanges: enrolledDate,
         handleStartDate: (date) => enrolledDate.value.start = date,
         handleEndDate: (date) => enrolledDate.value.end = date
       }
@@ -475,6 +549,7 @@ export default defineComponent({
       exportTable,
       bulkUpdate,
       sendBulkEmail,
+      removeFilters,
       handleShowColumns,
       handleSelectedTeamMember,
       applyFilterByAttributes,
@@ -484,7 +559,10 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style scoped>
+.green-color {
+  color: green
+}
 @media only screen and (max-width: 768px) {
   .btn-bar {
     flex-flow: column

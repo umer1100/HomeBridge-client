@@ -20,6 +20,20 @@ export const OUT_OF_STATE_CARD = [{
   leftButtonURL: 'mailto:support@ownerific.com'
 }]
 
+export const AVALIABLE_MODALS = {
+  STATUS: 'Status',
+  GENDER: 'Gender',
+  STATE: 'State',
+  DEPARTMENT: 'Department',
+  ROLE: 'Role',
+  EMPLOYMENT: 'Employment Type',
+  LAST_SEEN: 'Last Seen',
+  HIRED_DATE: 'Hired Date',
+  END_DATE: 'End Date',
+  ENROLLED_DATE: 'Enrolled Date',
+  COLUMN_OPTIONS: 'Column Options'
+}
+
 export const USER_STATUSES = {
   NEW: 'NEW',
   PENDING: 'PENDING',
