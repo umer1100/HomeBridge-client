@@ -8,14 +8,39 @@ export const ZIP_CODE_REGEX = /^\d{5}$/
 export const PHONE_NUMBER_REGEX = /^\(\d{3}\) \d{3}-\d{4}$/
 
 export const ERROR_SNACK_BAR_MESSAGE = 'Something went Wrong'
+export const CONGRATULATIONS_MESSAGE = 'Congratulations!'
+
+export const OUT_OF_STATE_CARD = [{
+  outOfStateCard: true,
+  firstName:'Support & Success',
+  lastName: 'Team',
+  officeName: 'Ownerific',
+  description: "If you are looking for homeownership experts outside of your region, please contact us below and let us know where you'd like to see us next.",
+  leftButtonTitle: 'Email',
+  leftButtonURL: 'mailto:support@ownerific.com'
+}]
+
+export const AVALIABLE_MODALS = {
+  STATUS: 'Status',
+  GENDER: 'Gender',
+  STATE: 'State',
+  DEPARTMENT: 'Department',
+  ROLE: 'Role',
+  EMPLOYMENT: 'Employment Type',
+  LAST_SEEN: 'Last Seen',
+  HIRED_DATE: 'Hired Date',
+  END_DATE: 'End Date',
+  ENROLLED_DATE: 'Enrolled Date',
+  COLUMN_OPTIONS: 'Column Options'
+}
 
 export const USER_STATUSES = {
-  ACTIVE: 'ACTIVE',
-  INACTIVE: 'INACTIVE',
+  NEW: 'NEW',
   PENDING: 'PENDING',
   ONBOARDING: 'ONBOARDING',
-  PAUSE: 'PAUSE',
-  NEW: 'NEW'
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  PAUSE: 'PAUSE'
 }
 
 export const USER_ROLE_TYPES = {
@@ -24,6 +49,17 @@ export const USER_ROLE_TYPES = {
   EMPLOYEE: 'EMPLOYEE',
   EMPLOYER: 'EMPLOYER',
   GUEST: 'GUEST'
+}
+
+export const WALLET_TYPE = {
+  EMPLOYER: 'EMPLOYER',
+  PLATFORM: 'PLATFORM'
+}
+
+export const GENDER = {
+  MALE: 'Male',
+  FEMALE: 'Female',
+  OTHER: 'Other'
 }
 
 export const PEOPLE_TAB_IMPORT_TEMPLATE = 'First Name,Last Name,Email'
@@ -54,3 +90,4 @@ export const MONTHLY_CREDIT_BY_PLATFORM = 100
 export const YEARLY_CREDIT_BONUS_BY_PLATFORM = 100
 export const ACTIVITY_TIMEOUT_TIME = 30
 export const ACTIVITY_TIMEOUT_REDIRECT_URL = "/authentication/signin"
+export const OWNERIFIC_ROUTE = 'https://www.ownerific.com/'

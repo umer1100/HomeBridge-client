@@ -8,8 +8,8 @@
         <sidenav-collapse
           nav-text="Dashboard"
           :collapse="false"
-          :class="getRoute() === 'dashboard' ? 'active' : ''"
-          @click="navigateToPath('/dashboard')"
+          :class="getRoute() === ROUTES.DASHBOARD ? 'active' : ''"
+          @click="navigateToPath(ROUTES.DASHBOARD)"
         >
           <template #icon>
             <Shop />
@@ -20,7 +20,7 @@
       <li class="mt-3 nav-item">
       </li>
 
-      <li v-if="getUserRole() === 'EMPLOYER'" class="nav-item">
+      <li v-if="getUserRole() === USER_ROLE_TYPES.EMPLOYER" class="nav-item">
         <hr class="mt-0 horizontal dark" />
         <h6
           class="text-xs ps-4 ms-2 text-uppercase font-weight-bolder opacity-6"
@@ -31,8 +31,8 @@
         <sidenav-collapse
           nav-text="People"
           :collapse="false"
-          :class="getRoute() === 'people' ? 'active' : ''"
-          @click="navigateToPath('/people')"
+          :class="getRoute() === ROUTES.PEOPLE ? 'active' : ''"
+          @click="navigateToPath(ROUTES.PEOPLE)"
         >
           <template #icon>
             <Office />
@@ -65,12 +65,12 @@
         </sidenav-collapse>
       </li> -->
 
-      <li class="nav-item">
+      <li v-if="getUserRole() === USER_ROLE_TYPES.EMPLOYEE" class="nav-item">
         <sidenav-collapse
           nav-text="Buy"
           :collapse="false"
-          :class="getRoute() === 'brokerage' ? 'active' : ''"
-          @click="navigateToPath('/brokerage')"
+          :class="getRoute() === ROUTES.PARTNERS ? 'active' : ''"
+          @click="navigateToPath(ROUTES.PARTNERS)"
         >
           <template #icon>
             <Basket />
@@ -79,12 +79,38 @@
       </li>
 
 
-      <li class="nav-item">
+      <li v-if="getUserRole() === USER_ROLE_TYPES.EMPLOYEE" class="nav-item">
         <sidenav-collapse
           nav-text="Finance"
           :collapse="false"
-          :class="getRoute() === 'lender' ? 'active' : ''"
-          @click="navigateToPath('/lender')"
+          :class="getRoute() === ROUTES.LENDERS ? 'active' : ''"
+          @click="navigateToPath(ROUTES.LENDERS)"
+        >
+          <template #icon>
+            <Basket />
+          </template>
+        </sidenav-collapse>
+      </li>
+
+      <li v-if="getUserRole() === USER_ROLE_TYPES.EMPLOYEE" class="nav-item">
+        <sidenav-collapse
+          nav-text='Close'
+          :collapse=false
+          :class='getRoute() === ROUTES.CLOSE ? "active" : ""'
+          @click='navigateToPath(ROUTES.CLOSE)'
+        >
+          <template #icon>
+            <Basket />
+          </template>
+        </sidenav-collapse>
+      </li>
+
+      <li v-if="getUserRole() === USER_ROLE_TYPES.EMPLOYEE" class="nav-item">
+        <sidenav-collapse
+          nav-text='Calculator'
+          :collapse=false
+          :class='getRoute() === ROUTES.CALCULATOR ? "active" : ""'
+          @click='navigateToPath(ROUTES.CALCULATOR)'
         >
           <template #icon>
             <Basket />
@@ -94,10 +120,10 @@
 
       <li class="nav-item">
         <sidenav-collapse
-          nav-text="Resources"
-          :collapse="false"
-          :class="getRoute() === 'resources' ? 'active' : ''"
-          @click="navigateToPath('/resources')"
+          nav-text='Resources'
+          :collapse=false
+          :class='getRoute() === ROUTES.RESOURCES ? "active" : ""'
+          @click='navigateToPath(ROUTES.RESOURCES)'
         >
           <template #icon>
             <Basket />
@@ -105,25 +131,12 @@
         </sidenav-collapse>
       </li>
 
-      <li class="nav-item">
-        <sidenav-collapse
-          nav-text="Close"
-          :collapse="false"
-          :class="getRoute() === 'close' ? 'active' : ''"
-          @click="navigateToPath('/close')"
-        >
-          <template #icon>
-            <Basket />
-          </template>
-        </sidenav-collapse>
-      </li>
-
-      <li v-if="getUserRole() === 'EMPLOYER'" class="nav-item">
+      <li v-if="getUserRole() === USER_ROLE_TYPES.EMPLOYER" class="nav-item">
         <sidenav-collapse
           nav-text="Integrations"
           :collapse="false"
-          :class="getRoute() === 'integrations' ? 'active' : ''"
-          @click="navigateToPath('/integrations')"
+          :class="getRoute() === ROUTES.INTEGRATIONS ? 'active' : ''"
+          @click="navigateToPath(ROUTES.INTEGRATIONS)"
         >
           <template #icon>
             <Document />
@@ -511,6 +524,8 @@ import Document from "../components/Icon/Document.vue"
 // import Spaceship from "../components/Icon/Spaceship.vue"
 // import CreditCard from "../components/Icon/CreditCard.vue"
 import { useUserStore } from "../store/user"
+import { ROUTES } from 'src/router/routeAccessControl.js'
+import { USER_ROLE_TYPES } from 'src/constant/index.js'
 
 export default defineComponent({
   name: "SidenavList",
@@ -535,7 +550,7 @@ export default defineComponent({
 
     const getRoute = () => {
       const routeArr = route.path.split("/")
-      return routeArr[1]
+      return `/${routeArr[1]}`
     }
 
     const getUserRole = () => {
@@ -550,10 +565,12 @@ export default defineComponent({
     }
 
     return {
+      isRTL,
+      ROUTES,
+      USER_ROLE_TYPES,
       getRoute,
       getUserRole,
-      navigateToPath,
-      isRTL,
+      navigateToPath
     }
   },
 })

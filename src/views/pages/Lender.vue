@@ -1,19 +1,21 @@
 <template>
   <div class='container-fluid'>
-    <div class='row'>
+    <div v-if="!isEmptyArray(lenderAgents)" class='row'>
       <div v-for='lender in lenderAgents' :key='lender.id' class='mt-4 card col-12 col-lg-4 mx-1 card-width'>
         <partner-card
+          :show-image = !lender.outOfStateCard
           :image = lender.imageURL
           :title = '`${lender.firstName} ${lender.lastName}`'
           :sub-heading = lender.officeName
           :phone = lender.phone
           :email = lender.email
           :nmls-id = lender.nmlsId
-          :left-button-url = lender.reviewsURL
+          :description = lender.description
+          :left-button-url = 'lender.outOfStateCard ? lender.leftButtonURL : lender.reviewsURL'
           :right-button-url = lender.applicationURL
           :show-left-button = true
-          :show-right-button = true
-          left-button-title = 'Review'
+          :show-right-button = !lender.outOfStateCard
+          :left-button-title = 'lender.outOfStateCard ? "Email" : "Review"'
           right-button-title = 'Apply'
         />
       </div>
@@ -27,8 +29,8 @@
   import { useUserStore } from 'src/store/user'
   import PartnerCard from 'src/Cards/PartnerCard'
   import { requestQuery } from 'src/api/partners/query'
-  import { showSnackBar } from 'src/utils/helper'
-  import { ERROR_SNACK_BAR_MESSAGE } from 'src/constant'
+  import { showSnackBar, isEmptyArray } from 'src/utils/helper'
+  import { ERROR_SNACK_BAR_MESSAGE, OUT_OF_STATE_CARD } from 'src/constant'
 
   export default defineComponent({
     name: 'Lender',
@@ -46,13 +48,14 @@
         globalStore.state.showNavs = true
 
         const res = await requestQuery('/v1/lenders/query')
-        if (res && res?.success) lenderAgents.value = res.lenders
+        if (res && res?.success) lenderAgents.value = isEmptyArray(res.lenders) ? OUT_OF_STATE_CARD : res.lenders
         else showSnackBar(ERROR_SNACK_BAR_MESSAGE, res?.message)
       })
 
       return {
         roleType,
-        lenderAgents
+        lenderAgents,
+        isEmptyArray
       }
     }
   })

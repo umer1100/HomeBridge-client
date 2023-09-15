@@ -1,10 +1,10 @@
 <template>
   <div class='p-3 card-body d-flex flex-column'>
     <div class='d-flex'>
-      <div v-if='image' class='avatar avatar-lg'>
+      <div v-if='showImage' class='avatar avatar-lg'>
         <img :src='image' />
       </div>
-      <div class='my-auto ms-2'>
+      <div :class="!showImage ? 'my-auto' : 'my-auto ms-2'">
         <h6 v-if='title' class='mb-0'>
           {{ title }}
         </h6>
@@ -67,6 +67,10 @@
       title: {
         type: String,
         default: ''
+      },
+      showImage: {
+        type: Boolean,
+        default: true
       },
       image: {
         type: String,

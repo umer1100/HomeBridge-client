@@ -5,11 +5,14 @@
     :class="isBlur ? isBlur : 'shadow-none my-2 navbar-transparent w-100'"
   >
     <div class="container">
-      <router-link
+      <a
         class="navbar-brand font-weight-bolder ms-lg-0 ms-3"
         :class="darkMode ? 'text-black' : 'text-white'"
-        to="/"
-        >Ownerific</router-link>
+        href="https://www.ownerific.com/"
+        target="_blank"
+      >
+        Ownerific
+      </a>
       <button
         class="shadow-none navbar-toggler ms-2"
         type="button"
