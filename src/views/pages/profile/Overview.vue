@@ -73,14 +73,15 @@
       <div class='card-body pt-0'>
         <div class='row'>
           <div class='col-md-6 col-sm-12'>
-            <label>What is the nearest zip code you want to buy in?</label>
-            <input
-              id='zipCode'
-              v-model=questionnaireData.zipcode
+            <label>What is the nearest state you want to buy in?</label>
+            <select
+              id='nearestState'
+              v-model=questionnaireData.nearestState
               class='form-control'
-              type='text'
-              placeholder='eg. 12345'
-            />
+              name='nearestState'>
+                <option value=''>Select</option>
+                <option v-for='item in stateOptions' :key=item>{{ item }}</option>
+            </select>
           </div>
           <div class='col-md-6 col-sm-12'>
             <label>What is your home purchase budget?</label>
@@ -272,7 +273,7 @@
         haveMortgage: null,
         bedroomsCount: null,
         timelineToBuyHome: null,
-        zipcode: null
+        nearestState: null
       })
 
       const userRoleType = ref(userStore?.data?.roleType)
@@ -298,8 +299,8 @@
 
           if (userStore.data.roleType === USER_ROLE_TYPES.EMPLOYEE) {
             const res = await readQuestionnaire()
-            if(res.success) {
-              questionnaireData.value.zipcode = res?.data?.zipcode || ''
+            if (res && res.success) {
+              questionnaireData.value.nearestState = STATES[res?.data?.nearestState] || ''
               questionnaireData.value.homePurchaseBudget = res?.data?.homeBudget || ''
               questionnaireData.value.homePurchaseReason = res?.data?.profile || ''
               questionnaireData.value.haveAgent = res?.data?.isWorkingWithAgent === true ? 'Yes' : 'No' || ''
@@ -336,11 +337,9 @@
       }
 
       const updateQuestionnaireHandler = async () => {
-        if (!ZIP_CODE_REGEX.test(questionnaireData.value.zipcode)) {
-          showSnackBar(ERROR_SNACK_BAR_MESSAGE, 'Invalid Zip Code [Required Format 5-digits]')
-        } else if(userRoleType.value === USER_ROLE_TYPES.EMPLOYEE) {
+        if (userRoleType.value === USER_ROLE_TYPES.EMPLOYEE) {
           const res = await updateQuestionnaire({
-            zipcode: questionnaireData.value.zipcode,
+            nearestState: Object.keys(STATES).find(key => STATES[key] === questionnaireData.value.nearestState),
             profile: questionnaireData.value.homePurchaseReason === 'Other' ?questionnaireData.value.purchaseReason : questionnaireData.value.homePurchaseReason,
             isWorkingWithAgent: questionnaireData.value.haveAgent === 'Yes' ? true : false,
             preApprovedLoan: questionnaireData.value.haveMortgage === 'Yes' ? true : false,
