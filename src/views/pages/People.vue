@@ -106,8 +106,13 @@
       :modal-option=availableToggleOption[index]?.options
       :selected-options=item.selectedOptions
       :show-search=item.showSearch
+      :show-text-areas=item.showTextAreas
       :on-click-apply='item.title.includes("Column Options") ? handleShowColumns : applyFilterByAttributes'
-      @selected-options-changed=item.selectedOptionsChanged />
+      :default-text=item.defaultText
+      @selected-options-changed=item.selectedOptionsChanged
+      @selected-start-text=item.handleStartedText
+      @selected-end-text=item.handleEndedText
+      />
   </div>
   <div v-for='item in toggleRangeProps' 
     :id='`modal-filter${hyphenateString(item.name)}`'
@@ -157,6 +162,7 @@ import {
   toggleSelectedOptions
 } from 'src/utils/helper'
 
+
 let availableColumnOptions = {
   'Name': { field: 'fullName', sortable: true, isAscending: true, sortingType: 'string' },
   'Email': { field: 'email', sortable: true, isAscending: true, sortingType: 'string' },
@@ -174,7 +180,7 @@ let availableColumnOptions = {
   'Hired Date': { field: 'formattedStartDate', sortable: true, isAscending: true, sortingType: 'date', isFilterApplied: false },
   'End Date': { field: 'formattedEndDate', sortable: true, isAscending: true, sortingType: 'date', isFilterApplied: false },
   'Enrolled Date': { field: 'formattedCreatedAt', sortable: true, isAscending: true, sortingType: 'date', isFilterApplied: false },
-  'Ownerific Dollars': { field: 'ownerificDollars', sortable: true, isAscending: true, sortingType: 'number' }
+  'Ownerific Dollars': { field: 'ownerificDollars', sortable: true, isAscending: true, sortingType: 'number', isFilterApplied: false }
 }
 
 export default defineComponent({
@@ -205,7 +211,8 @@ export default defineComponent({
       AVALIABLE_MODALS.LAST_SEEN,
       AVALIABLE_MODALS.HIRED_DATE,
       AVALIABLE_MODALS.END_DATE,
-      AVALIABLE_MODALS.ENROLLED_DATE
+      AVALIABLE_MODALS.ENROLLED_DATE,
+      AVALIABLE_MODALS.OWNERIFIC_DOLLARS
     ]
     const filterData = ref([])
     const availableToggleOption = ref([...availableFilters])
@@ -230,6 +237,11 @@ export default defineComponent({
       end: ''
     })
     const enrolledDate = ref({
+      start: '',
+      end: ''
+    })
+
+    const filteredOwnerificDollars = ref({
       start: '',
       end: ''
     })
@@ -349,6 +361,11 @@ export default defineComponent({
       })
     }
 
+    const filterByOwnerificDollars = () => filterData.value.filter((person) => {
+      return person.ownerificDollars >= parseFloat(filteredOwnerificDollars.value.start)
+            && person.ownerificDollars <= parseFloat(filteredOwnerificDollars.value.end)
+    })
+
     const removeCheckMarks = () => {
       Object.keys(availableColumnOptions).forEach((key) => {
         if (availableColumnOptions[key].isFilterApplied) {
@@ -366,6 +383,8 @@ export default defineComponent({
         || isEmptyString(hiredDate.value.start)
         || isEmptyString(endDate.value.start)
         || isEmptyString(enrolledDate.value.start)
+        || isEmptyString(filteredOwnerificDollars.value.start)
+        || isEmptyString(filteredOwnerificDollars.value.end)
       ) {
         filterData.value = data.value
         removeCheckMarks()
@@ -421,6 +440,11 @@ export default defineComponent({
         filterData.value = filterByDateRange('formattedCreatedAt', enrolledDate.value.start, enrolledDate.value.end)
       }
 
+      if (!isEmptyString(filteredOwnerificDollars.value.start) && !isEmptyString(filteredOwnerificDollars.value.end)) {
+        availableColumnOptions[AVALIABLE_MODALS.OWNERIFIC_DOLLARS].isFilterApplied = true
+        filterData.value = filterByOwnerificDollars()
+      }
+
       peopleDataToDisplay.value = filterData.value
     }
 
@@ -439,6 +463,9 @@ export default defineComponent({
       endDate.value.end = ''
       enrolledDate.value.start = ''
       enrolledDate.value.end = ''
+      filteredOwnerificDollars.value.start = ''
+      filteredOwnerificDollars.value.end = ''
+
       removeCheckMarks()
 
       peopleDataToDisplay.value = data.value
@@ -493,6 +520,14 @@ export default defineComponent({
         selectedOptions: selectedColumns,
         showSearch: false,
         selectedOptionsChanged: (item) => toggleSelectedOptions(selectedColumns.value, item)
+      },
+      {
+        name: AVALIABLE_MODALS.OWNERIFIC_DOLLARS,
+        title: `Filter by ${AVALIABLE_MODALS.OWNERIFIC_DOLLARS}`,
+        showTextAreas: true,
+        defaultText: filteredOwnerificDollars,
+        handleStartedText: (text) => filteredOwnerificDollars.value.start = text,
+        handleEndedText: (text) => filteredOwnerificDollars.value.end = text
       }
     ])
 

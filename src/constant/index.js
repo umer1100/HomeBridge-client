@@ -31,7 +31,8 @@ export const AVALIABLE_MODALS = {
   HIRED_DATE: 'Hired Date',
   END_DATE: 'End Date',
   ENROLLED_DATE: 'Enrolled Date',
-  COLUMN_OPTIONS: 'Column Options'
+  COLUMN_OPTIONS: 'Column Options',
+  OWNERIFIC_DOLLARS: 'Ownerific Dollars'
 }
 
 export const USER_STATUSES = {

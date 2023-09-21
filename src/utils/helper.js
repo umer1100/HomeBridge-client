@@ -168,3 +168,18 @@ export const USDollar = new Intl.NumberFormat('en-US', {
 
 export const isEmptyString = (str) => str === undefined || str.trim() === ''
 export const isEmptyArray = (arr) => arr.length === 0
+
+export const formatCurrency = (value) => {
+  let formattedValue = ''
+
+  const numericValue = value.replace(/[^0-9.]/g, '')
+
+  if (numericValue.includes('.')) {
+    const parts = numericValue.split('.');
+    formattedValue = `$${parts[0]}.${parts[1].slice(0, 2)}`
+  } else if (numericValue !== '') {
+    formattedValue = `$${numericValue}`
+  }
+
+  return formattedValue
+}
