@@ -1,6 +1,7 @@
 export const ROUTES = {
   DASHBOARD: '/dashboard',
   SIGNIN: '/authentication/signin',
+  SIGNUP: '/authentication/signUp',
   PROFILE: '/profile/:id',
   NEW_PASSWORD: '/ResetPassword',
   RESET_PASSWORD: '/authentication/reset',
@@ -19,6 +20,7 @@ export const ROUTES = {
 
 export const PUBLIC_ROUTES = [
   ROUTES.SIGNIN,
+  ROUTES.SIGNUP,
   ROUTES.NEW_PASSWORD,
   ROUTES.RESET_PASSWORD,
   ROUTES.CONFIRM_EMAIL,

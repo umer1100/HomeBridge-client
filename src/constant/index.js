@@ -9,6 +9,8 @@ export const PHONE_NUMBER_REGEX = /^\(\d{3}\) \d{3}-\d{4}$/
 
 export const ERROR_SNACK_BAR_MESSAGE = 'Something went Wrong'
 export const CONGRATULATIONS_MESSAGE = 'Congratulations!'
+export const FILL_IN_REQUIRED_FIELDS = 'Please fill in all the required fields to proceed.'
+export const MATCH_PASSWORDS = 'Password and Confirm Password must match.'
 
 export const OUT_OF_STATE_CARD = [{
   outOfStateCard: true,
