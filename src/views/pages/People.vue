@@ -74,7 +74,7 @@
               </div>
             </div>
           </div>
-          <user-table 
+          <user-table
             :columns=columns
             :rows=peopleDataToDisplay
             :available-columns-option=availableColumnOptions
@@ -93,12 +93,12 @@
     aria-hidden='true'>
     <import-users @post-submit-callback='readOrganizationUsersData' />
   </div>
-  <div v-for='(item, index) in toggleOptionProps' 
+  <div v-for='(item, index) in toggleOptionProps'
     :id='`modal-filter${hyphenateString(item.name)}`'
     :key=item.name
-    class='modal fade' 
-    tabindex='-1' 
-    role='dialog' 
+    class='modal fade'
+    tabindex='-1'
+    role='dialog'
     :ria-labelledby='`modal-filter${hyphenateString(item.name)}`'
     aria-hidden='true'>
     <options-modal
@@ -114,7 +114,7 @@
       @selected-end-text=item.handleEndedText
       />
   </div>
-  <div v-for='item in toggleRangeProps' 
+  <div v-for='item in toggleRangeProps'
     :id='`modal-filter${hyphenateString(item.name)}`'
     :key=item.name
     class='modal fade'
@@ -122,7 +122,7 @@
     role='dialog'
     :ria-labelledby='`modal-filter${hyphenateString(item.name)}`'
     aria-hidden='true'>
-    <date-range-modal 
+    <date-range-modal
       :title=item.title
       :date-range=item.dateRanges
       :on-click-apply='applyFilterByAttributes'
@@ -419,21 +419,16 @@ export default defineComponent({
         availableColumnOptions[AVALIABLE_MODALS.EMPLOYMENT].isFilterApplied = true
         filterData.value = filterData.value.filter(person => selectedEmploymentTypeFilters.value.includes(person.employmentType))
       }
-    }
 
       if (!isEmptyString(lastSeenDate.value.start) && !isEmptyString(lastSeenDate.value.end)) {
         availableColumnOptions[AVALIABLE_MODALS.LAST_SEEN].isFilterApplied = true
         filterData.value = filterByDateRange('formattedLastSeen', lastSeenDate.value.start, lastSeenDate.value.end)
       }
-    }
 
       if (!isEmptyString(hiredDate.value.start) && !isEmptyString(hiredDate.value.end)) {
         availableColumnOptions[AVALIABLE_MODALS.HIRED_DATE].isFilterApplied = true
         filterData.value = filterByDateRange('formattedStartDate', hiredDate.value.start, hiredDate.value.end)
       }
-      await readOrganizationUsersData()
-      selectedTeamMember.value = []
-    }
 
       if (!isEmptyString(endDate.value.start) && !isEmptyString(endDate.value.end)) {
         availableColumnOptions[AVALIABLE_MODALS.END_DATE].isFilterApplied = true
