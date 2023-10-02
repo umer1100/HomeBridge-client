@@ -132,7 +132,7 @@
                   class="form-control"
                   :name="emailAddress"
                   placeholder="Email Address"
-                  :isRequired="true"
+                  required
                 />
               </div>
               <div class="mb-3">
@@ -142,7 +142,7 @@
                   class="form-control"
                   :name="password"
                   placeholder="Password"
-                  :isRequired="true"
+                  required
                 />
               </div>
               <div class="py-3">
@@ -151,6 +151,11 @@
                   class="border-radius-md underline"
                 >
                   Forgot your password ?
+                </router-link>
+              </div>
+              <div class='py-3'>
+                <router-link to='/authentication/signUp' class='border-radius-md underline'>
+                  Want to sign your company up ?
                 </router-link>
               </div>
               <div class="text-center">

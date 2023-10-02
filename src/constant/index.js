@@ -9,6 +9,9 @@ export const PHONE_NUMBER_REGEX = /^\(\d{3}\) \d{3}-\d{4}$/
 
 export const ERROR_SNACK_BAR_MESSAGE = 'Something went Wrong'
 export const CONGRATULATIONS_MESSAGE = 'Congratulations!'
+export const FILL_IN_REQUIRED_FIELDS = 'Please fill in all the required fields to proceed.'
+export const MATCH_PASSWORDS = 'Password and Confirm Password must match.'
+
 
 export const OUT_OF_STATE_CARD = [{
   outOfStateCard: true,
@@ -31,7 +34,8 @@ export const AVALIABLE_MODALS = {
   HIRED_DATE: 'Hired Date',
   END_DATE: 'End Date',
   ENROLLED_DATE: 'Enrolled Date',
-  COLUMN_OPTIONS: 'Column Options'
+  COLUMN_OPTIONS: 'Column Options',
+  OWNERIFIC_DOLLARS: 'Ownerific Dollars'
 }
 
 export const USER_STATUSES = {
@@ -91,3 +95,13 @@ export const YEARLY_CREDIT_BONUS_BY_PLATFORM = 100
 export const ACTIVITY_TIMEOUT_TIME = 30
 export const ACTIVITY_TIMEOUT_REDIRECT_URL = "/authentication/signin"
 export const OWNERIFIC_ROUTE = 'https://www.ownerific.com/'
+
+export const DEFAULT_CALCULATOR_HOME_BUDGET = 500000
+export const DEFAULT_CALCULATOR_LOAN_AMOUNT = 400000
+export const DEFAULT_CALCULATOR_DOWN_PAYMENT = 100000
+export const DEFAULT_CALCULATOR_INTEREST_RATE = 7
+export const DEFAULT_CALCULATOR_PMI = 0
+export const DEFAULT_CALCULATOR_TAX_RATE = 2400
+export const DEFAULT_CALCULATOR_INSURANCE = 800
+// In years
+export const DEFAULT_CALCULATOR_LOAN_TERM = 30

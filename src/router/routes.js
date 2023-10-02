@@ -64,6 +64,7 @@ import ConfirmEmail from "../views/onboarding/ConfirmEmail.vue"
 import EmployeeOnboarding from "../views/onboarding/Employee.vue"
 import EmployerOnboarding from "../views/onboarding/Employer.vue"
 import People from "../views/pages/People.vue"
+import SignUpBasic from '../views/auth/signup/Basic.vue'
 
 const routes = [
   {
@@ -310,6 +311,11 @@ const routes = [
     path: "/authentication/signin",
     name: "Signin Basic",
     component: Basic,
+  },
+  {
+    path: '/authentication/signUp',
+    name: 'SignUp Basic',
+    component: SignUpBasic,
   },
   // {
   //   path: "/authentication/signin",

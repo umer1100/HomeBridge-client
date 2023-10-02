@@ -14,14 +14,15 @@
     <div class="multisteps-form__content">
       <div v-if="step == 0">
         <div class="col-12 col-sm-12">
-          <label>What is the nearest zip code you want to buy in?</label>
-          <input
-            id="zipCode"
-            v-model="zipCode"
+          <label>What is the nearest state you want to buy in?</label>
+          <select
+            id="nearestState"
+            v-model="nearestState"
             class="form-control"
-            type="text"
-            placeholder="eg. 12345"
-          />
+            name="nearestState">
+              <option value="">Select</option>
+              <option v-for='item in stateOptions' :key=item>{{ item }}</option>
+          </select>
         </div>
         <div class="col-12 col-sm-12 mt-3 mt-sm-0">
           <label>What is your home purchase budget?</label>
@@ -132,17 +133,17 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, onUpdated, ref } from "vue"
+import { defineComponent, onMounted, onBeforeMount, onUpdated, ref } from "vue"
 import SoftButton from "@/components/SoftButton.vue"
 import * as Choices from "choices.js"
-import { ZIP_CODE_REGEX } from "../../../constant"
+import { showSnackBar } from "../../../utils/helper"
+import { STATES } from 'src/constant/states'
 import {
   HOME_PURCHASE_BUDGET,
   HOME_PURCHASE_PROFILE,
   HOME_PURCHASE_DESIRE_ROOMS,
   HOME_PURCHASE_TIMELINE
 } from "../../../constant/questionaire"
-import { showSnackBar } from "../../../utils/helper"
 
 export default defineComponent({
   name: "UserQuestionnaire",
@@ -153,7 +154,8 @@ export default defineComponent({
 
   setup(props,{emit}) {
     const homePurchaseBudget = ref("")
-    const zipCode = ref("")
+    const stateOptions = ref([])
+    const nearestState = ref("")
     const homePurchaseReason = ref("")
     const purchaseReason = ref("")
     const haveAgent = ref("")
@@ -163,12 +165,13 @@ export default defineComponent({
 
     const handleNextStep = () => {
       if (props.step === 0) {
-        if (!ZIP_CODE_REGEX.test(zipCode.value) ||
-        (homePurchaseReason.value === 'Other' && purchaseReason.value === "") ||
+        if ((homePurchaseReason.value === 'Other' && purchaseReason.value === "") ||
         homePurchaseBudget.value === "Select" ||
         homePurchaseReason.value === "Select" ||
+        nearestState.value === "Select" ||
         homePurchaseBudget.value === "" ||
-        homePurchaseReason.value === ""
+        homePurchaseReason.value === "" ||
+        nearestState.value === ""
         ) {
           showSnackBar("Incorrect/Missing Information")
           return
@@ -188,7 +191,7 @@ export default defineComponent({
         } else if (props.step == 1) {
           return emit("handle-finish-onboarding", {
             homeBudget: homePurchaseBudget.value,
-            zipcode: zipCode.value,
+            nearestState: Object.keys(STATES).find(key => STATES[key] === nearestState.value),
             profile: homePurchaseReason.value == "Other" ? purchaseReason.value : homePurchaseReason.value,
             isWorkingWithAgent: haveAgent.value == "Yes" ? true : false,
             preApprovedLoan: haveMortgage.value == "Yes" ? true : false,
@@ -215,11 +218,18 @@ export default defineComponent({
     }
 
     onMounted(() => {
+      initializeSelectOptions("nearestState")
       initializeSelectOptions("choices-budget")
       initializeSelectOptions("choices-experience")
+      stateOptions.value = Object.values(STATES) || []
+    })
+
+    onBeforeMount(()=> {
+      stateOptions.value = Object.values(STATES) || []
     })
 
     onUpdated(()=> {
+      initializeSelectOptions("nearestState")
       initializeSelectOptions("choices-budget")
       initializeSelectOptions("choices-experience")
       initializeSelectOptions("choices-agent")
@@ -233,8 +243,9 @@ export default defineComponent({
       HOME_PURCHASE_PROFILE,
       HOME_PURCHASE_DESIRE_ROOMS,
       HOME_PURCHASE_TIMELINE,
+      stateOptions,
       homePurchaseBudget,
-      zipCode,
+      nearestState,
       homePurchaseReason,
       purchaseReason,
       haveAgent,
