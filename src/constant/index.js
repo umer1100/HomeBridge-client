@@ -12,6 +12,7 @@ export const CONGRATULATIONS_MESSAGE = 'Congratulations!'
 export const FILL_IN_REQUIRED_FIELDS = 'Please fill in all the required fields to proceed.'
 export const MATCH_PASSWORDS = 'Password and Confirm Password must match.'
 
+
 export const OUT_OF_STATE_CARD = [{
   outOfStateCard: true,
   firstName:'Support & Success',

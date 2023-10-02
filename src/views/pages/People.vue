@@ -419,16 +419,21 @@ export default defineComponent({
         availableColumnOptions[AVALIABLE_MODALS.EMPLOYMENT].isFilterApplied = true
         filterData.value = filterData.value.filter(person => selectedEmploymentTypeFilters.value.includes(person.employmentType))
       }
+    }
 
       if (!isEmptyString(lastSeenDate.value.start) && !isEmptyString(lastSeenDate.value.end)) {
         availableColumnOptions[AVALIABLE_MODALS.LAST_SEEN].isFilterApplied = true
         filterData.value = filterByDateRange('formattedLastSeen', lastSeenDate.value.start, lastSeenDate.value.end)
       }
+    }
 
       if (!isEmptyString(hiredDate.value.start) && !isEmptyString(hiredDate.value.end)) {
         availableColumnOptions[AVALIABLE_MODALS.HIRED_DATE].isFilterApplied = true
         filterData.value = filterByDateRange('formattedStartDate', hiredDate.value.start, hiredDate.value.end)
       }
+      await readOrganizationUsersData()
+      selectedTeamMember.value = []
+    }
 
       if (!isEmptyString(endDate.value.start) && !isEmptyString(endDate.value.end)) {
         availableColumnOptions[AVALIABLE_MODALS.END_DATE].isFilterApplied = true
