@@ -147,7 +147,7 @@ export default defineComponent({
         if (response && response?.success) averagePlatformCredits.value = USDollar.format(response.data)
         else showSnackBar(ERROR_SNACK_BAR_MESSAGE, response?.message)
       } else if (roleType === USER_ROLE_TYPES.EMPLOYER) {
-        averagePlatformCredits.value = USDollar.format((organizationStore.totalOwnerificCredits / employeesCount.value).toFixed(2))
+        averagePlatformCredits.value = USDollar.format((organizationStore.totalOwnerificCredits / (employeesCount.value || 1)).toFixed(2))
       }
     }
 
