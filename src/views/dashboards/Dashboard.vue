@@ -18,7 +18,7 @@
               <mini-gradient-line-chart title='Yearly Projected Savings'
                 :description=employeeProjectedSavingsByPlatform />
             </div>
-            <div class='mt-4 col-sm-4 mt-sm-0'>
+            <div v-if='roleType === USER_ROLE_TYPES.EMPLOYER' class='mt-4 col-sm-4 mt-sm-0'>
               <mini-gradient-line-chart :title='`${organizationName} Average Savings`'
                 :description=averagePlatformCredits />
             </div>
@@ -31,7 +31,7 @@
         <div class='mt-4 col-xl-4 col-lg-5 mt-lg-0'>
           <div class='row'>
             <div class='col-lg-12'>
-              <background-blog-card 
+              <background-blog-card
                 :image=backgroundImage
                 :title=sideCardTitle
                 :description=sideCardDescription
@@ -147,7 +147,7 @@ export default defineComponent({
         if (response && response?.success) averagePlatformCredits.value = USDollar.format(response.data)
         else showSnackBar(ERROR_SNACK_BAR_MESSAGE, response?.message)
       } else if (roleType === USER_ROLE_TYPES.EMPLOYER) {
-        averagePlatformCredits.value = USDollar.format((organizationStore.totalOwnerificCredits / employeesCount.value).toFixed(2))
+        averagePlatformCredits.value = USDollar.format((organizationStore.totalOwnerificCredits / (employeesCount.value || 1)).toFixed(2))
       }
     }
 
@@ -188,7 +188,7 @@ export default defineComponent({
 
       if (brokergaeAgents.success) brokergaeAgentsCount = brokergaeAgents.agents.length
       else showSnackBar(ERROR_SNACK_BAR_MESSAGE, 'Failed to read Brokerage data')
-      
+
       if (lenderAgents.success) lenderAgentsCount = lenderAgents.lenders.length
       else showSnackBar(ERROR_SNACK_BAR_MESSAGE, 'Failed to read Lenders data')
     }
