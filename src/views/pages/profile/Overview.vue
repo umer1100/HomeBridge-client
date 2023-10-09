@@ -8,11 +8,11 @@
         <div class='row'>
           <div class='col-md-6 col-sm-12'>
             <label class='form-label'>First Name</label>
-            <input v-model=userData.firstName :disabled=!isCurrentUserProfile class='form-control' type='text' placeholder='Alec' />
+            <input v-model=userData.firstName :disabled=!isCurrentUserProfile class='form-control' type='text' placeholder='' />
           </div>
           <div class='col-md-6 col-sm-12'>
             <label class='form-label'>Last Name</label>
-            <input v-model=userData.lastName :disabled=!isCurrentUserProfile class='form-control' type='text' placeholder='Thompson' />
+            <input v-model=userData.lastName :disabled=!isCurrentUserProfile class='form-control' type='text' placeholder='' />
           </div>
         </div>
         <div class='col-12'>
@@ -21,20 +21,20 @@
         </div>
         <div class='col-12'>
           <label class='form-label'>Address Line 1</label>
-          <input v-model=userData.addressLine1 :disabled=!isCurrentUserProfile class='form-control' type='text' placeholder='813 Howard Street Oswego' />
+          <input v-model=userData.addressLine1 :disabled=!isCurrentUserProfile class='form-control' type='text' placeholder='' />
         </div>
         <div class='col-12'>
           <label class='form-label'>Address Line 2</label>
-          <input v-model=userData.addressLine2 :disabled=!isCurrentUserProfile class='form-control' type='text' placeholder='NY 13126 USA' />
+          <input v-model=userData.addressLine2 :disabled=!isCurrentUserProfile class='form-control' type='text' placeholder='' />
         </div>
         <div class='row'>
           <div class='col-md-6 col-sm-12'>
             <label class='form-label'>City</label>
-            <input v-model=userData.city :disabled=!isCurrentUserProfile class='form-control' type='text' placeholder='Chicago' />
+            <input v-model=userData.city :disabled=!isCurrentUserProfile class='form-control' type='text' placeholder='' />
           </div>
           <div class='col-md-6 col-sm-12'>
             <label class='form-label'>Zip Code</label>
-            <input v-model=userData.zipcode :disabled=!isCurrentUserProfile class='form-control' type='text' placeholder='14602' />
+            <input v-model=userData.zipcode :disabled=!isCurrentUserProfile class='form-control' type='text' placeholder='' />
           </div>
         </div>
         <div class='row'>
@@ -68,7 +68,7 @@
     </div>
     <div v-if='userRoleType === USER_ROLE_TYPES.EMPLOYEE' class='card mt-4'>
       <div class='card-header'>
-        <h5>Questionnaire Info</h5>
+        <h5>Homeownership Questionaire</h5>
       </div>
       <div class='card-body pt-0'>
         <div class='row'>

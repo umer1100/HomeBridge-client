@@ -174,11 +174,11 @@ export default defineComponent({
         pieChartValue.value.labels = ['Buying and selling pros', 'Financing and lending pros']
         pieChartValue.value.datasets = [{ label: 'Buy and Finance', data: [brokergaeAgentsCount, lenderAgentsCount] }]
       } else if (roleType === USER_ROLE_TYPES.EMPLOYER) {
-        pieChartTitle.value = 'Employee Status'
+        pieChartTitle.value = 'Team Member Status'
         pieChartValue.value.labels = Object.keys(employeesStatusCount.value)
         pieChartValue.value.datasets = [{ label: 'Employees', data: Object.values(employeesStatusCount.value) }]
         pieChartActions.value.route = ROUTES.PEOPLE
-        pieChartActions.value.label = 'See all employees'
+        pieChartActions.value.label = 'See All Team Members'
       }
     }
 

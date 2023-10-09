@@ -7,7 +7,7 @@
           <div class='pb-0 card-header'>
             <div class='d-lg-flex'>
               <div>
-                <h5 class='mb-0'>All Employees</h5>
+                <h5 class='mb-0'>Team Members</h5>
                 <p class='mb-0 text-sm'>
                   View more information about your team
                 </p>
@@ -17,7 +17,7 @@
                   <div class='dropdown'>
                     <button id='dropdownMenuButton' class='btn bg-gradient-info btn-sm dropdown-toggle w-100'
                       type='button' data-bs-toggle='dropdown' aria-expanded='false'>
-                      +&nbsp; Add Employee
+                      +&nbsp; Add Team Member
                     </button>
                     <ul class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
                       <li><a class='dropdown-item' data-bs-toggle='modal' data-bs-target='#modal-addSingleUser'>Single</a>

@@ -2,7 +2,7 @@
   <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 id="modal-title-default" class="modal-title">Add Employee</h6>
+        <h6 id="modal-title-default" class="modal-title">Add Team Member</h6>
         <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
@@ -18,7 +18,7 @@
             <input v-model="lastName" type="text" class="form-control" placeholder="e.g. Prior">
           </div>
           <div class="form-group mx-2">
-            <label for="exampleFormControlInput1">Email address</label>
+            <label for="exampleFormControlInput1">Email Address</label>
             <input v-model="email" type="email" class="form-control" placeholder="e.g riley@example.com">
           </div>
         </form>
