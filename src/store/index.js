@@ -21,6 +21,7 @@ export default createStore({
     snackbarTitle: "",
     snackbarDescription: "",
     snackbarIsRawHtml: false,
+    startIntro: false,
     navbarFixed:
       "position-sticky blur shadow-blur left-auto top-1 z-index-sticky px-0 mx-4",
     absolute: "position-absolute px-4 mx-0 w-100 z-index-2",
@@ -41,6 +42,18 @@ export default createStore({
         sidenav_show.classList.remove("g-sidenav-pinned");
         state.isPinned = false;
       }
+    },
+    showNavbar(state) {
+      const sidenav_show = document.querySelector('.g-sidenav-show')
+      if (sidenav_show.classList.contains('g-sidenav-hidden')) sidenav_show.classList.remove('g-sidenav-hidden')
+      sidenav_show.classList.add('g-sidenav-pinned')
+      state.isPinned = true
+    },
+    hideNavbar(state) {
+      const sidenav_show = document.querySelector('.g-sidenav-show')
+      if (sidenav_show.classList.contains('g-sidenav-pinned')) sidenav_show.classList.remove('g-sidenav-pinned')
+      sidenav_show.classList.add('g-sidenav-hidden')
+      state.isPinned = false
     },
     sidebarType(state, payload) {
       state.isTransparent = payload;
@@ -71,6 +84,9 @@ export default createStore({
     },
     toggleHideConfig(state) {
       state.hideConfigButton = !state.hideConfigButton;
+    },
+    showIntro(state, value) {
+      state.startIntro = value
     }
   },
   actions: {

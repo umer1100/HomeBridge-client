@@ -24,7 +24,7 @@
         <router-link
         id="btn-transparent"
         :to="`/profile/${userId}`"
-        class="px-3 mb-2 btn w-100 h-auto"
+        class='px-3 mb-2 btn w-100 h-auto introStep4'
       >
         My Profile
       </router-link>
@@ -150,6 +150,9 @@
           target="_blank">
           Help Center
         </a>
+        <a  v-if='isEmployee' class='btn bg-gradient-warning w-100' @click=startIntro>
+          Take a Tour?
+        </a>
         <a class="btn bg-gradient-dark w-100"
           href="https://forms.monday.com/forms/3e2a8d7916bcee4c1afce30843f71f2f?r=use1"
           target="_blank">
@@ -198,7 +201,8 @@ import { logout } from "./utils/logout"
 import router from "./router/index"
 import { useUserStore } from "./store/user"
 import { useOrganizationStore } from "./store/organization"
-import { titleCase } from "./utils/helper"
+import { titleCase, isRoleEmployer } from "./utils/helper"
+import { ROUTES } from 'src/router/routeAccessControl.js'
 
 export default defineComponent({
   name: "Configurator",
@@ -224,6 +228,7 @@ export default defineComponent({
     let roleType = ref(titleCase(userStore.data?.roleType))
     let userId = ref(userStore.data?.id)
     let organizationName = ref(organizationStore?.data?.name)
+    const isEmployee = ref(!isRoleEmployer(userStore.data?.roleType))
 
     const onClickLogout = async () => {
       const response = await logout()
@@ -265,10 +270,17 @@ export default defineComponent({
       }
     }
 
+    const startIntro = () => {
+      router.push(ROUTES.DASHBOARD)
+      globalStore.commit('toggleConfigurator')
+      globalStore.commit('showIntro', true)
+    }
+
     watch(() => userStore.data?.firstName, () => {
       firstName.value = userStore.data?.firstName
       lastName.value = userStore.data?.lastName
       roleType.value = titleCase(userStore.data?.roleType)
+      isEmployee.value = !isRoleEmployer(userStore.data?.roleType)
       userId.value = userStore.data?.id
       organizationName.value = organizationStore?.data?.name
     })
@@ -280,6 +292,7 @@ export default defineComponent({
     })
 
     return {
+      isEmployee,
       firstName,
       lastName,
       roleType,
@@ -294,7 +307,8 @@ export default defineComponent({
       sidebarType,
       setNavbarFixed,
       sidebarColor,
-      onClickLogout
+      onClickLogout,
+      startIntro
     }
   },
 })

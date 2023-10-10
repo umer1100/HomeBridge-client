@@ -38,6 +38,15 @@ export const AVALIABLE_MODALS = {
   OWNERIFIC_DOLLARS: 'Ownerific Dollars'
 }
 
+const INTRO_MESSAGES = {
+  WELCOME: 'Welcome to Ownerific, here is a brief tour of our application.',
+  OWNERIFIC_DOLLARS: 'This is your Ownerific Dollars. This will accumulate by $100 every month. You can redeem these dollars when you purchase a home.',
+  PARTNER_TABS: 'These tabs represent the agents in the area you are looking to buy. Once you are ready to purchase a home, you can contact them to help you in your home buying process.',
+  CALCULATOR_TAB: 'The calculator will help you understand all the factors that go into your monthly payments.',
+  PROFILE_TAB: 'The profile tab is where you can update information about yourself and preferences about your home buying goals.',
+  LAST_MESSAGE:  "That's everything, we wish you luck on your home buying journey."
+}
+
 export const USER_STATUSES = {
   NEW: 'NEW',
   PENDING: 'PENDING',
@@ -90,10 +99,47 @@ export const GOAL_AMOUNT_OPTIONS = [
   '$50,000 or more'
 ]
 
+export const INTRO_STEPS = [
+  {
+    id: 'step1',
+    text: INTRO_MESSAGES.WELCOME,
+    buttonText: 'Next'
+  },
+  {
+    id: 'step2',
+    text: INTRO_MESSAGES.OWNERIFIC_DOLLARS,
+    elementName: '.introStep1',
+    buttonText: 'Next'
+  },
+  {
+    id: 'step3',
+    text: INTRO_MESSAGES.PARTNER_TABS,
+    elementName: '.introStep2',
+    buttonText: 'Next'
+  },
+  {
+    id: 'step4',
+    text: INTRO_MESSAGES.CALCULATOR_TAB,
+    elementName: '.introStep3',
+    buttonText: 'Next'
+  },
+  {
+    id: 'step5',
+    text: INTRO_MESSAGES.PROFILE_TAB,
+    elementName: '.introStep4',
+    buttonText: 'Next'
+  },
+  {
+    id: 'step6',
+    text: INTRO_MESSAGES.LAST_MESSAGE,
+    buttonText: 'Done'
+  }
+]
+
 export const MONTHLY_CREDIT_BY_PLATFORM = 100
 export const YEARLY_CREDIT_BONUS_BY_PLATFORM = 100
 export const ACTIVITY_TIMEOUT_TIME = 30
-export const ACTIVITY_TIMEOUT_REDIRECT_URL = "/authentication/signin"
+export const ACTIVITY_TIMEOUT_REDIRECT_URL = '/authentication/signin'
 export const OWNERIFIC_ROUTE = 'https://www.ownerific.com/'
 
 export const DEFAULT_CALCULATOR_HOME_BUDGET = 500000

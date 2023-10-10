@@ -8,7 +8,7 @@
               <mini-gradient-line-chart title='Ownerific Value Earned' :description=totalPlatformCredits />
             </div>
             <div v-if='roleType === USER_ROLE_TYPES.EMPLOYEE' class='mt-4 col-sm-4 mt-sm-0'>
-              <mini-gradient-line-chart title='Ownerific Wallet' :description=employeePlatformCredits />
+              <mini-gradient-line-chart :is-tour-object=true title='Ownerific Wallet' :description=employeePlatformCredits />
             </div>
             <div v-if='roleType === USER_ROLE_TYPES.EMPLOYER' class='mt-4 col-sm-4 mt-sm-0'>
               <mini-gradient-line-chart title='Yearly Projected Savings'
@@ -49,7 +49,10 @@
 </template>
 
 <script>
-import { defineComponent, onBeforeMount, ref } from 'vue'
+import { defineComponent, onBeforeMount, onMounted, ref, watch } from 'vue'
+import { useStore } from 'vuex'
+import Shepherd from 'shepherd.js'
+import 'shepherd.js/dist/css/shepherd.css'
 import BackgroundBlogCard from './components/BackgroundBlogCard.vue'
 import MiniGradientLineChart from 'src/views/dashboards/components/MiniGradientLineChart.vue'
 import DefaultDoughnutChart from 'src/views/applications/analytics/components/DefaultDoughnutChart.vue'
@@ -65,11 +68,13 @@ import {
   ERROR_SNACK_BAR_MESSAGE,
   USER_STATUSES,
   WALLET_TYPE,
-  OWNERIFIC_ROUTE
+  OWNERIFIC_ROUTE,
+  INTRO_STEPS
 } from 'src/constant/index.js'
 import { API } from 'src/constant/api'
 import { showSnackBar, USDollar, handleSpinner } from 'src/utils/helper.js'
 import { requestQuery } from 'src/api/partners/query'
+import { updateUser } from 'src/api/user/update'
 import { ROUTES } from 'src/router/routeAccessControl'
 
 export default defineComponent({
@@ -80,6 +85,7 @@ export default defineComponent({
     DefaultDoughnutChart
   },
   setup() {
+    const globalStore = useStore()
     const userStore = useUserStore()
     const organizationStore = useOrganizationStore()
 
@@ -209,6 +215,64 @@ export default defineComponent({
     const employerApiCalls = async () => {
       await fetchUsersData()
     }
+
+    const showIntro = (updateUserIntroStatus) => {
+      const tour = new Shepherd.Tour({
+        useModalOverlay: true,
+        defaultStepOptions: {
+          classes: 'shadow-md bg-purple-dark mt-3',
+          scrollTo: true,
+          modalOverlayOpeningRadius: 5
+        }
+      })
+
+      INTRO_STEPS.forEach((step) => {
+        tour.addStep({
+          id: step.id,
+          text: step.text,
+          attachTo: {
+            element: step.elementName,
+            on: 'bottom'
+          },
+          buttons: [
+            {
+              text: step.buttonText,
+              action: () => {
+                const currentStepId = tour.getCurrentStep().id
+                if (window.innerWidth < 1200 && currentStepId === 'step1') globalStore.commit('hideNavbar')
+                else if (currentStepId === 'step2') globalStore.commit('showNavbar')
+                else if (currentStepId === 'step4') globalStore.commit('toggleConfigurator')
+                tour.next()
+              }
+            }
+          ]
+        })
+      })
+
+      tour.start()
+
+      tour.on('complete', async () => {
+        if (updateUserIntroStatus) {
+          const response = await updateUser({ isIntroViewed: true })
+          if (response && response?.success) {
+            userStore.data = response?.data
+          }
+        }
+        if (window.innerWidth < 1200) globalStore.commit('hideNavbar')
+        globalStore.commit('showIntro', false)
+        globalStore.commit('toggleConfigurator')
+      })
+    }
+
+    watch(() => globalStore.state.startIntro, (newValue) => {
+      if (newValue) showIntro(false)
+    })
+
+    onMounted(() => {
+      if (((!userStore.data.isIntroViewed) || globalStore.state.startIntro) && (userStore.data.roleType === USER_ROLE_TYPES.EMPLOYEE)) {
+        showIntro(userStore.data.isIntroViewed ? false : true)
+      }
+    })
 
     onBeforeMount(async () => {
       handleSpinner(true)

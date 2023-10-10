@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-hidden card">
+  <div :class='`overflow-hidden card ${isTourObject ? "introStep1" : ""}`'>
     <div class="p-3 pb-0 card-header">
       <p class="mb-0 text-sm text-capitalize font-weight-bold">{{ title }}</p>
       <!-- eslint-disable vue/no-v-html -->
@@ -34,6 +34,10 @@ export default {
       type: String,
       default: "",
     },
+    isTourObject: {
+      type: Boolean,
+      default: false
+    }
     // chart: {
     //   type: Object,
     //   required: true,

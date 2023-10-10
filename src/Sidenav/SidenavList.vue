@@ -65,47 +65,48 @@
         </sidenav-collapse>
       </li> -->
 
-      <li v-if="getUserRole() === USER_ROLE_TYPES.EMPLOYEE" class="nav-item">
-        <sidenav-collapse
-          nav-text="Buy"
-          :collapse="false"
-          :class="getRoute() === ROUTES.PARTNERS ? 'active' : ''"
-          @click="navigateToPath(ROUTES.PARTNERS)"
-        >
-          <template #icon>
-            <Basket />
-          </template>
-        </sidenav-collapse>
-      </li>
+      <div class='introStep2 nav-item'>
+        <li v-if='getUserRole() === USER_ROLE_TYPES.EMPLOYEE' class='nav-item'>
+          <sidenav-collapse
+            nav-text='Buy'
+            :collapse=false
+            :class='getRoute() === ROUTES.PARTNERS ? "active" : ""'
+            @click='navigateToPath(ROUTES.PARTNERS)'
+          >
+            <template #icon>
+              <Basket />
+            </template>
+          </sidenav-collapse>
+        </li>
 
+        <li v-if='getUserRole() === USER_ROLE_TYPES.EMPLOYEE' class='nav-item'>
+          <sidenav-collapse
+            nav-text='Finance'
+            :collapse=false
+            :class="getRoute() === ROUTES.LENDERS ? 'active' : ''"
+            @click='navigateToPath(ROUTES.LENDERS)'
+          >
+            <template #icon>
+              <Basket />
+            </template>
+          </sidenav-collapse>
+        </li>
 
-      <li v-if="getUserRole() === USER_ROLE_TYPES.EMPLOYEE" class="nav-item">
-        <sidenav-collapse
-          nav-text="Finance"
-          :collapse="false"
-          :class="getRoute() === ROUTES.LENDERS ? 'active' : ''"
-          @click="navigateToPath(ROUTES.LENDERS)"
-        >
-          <template #icon>
-            <Basket />
-          </template>
-        </sidenav-collapse>
-      </li>
+        <li v-if='getUserRole() === USER_ROLE_TYPES.EMPLOYEE' class='nav-item'>
+          <sidenav-collapse
+            nav-text='Close'
+            :collapse=false
+            :class='getRoute() === ROUTES.CLOSE ? "active" : ""'
+            @click='navigateToPath(ROUTES.CLOSE)'
+          >
+            <template #icon>
+              <Basket />
+            </template>
+          </sidenav-collapse>
+        </li>
+      </div>
 
-      <li v-if="getUserRole() === USER_ROLE_TYPES.EMPLOYEE" class="nav-item">
-        <sidenav-collapse
-          nav-text='Close'
-          :collapse=false
-          :class='getRoute() === ROUTES.CLOSE ? "active" : ""'
-          @click='navigateToPath(ROUTES.CLOSE)'
-        >
-          <template #icon>
-            <Basket />
-          </template>
-        </sidenav-collapse>
-      </li>
-
-      <li v-if="getUserRole() === USER_ROLE_TYPES.EMPLOYEE" class="nav-item">
+      <li v-if='getUserRole() === USER_ROLE_TYPES.EMPLOYEE' class='nav-item introStep3'>
         <sidenav-collapse
           nav-text='Calculator'
           :collapse=false
