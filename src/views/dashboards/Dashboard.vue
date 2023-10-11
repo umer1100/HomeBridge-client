@@ -115,7 +115,8 @@ export default defineComponent({
       PENDING: 0,
       NEW: 0,
       ACTIVE: 0,
-      PAUSED: 0
+      PAUSED: 0,
+      ONBOARDING: 0
     })
     let lenderAgentsCount = 0
     let brokergaeAgentsCount = 0
@@ -127,7 +128,7 @@ export default defineComponent({
         organizationStore.users = response.data
         employeesStatusCount.value = response.data.filter(item => item.roleType === USER_ROLE_TYPES.EMPLOYEE).reduce((count, item) => {
           const status = item.status === USER_STATUSES.PAUSE ? 'PAUSED' : item.status
-          if (item.status !== USER_STATUSES.ONBOARDING) count[status] = (count[status] || 0) + 1
+          count[status] = (count[status] || 0) + 1
           return count
         }, {})
         calculateTotalPlatformCredits()
