@@ -29,7 +29,7 @@
                   title="Connect"
                   :class="activeClass"
                 >
-                  <span> Connect </span>
+                  <span> {{ activeStep === 0 ? 'Create Organization' : 'Connect' }} </span>
                 </button>
               </div>
             </div>
@@ -38,8 +38,10 @@
           <div class="row" >
             <div class="col-12 col-lg-8 m-auto">
               <form class="multisteps-form__form mb-5">
-                <!-- single form panel -->
-                <div>
+                <div v-if='activeStep === 0'>
+                  <organization-info :class = 'activeClass' @next-step = 'handleNextStep'/>
+                </div>
+                <div v-if='activeStep === 1'>
                   <Connect  :class = "activeClass" 
                             @next-step = "finishOnboarding"/>
                 </div>
@@ -53,24 +55,28 @@
 </template>
 
 <script>
-import { defineComponent, onBeforeMount, onBeforeUnmount } from "vue"
+import { defineComponent, onBeforeMount, onBeforeUnmount, ref } from 'vue'
 import { useRouter } from "vue-router"
 import { useStore } from "vuex"
 import Connect from "./components/Connect.vue"
+import OrganizationInfo from './components/OrganizationInfo.vue'
 import { useUserStore } from "../../store/user"
 import { updateUser } from "../../api/user/update"
 import { USER_STATUSES } from "../../constant"
 import { showSnackBar } from "../../utils/helper"
 
 export default defineComponent({
-  name: "Employer Onboarding",
+  name: 'EmployerOnboarding',
   components: {
-    Connect
+    Connect,
+    OrganizationInfo
   },
   setup() {
     const globalStore = useStore()
     const userStore = useUserStore()
     const router = useRouter()
+
+    const activeStep = ref(0)
     
     const finishOnboarding = async () => {
       const res = await updateUser({
@@ -84,9 +90,13 @@ export default defineComponent({
       router.push("/")
     }
 
+    const handleNextStep = () => activeStep.value = 1
+
     onBeforeMount(()=> {
       globalStore.commit("hideEveryDisplay")
       globalStore.state.hideConfigButton = true
+      if(!userStore?.data?.organizationId) activeStep.value = 0
+      else activeStep.value = 1
     })
 
     onBeforeUnmount(()=> {
@@ -96,7 +106,9 @@ export default defineComponent({
     })
 
     return{
+      activeStep,
       activeClass: "js-active position-relative",
+      handleNextStep,
       finishOnboarding,
     }
   },

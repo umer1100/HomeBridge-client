@@ -22,8 +22,8 @@
           <div class="pt-4 text-center card-header">
             <h5>Sign in</h5>
           </div>
-          <!-- <div class="px-3 row px-xl-5 px-sm-4">
-            <div class="px-1 col-3 ms-auto">
+          <div class='px-3 row px-xl-5 px-sm-4'>
+            <!-- <div class='px-1 col-3 ms-auto'>
               <a class="btn btn-outline-light w-100" href="javascript:;">
                 <svg
                   width="24px"
@@ -82,8 +82,8 @@
                   </g>
                 </svg>
               </a>
-            </div>
-            <div class="px-1 col-3 me-auto">
+            </div> -->
+            <div class='px-1 col-12 me-auto' @click=loginWithGoogle>
               <a class="btn btn-outline-light w-100" href="javascript:;">
                 <svg
                   width="24px"
@@ -122,7 +122,8 @@
                 </svg>
               </a>
             </div>
-          </div> -->
+          </div>
+          <hr class='horizontal dark my-1' />
           <div class="card-body">
             <form role="form" class="text-start" @submit="handleFormSubmit">
               <div class="mb-3">
@@ -180,12 +181,15 @@ import { defineComponent, onBeforeMount, onBeforeUnmount, ref } from "vue"
 import { useStore } from "vuex"
 import Navbar from "@/PageLayout/Navbar.vue"
 import AppFooter from "@/PageLayout/Footer.vue"
+import { ERROR_SNACK_BAR_MESSAGE } from 'src/constant'
 import { login } from "../../../api/user/login"
+import { signInOAuth } from 'src/api/user/signInOAuth.js'
 import { useUserStore } from "../../../store/user"
 import { useOrganizationStore } from "../../../store/organization"
 import { persistAuthenticationDetails } from "../../../utils/localStorage"
 import { useRouter } from "vue-router"
-import { showSnackBar } from "../../../utils/helper"
+import { handleSpinner, showSnackBar } from 'src/utils/helper'
+import { googleAuth } from 'src/services/oauth.js'
 
 export default defineComponent({
   name: "SigninBasic",
@@ -220,6 +224,30 @@ export default defineComponent({
       }
     }
 
+    const loginWithGoogle = async () => await googleAuth(getUserInfo)
+
+    const getUserInfo = async (code) => {
+      try {
+        handleSpinner(true)
+        const userInfo = await signInOAuth({ code })
+        const { success, token, user } = userInfo
+
+        if (success) {
+          userStore.userJWT = token
+          userStore.data = user
+          organizationStore.data = user.organization
+
+          persistAuthenticationDetails(token)
+          router.push('/')
+        } else {
+          showSnackBar(ERROR_SNACK_BAR_MESSAGE, userInfo.message)
+        }
+      } catch (error) {
+        showSnackBar(ERROR_SNACK_BAR_MESSAGE, 'Something went wrong')
+      }
+      handleSpinner(false)
+    }
+
     onBeforeMount(()=> {
       globalStore.commit("hideEveryDisplay")
     })
@@ -232,7 +260,8 @@ export default defineComponent({
     return{
       emailAddress,
       password,
-      handleFormSubmit
+      handleFormSubmit,
+      loginWithGoogle
     }
   }
 })
