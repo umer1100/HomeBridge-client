@@ -9,13 +9,13 @@
           :sub-heading = lender.officeName
           :phone = lender.phone
           :email = lender.email
-          :nmls-id = lender.nmlsId
+          :licensed-in = 'lender.addresses?.map(item => STATES[item?.state]).join(", ")'
           :description = lender.description
           :left-button-url = 'lender.outOfStateCard ? lender.leftButtonURL : lender.reviewsURL'
           :right-button-url = lender.applicationURL
           :show-left-button = true
           :show-right-button = !lender.outOfStateCard
-          :left-button-title = 'lender.outOfStateCard ? "Email" : "Review"'
+          :left-button-title = 'lender.outOfStateCard ? "Email" : "Reviews"'
           right-button-title = 'Apply'
         />
       </div>
@@ -31,6 +31,7 @@
   import { requestQuery } from 'src/api/partners/query'
   import { showSnackBar, isEmptyArray } from 'src/utils/helper'
   import { ERROR_SNACK_BAR_MESSAGE, OUT_OF_STATE_CARD } from 'src/constant'
+  import { STATES } from 'src/constant/states'
 
   export default defineComponent({
     name: 'Lender',
@@ -53,6 +54,7 @@
       })
 
       return {
+        STATES,
         roleType,
         lenderAgents,
         isEmptyArray

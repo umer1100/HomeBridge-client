@@ -15,7 +15,7 @@
           :right-button-url = agent.applicationURL
           :show-left-button = true
           :show-right-button = !agent.outOfStateCard
-          :left-button-title = 'agent.outOfStateCard ? "Email" : "Review"'
+          :left-button-title = 'agent.outOfStateCard ? "Email" : "Reviews"'
           right-button-title = 'Apply'
         />
       </div>

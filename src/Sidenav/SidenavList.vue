@@ -119,7 +119,7 @@
         </sidenav-collapse>
       </li>
 
-      <li class="nav-item">
+      <li v-if='getUserRole() === USER_ROLE_TYPES.EMPLOYEE' class="nav-item">
         <sidenav-collapse
           nav-text='Resources'
           :collapse=false

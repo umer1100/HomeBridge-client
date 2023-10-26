@@ -15,8 +15,7 @@ export const MATCH_PASSWORDS = 'Password and Confirm Password must match.'
 
 export const OUT_OF_STATE_CARD = [{
   outOfStateCard: true,
-  firstName:'Support & Success',
-  lastName: 'Team',
+  firstName:'Support & Success Team',
   officeName: 'Ownerific',
   description: "If you are looking for homeownership experts outside of your region, please contact us below and let us know where you'd like to see us next.",
   leftButtonTitle: 'Email',
